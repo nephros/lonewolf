@@ -5,51 +5,34 @@ import Sailfish.WebEngine 1.0
 import Sailfish.WebView.Popups 1.0
 import Lonewolf 1.0
 
-Page {
+WebViewPage {
     id: root
 
     property var you
     property bool canDoBackAction: false
     //readonly property product: bookProduct()
+    //
+    backgroundColor: Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
 
     Component {
         id: saveDialog
         Dialog {
             id: dialog
-            PageHeader { id: header; title: "Quick Save" }
+            DialogHeader { id: header; title: "Quick Save"; acceptText: "Got it" }
             Label {
-            text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
-            }
-            Button {
-                text: "Got it"
-                onClicked: PopupUtils.close(dialog)
+                anchors.fill: parent
+                text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
             }
         }
     }
 
-    Component {
+    ChartPage {
         id: chartPage
-        ChartPage {
-            objectName: "chart"
-            you: root.you
-        }
+        objectName: "chart"
+        you: root.you
     }
-
-    property bool shouldShowChart: book.progress == 100
-
-    function ensureChartPage() {
-        if (shouldShowChart) {
-            const np = pageStack.nextPage()
-            if (np.objectName != "chart") {
-                pageStack.pushAttached(chartPage);
-            }
-        }
-    }
-
-    onVisibleChanged: if (visible) ensureChartPage()
 
     Component.onCompleted: {
-        ensureChartPage();
         if (book.progress < 100) {
             book.downloadBook();
             pageView.pageId = "license";
@@ -57,53 +40,59 @@ Page {
             downloadCover.visible = false;
         }
         canDoBackAction = true;
+        // Debug some engine events:
+        WebEngine.onRecvObserve.connect(function(message, data) {
+            console.log("Engine event contents: ", message, JSON.stringify(data));
+        })
     }
 
     SilicaFlickable {
-      anchors.fill: parent
-    PullDownMenu {
-    MenuItem {
-        id: backAction
-        text: qsTr("Back")
-        enabled: canDoBackAction
-        visible: book.progress == 100
-        onClicked: {
-            if (book.inBackMatter) {
-                pageView.pageId = you.pageId; // go back to saved place
-                book.inBackMatter = false;
-            } else {
-                popBookTab();
+        anchors.fill: parent
+        PullDownMenu {
+            visible: book.progress == 100
+            MenuItem {
+                id: backAction
+                text: "Back"
+                enabled: canDoBackAction
+                onClicked: {
+                    if (book.inBackMatter) {
+                        pageView.pageId = you.pageId; // go back to saved place
+                        book.inBackMatter = false;
+                    } else {
+                        popBookTab();
+                    }
+                }
+            }
+            MenuItem {
+                id: actionChart
+                //icon.source: "note"
+                text: "Action Chart"
+                onClicked: pageStack.push(chartPage)
+            }
+            MenuItem {
+                id: quickSave
+                //icon.source: "save"
+                text: "Quick Save"
+                enabled: !book.inBackMatter && mainView.endurance > 0
+                onClicked: {
+                    if (quickSaveState.pageId == "") {
+                        PopupUtils.open(saveDialog);
+                    }
+                    you.copyTo(quickSaveState);
+                }
+            }
+            MenuItem {
+                id: mapAction
+                //icon.source: "location"
+                text: "Map"
+                onClicked: pageView.pageId = "map"
             }
         }
-    }
-    MenuItem {
-        id: actionChart
-        //icon.source: "note"
-        text: qsTr("Action Chart")
-        visible: book.progress == 100
-        onClicked: pageStack.push(chartPage)
-    }
-    MenuItem {
-        id: quickSave
-        //icon.source: "save"
-        text: qsTr("Quick Save")
-        visible: book.progress == 100
-        enabled: !book.inBackMatter && mainView.endurance > 0
-        onClicked: {
-            if (quickSaveState.pageId == "") {
-                PopupUtils.open(saveDialog);
-            }
-            you.copyTo(quickSaveState);
+        PushUpMenu {
+            visible: pageView.loaded
+            MenuItem { text: "Increase Text size"; onClicked: WebEngineSettings.pixelRatio+=1 }
+            MenuItem { text: "Decrease Text size"; onClicked: WebEngineSettings.pixelRatio-=1 }
         }
-    }
-    MenuItem {
-        id: mapAction
-        //icon.source: "location"
-        text: qsTr("Map")
-        visible: book.progress == 100
-        onClicked: pageView.pageId = "map"
-    }
-    }
 
     PageHeader { id: header
         title: book.pageTitle
@@ -152,14 +141,16 @@ Page {
 
     Book {
         id: book
-        onDirChanged: console.debug("Book dir:", dir, cacheDir)
         dir: Qt.resolvedUrl(".")
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
         bgColor: "bisque"
-        textColor: "#212121"
-        linkColor:  Theme.highlightFromColor("lightbrown", Theme.DarkOnLight)
+        //textColor: "#212121"
+        textColor: "#333300"
+        linkColor:  Theme.highlightFromColor("bisque", Theme.DarkOnLight)
+
+        onDirChanged: console.debug("Book dir:", dir, "Cache dir:", cacheDir)
 
         property bool inBackMatter: false
 
@@ -195,17 +186,41 @@ Page {
         anchors.margins: Theme.horizontalPageMargin
 
         canShowSelectionMarkers: false
+        chromeGestureEnabled: false
+        //onTitleChanged: console.debug("Webview title:", title)
+        //onRecvAsyncMessage: {
+        //    console.debug("Webview Message")
+        //    switch (message) {
+        //    }
+        //}
+        //onViewInitialized: {
+        //    webview.loadFrameScript(Qt.resolvedUrl("framescript.js"));
+        //    webview.addMessageListener("webview:action")
+        //}
+        Component.onCompleted: {
+            WebEngineSettings.pixelRatio = 2
+            WebEngineSettings.autoLoadImages = true
+            WebEngineSettings.popupEnabled = true
+            WebEngineSettings.javascriptEnabled = true
+            // ^^^ This apparently does not work, but the following does:
+            WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
+            WebEngineSettings.setPreference("font.default.serif",      "serif", WebEngineSettings.StringPref)
+            WebEngineSettings.setPreference("font.default.sans-serif", "serif", WebEngineSettings.StringPref)
+            WebEngineSettings.setPreference("font.name-list.serif",    'Souvenir, "Sunset Serial Light", "Linux Biolinum", Georgia, "Times New Roman", serif, sans-serif', WebEngineSettings.StringPref)
+            //WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.disable_cors_checks", false, WebEngineSettings.BoolPref)
+        }
+
+
+        onLinkClicked: {
+          console.debug("Click!!")
+        }
         popupProvider: PopupProvider {
             alertPopup: alertDialog
         }
-        Component.onCompleted: {
-            WebEngineSettings.pixelRatio = 2
-            WebEngineSettings.setPreference("font.default.serif", "serif", WebEngineSettings.StringPref)
-            WebEngineSettings.setPreference("font.default.sans-serif", "serif", WebEngineSettings.StringPref)
-            WebEngineSettings.setPreference("font.name-list.serif", 'Souvenir, "Linux Biolinum", Georgia, "Times New Roman", serif, sans-serif', WebEngineSettings.StringPref)
-        }
     }
+
     Item {
         id: navigation
         anchors.left: parent.left
@@ -216,7 +231,7 @@ Page {
 
         IconButton {
             id: previous
-            anchors.left: parent.left
+                anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 anchors.margins: Theme.paddingSmall
                 //height: parent.height - Theme.paddingSmall
