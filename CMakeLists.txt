@@ -22,23 +22,20 @@ execute_process(
 
 add_definitions(-DQT_NO_KEYWORDS -std=c++11)
 
-set(QT_IMPORTS_DIR "lib/${ARCH_TRIPLET}")
-
 option(INSTALL_TESTS "Install the tests on make install" on)
 
 set(APP_NAME          "Lone Wolf")
 set(APP_ID            "lonewolf.timsueberkrueb")
-set(LONEWOLF_DIR "share/qml/lonewolf")
+set(LONEWOLF_DIR "share/lonewolf/qml")
 set(MAIN_QML          "Main.qml")
-set(ICON              "graphics/lonewolf.png")
+set(ICON              "lonewolf")
 
 # Set install paths
-set(CMAKE_INSTALL_PREFIX /)
-set(DATA_DIR /)
-set(DESKTOP_DIR ${DATA_DIR})
+set(CMAKE_INSTALL_PREFIX /usr)
 set(DESKTOP_FILE_NAME "lonewolf.desktop")
+set(DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/share/applications)
 
-set(EXEC "qmlscene $@ ${LONEWOLF_DIR}/${MAIN_QML}")
+set(EXEC "sailfish-qml lonewolf")
 
 # This command figures out the target architecture for use in the manifest file
 execute_process(
@@ -48,11 +45,6 @@ execute_process(
 )
 
 configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json
-        DESTINATION ${CMAKE_INSTALL_PREFIX})
-
-install(DIRECTORY "app/graphics" DESTINATION ${DATA_DIR})
-install(FILES "lonewolf.apparmor" DESTINATION ${DATA_DIR})
 
 add_subdirectory(app)
 add_subdirectory(backend)
@@ -76,4 +68,4 @@ add_custom_target("run" /usr/bin/qmlscene -I ${CMAKE_BINARY_DIR}/backend  ${CMAK
 # No op custom target for all not compiled files, so they show up in the QtCreator project tree
 add_custom_target("lonewolf_ClickFiles" ALL SOURCES "lonewolf.apparmor" "manifest.json.in")
 
-add_custom_target(bundle-deps ${CMAKE_SOURCE_DIR}/get-bundled-deps)
+#add_custom_target(bundle-deps ${CMAKE_SOURCE_DIR}/get-bundled-deps)
