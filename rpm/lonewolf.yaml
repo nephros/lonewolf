@@ -10,10 +10,6 @@ Sources:
     - '%{name}-%{version}.tar.gz'
     - lonewolf-bighead.png
     - lonewolf-app-icon.svg
-Patches:
-  - SailfishOS-build.patch
-  - SailfishOS-qml-1.patch
-  - SailfishOS-qml-2.patch
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'orgname;%{name}'

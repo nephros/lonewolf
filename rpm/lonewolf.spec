@@ -22,9 +22,6 @@ Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
 Source100:  lonewolf.yaml
-Patch0:     SailfishOS-build.patch
-Patch1:     SailfishOS-qml-1.patch
-Patch2:     SailfishOS-qml-2.patch
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
 BuildRequires:  pkgconfig(Qt5Core)
@@ -87,12 +84,6 @@ Group:      Libraries
 %prep
 %setup -q -n %{name}-%{version}
 
-# SailfishOS-build.patch
-%patch0 -p1
-# SailfishOS-qml-1.patch
-%patch1 -p1
-# SailfishOS-qml-2.patch
-%patch2 -p1
 # >> setup
 # << setup
 
