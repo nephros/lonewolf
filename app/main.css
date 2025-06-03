@@ -52,7 +52,7 @@ quote:after {
 
 .attribute {
  font-size: 14px;
- font: small-caps; // TODO: doesn't appear correctly
+ font-variant-caps: small-caps;
 }
 
 // TODO: fix stage3 link
