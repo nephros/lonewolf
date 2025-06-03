@@ -39,6 +39,9 @@ ApplicationWindow {
     property bool twoColumnView: false //isLandscape && !menuPage.visible
 
     initialPage: menuPage
+    cover: coverPage
+
+
     function goToBookTab() {
 	  pageStack.replace(bookComponent)
 	}
@@ -91,6 +94,15 @@ ApplicationWindow {
     BookPage {
         id: bookComponent
         you: gameState
+    }
+
+    CoverBackground { id: coverPage
+      Image {
+          source: "./lonewolf-bighead.png"
+          z: -1
+          anchors.fill: parent
+          fillMode: Image.PreserveAspectFit
+      }
     }
 
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
