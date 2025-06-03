@@ -13,7 +13,7 @@ ApplicationWindow {
 
     ConfigurationGroup {
         id: settings
-        path: "apps/games/lonewolf"
+        path: "/apps/games/lonewolf"
     }
 
     GameState {
@@ -28,7 +28,6 @@ ApplicationWindow {
 
     initialPage: menuPage
     cover: coverPage
-
 
     function goToBookTab() {
       pageStack.replace(bookComponent)
