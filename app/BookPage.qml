@@ -258,40 +258,32 @@ WebViewPage {
     }
 
     Component { id: alertDialog; AlertPopupInterface {
+        id: alertPopup
         anchors.fill: parent
-        property var model
 
         Component.onCompleted: {
-            if (model.message == "random") {
-                random.visible = true;
-            } else if (model.message == "action") {
-                Haptics.play();
-                actionChart.trigger();
-                model.accept();
-            } else if (model.message.indexOf("combat,") == 0) {
-                combat.props = model.message;
+            console.debug("Executing alert action:", text)
+            if (alertPopup.text == "random") {
+                pageStack.push(random)
+            } else if (alertPopup.text == "action") {
+                pageStack.push(chartPage)
+            } else if (alertPopup.text.indexOf("combat,") == 0) {
+                combat.props = alertPopup.text;
                 combat.visible = true;
-            } else if (model.message.indexOf("external,") == 0) {
-                Qt.openUrlExternally(model.message.split(',')[1]);
-                model.accept();
-            } else if (model.message.indexOf("puzzle-page,") == 0) {
-                puzzle.answers = model.message.split(',')[1];
+            } else if (alertPopup.text.indexOf("external,") == 0) {
+                Qt.openUrlExternally(alertPopup.text.split(',')[1]);
+                alertPopup.accepted(); alertPopup.visible = false
+            } else if (alertPopup.text.indexOf("puzzle-page,") == 0) {
+                puzzle.answers = alertPopup.text.split(',')[1];
                 puzzle.visible = true;
-            } else if (model.message.indexOf("book,") == 0) {
-                Haptics.play();
-                you.book = model.message.split(',')[2];
+            } else if (alertPopup.text.indexOf("book,") == 0) {
+                you.book = alertPopup.text.split(',')[2];
                 pageView.pageId = "";
                 goToBookTab();
             } else {
-                Haptics.play();
-                pageView.pageId = model.message;
-                model.accept();
+                pageView.pageId = alertPopup.text;
+                alertPopup.accepted(); alertPopup.visible = false
             }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            // eat events that fall through
         }
 
         Combat {
@@ -299,7 +291,7 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: model.accept()
+            onClose: { alertPopup.accepted(); alertPopup.visible = false }
         }
 
         Puzzle {
@@ -307,41 +299,48 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: model.accept()
+            onClose: { alertPopup.accepted(); alertPopup.visible = false }
             onGoTo: {
                 pageView.pageId = page;
-                model.accept();
+                alertPopup.accepted(); alertPopup.visible = false
             }
         }
 
-        Rectangle {
+        Dialog {
             id: random
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.95
-            visible: false
-            Column {
-                spacing: units.gu(1)
-                anchors.centerIn: parent
-                Label {
-                    text: "Your random number is:"
-                    color: Theme.primaryColor
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    wrapMode: Text.Wrap
-                }
-                Label {
-                    text: Util.getRandom()
-                    font.pixelSize: Theme.fontSizeExtraLarge
-                    color: Theme.primaryColor
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
+            onAccepted: { alertPopup.accepted(); alertPopup.visible = false }
+            onRejected: { alertPopup.accepted(); alertPopup.visible = false }
+            Component.onCompleted: timer.start()
+            DialogHeader { id: header; acceptText: "Great"; cancelText: "Alright" }
+            Label { id: islabel
+                anchors.top: header.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.horizontalPageMargin
+                anchors.leftMargin: Theme.horizontalPageMargin
+                font.pixelSize: Theme.fontSizeLarge
+                text: "Your random number is:"
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
             }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: model.accept()
+            Label { id: number
+                anchors.top: islabel.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.topMargin: Theme.itemSizeLarge
+                anchors.rightMargin: Theme.horizontalPageMargin
+                anchors.leftMargin: Theme.horizontalPageMargin
+                font.pixelSize: Theme.fontSizeHuge
+                text: Util.getRandom()
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                visible: false
+                opacity: visible ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
             }
+            Timer { id: timer; interval: 1000; onTriggered: number.visible = true }
         }
     }}
 
