@@ -38,6 +38,14 @@ ApplicationWindow {
 
     property bool twoColumnView: false //isLandscape && !menuPage.visible
 
+    initialPage: menuPage
+    function goToBookTab() {
+	  pageStack.replace(bookComponent)
+	}
+    function popBookTab() {
+	  pageStack.replace(menuPage)
+	}
+/*
     function goToBookTab()
     {
         pageLayout.primaryPage.enabled = false;
@@ -57,8 +65,6 @@ ApplicationWindow {
         goToBookTab();
     }
 
-    initialPage: menuPage
-/*
     AdaptivePageLayout {
         id: pageLayout
         anchors.fill: parent
@@ -78,16 +84,14 @@ ApplicationWindow {
     }
     */
 
-        MenuPage {
-            id: menuPage
-        }
+    MenuPage {
+        id: menuPage
+    }
 
-        Component {
-            id: bookComponent
-            BookPage {
-                you: gameState
-            }
-        }
+    BookPage {
+        id: bookComponent
+        you: gameState
+    }
 
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance

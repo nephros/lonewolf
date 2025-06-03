@@ -68,7 +68,7 @@ Rectangle {
         anchors.topMargin: units.gu(1)
         horizontalAlignment: Text.AlignHCenter
         text: "Round " + d.round
-        color: "white"
+        color: Theme.primaryColor
     }
 
     Item {
@@ -82,7 +82,7 @@ Rectangle {
             anchors.left: parent.left
             Label {
                 text: "You"
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -90,7 +90,7 @@ Rectangle {
             Label {
                 id: youenduranceLabel
                 text: d.youendurance > 0 || youenduranceTitle.text != "ENDURANCE"  ? d.youendurance : "DEAD"
-                color: d.youendurance > 0 ? "white" : theme.palette.normal.negative
+                color: d.youendurance > 0 ? Theme.primaryColor : Theme.errorColor
                 font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -116,7 +116,7 @@ Rectangle {
             Label {
                 id: youenduranceTitle
                 text: "ENDURANCE"
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -124,7 +124,7 @@ Rectangle {
             Label {
                 id: youcombatskillLabel
                 text: d.youcombatskill
-                color: "white"
+                color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -151,7 +151,7 @@ Rectangle {
             }
             Label {
                 text: "COMBAT SKILL"
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -162,14 +162,14 @@ Rectangle {
                 }
                 Label {
                     text: "weak (×2 damage)"
-                    color: "white"
+                    color: Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 text: "(only enable if instructed)"
-                color: "white"
+                color: Theme.primaryColor
                 font.italic: true
                 font.pixelSize: Theme.fontSizeSmall
                 width: root.width / 2
@@ -182,7 +182,7 @@ Rectangle {
             anchors.right: parent.right
             Label {
                 text: d.enemy
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -190,7 +190,7 @@ Rectangle {
             Label {
                 id: enduranceLabel
                 text: d.endurance > 0 || enduranceTitle.text != "ENDURANCE" ? d.endurance : "DEAD"
-                color: d.endurance > 0 ? "white" : theme.palette.normal.negative
+                color: d.endurance > 0 ? Theme.primaryColor : Theme.errorColor
                 font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -216,7 +216,7 @@ Rectangle {
             Label {
                 id: enduranceTitle
                 text: "ENDURANCE"
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -224,14 +224,14 @@ Rectangle {
             Label {
                 id: combatskillLabel
                 text: d.combatskill
-                color: "white"
+                color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 text: "COMBAT SKILL"
-                color: "white"
+                color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -242,14 +242,14 @@ Rectangle {
                 }
                 Label {
                     text: "weak (×2 damage)"
-                    color: "white"
+                    color: Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 text: "(only enable if instructed)"
-                color: "white"
+                color: Theme.primaryColor
                 font.italic: true
                 font.pixelSize: Theme.fontSizeSmall
                 width: root.width / 2
@@ -271,10 +271,10 @@ Rectangle {
             root.close();
         }
     }
-    Button {
+    SecondaryButton {
         id: fleeButton
         text: "Evade"
-        color: theme.palette.normal.negative
+        //color: theme.palette.normal.negative
         anchors.left: parent.left
         anchors.right: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -301,7 +301,7 @@ Rectangle {
     }
     Button {
         text: "Fight"
-        color: theme.palette.normal.positive
+        //color: theme.palette.normal.positive
         anchors.right: parent.right
         anchors.left: parent.horizontalCenter
         anchors.bottom: parent.bottom

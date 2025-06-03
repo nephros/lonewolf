@@ -33,7 +33,7 @@ Rectangle {
             anchors.right: parent.right
             horizontalAlignment: Text.AlignHCenter
             text: "Enter number"
-            color: "white"
+            color: Theme.primaryColor
             font.pixelSize: Theme.fontSizeExtraLarge
         }
 
@@ -59,7 +59,7 @@ Rectangle {
             Button {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Try"
-                color: theme.palette.normal.positive
+                //color: theme.palette.normal.positive
                 onClicked:{
                     var haystack = root.answers + " ";
                     var needle = "sect" + entry.text + " ";
@@ -81,7 +81,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             visible: d.wrong
             text: "Wrong"
-            color: theme.palette.normal.negative
+            //color: theme.palette.normal.negative
             font.pixelSize: Theme.fontSizeExtraLarge
         }
     }

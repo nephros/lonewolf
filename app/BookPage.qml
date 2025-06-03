@@ -1,7 +1,8 @@
 import QtQuick 2.4
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
-//import Sailfish.WebView.Popups 1.0
+import Sailfish.WebEngine 1.0
+import Sailfish.WebView.Popups 1.0
 import Lonewolf 1.0
 
 Page {
@@ -14,10 +15,10 @@ Page {
         id: saveDialog
         Dialog {
             id: dialog
-            PageHeader { title: "Quick Save" }
-			Label {
+            PageHeader { id: header; title: "Quick Save" }
+            Label {
             text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
-			}
+            }
             Button {
                 text: "Got it"
                 onClicked: PopupUtils.close(dialog)
@@ -25,18 +26,22 @@ Page {
         }
     }
 
-    ChartPage {
+    Component {
         id: chartPage
-        you: root.you
+        ChartPage {
+            you: root.you
+        }
     }
 
     property bool shouldShowChart: mainView.twoColumnView && book.progress == 100
 
     function ensureChartPage() {
         if (shouldShowChart) {
-            pageStack.addPageToNextColumn(root, chartPage);
+            //pageStack.addPageToNextColumn(root, chartPage);
+            pageStack.pushAttached(chartPage);
         } else {
-            pageStack.removePages(chartPage);
+            //pageStack.popAttached(root, PageStackAction.Immediate);
+            //pageStack.removePages(chartPage);
         }
     }
 
@@ -51,22 +56,23 @@ Page {
             book.inBackMatter = false;
             downloadCover.visible = false;
         }
-        backAction.visible = true;
+        //backAction.visible = true;
     }
 
-	PullDownMenu {
+    SilicaFlickable {
+      anchors.fill: parent
+    PullDownMenu {
     MenuItem {
         id: actionChart
         //icon.source: "note"
-        text: i18n.tr("Action Chart")
+        text: qsTr("Action Chart")
         visible: book.progress == 100 && !mainView.twoColumnView
-        onClicked: pageStack.addPageToNextColumn(root, chartPage)
+        onClicked: pageStack.push(chartPage)
     }
-
     MenuItem {
         id: quickSave
         //icon.source: "save"
-        text: i18n.tr("Quick Save")
+        text: qsTr("Quick Save")
         visible: book.progress == 100
         enabled: !book.inBackMatter && mainView.endurance > 0
         onClicked: {
@@ -76,25 +82,59 @@ Page {
             you.copyTo(quickSaveState);
         }
     }
-
     MenuItem {
         id: mapAction
         //icon.source: "location"
-        text: i18n.tr("Map")
+        text: qsTr("Map")
         visible: book.progress == 100
         onClicked: pageView.pageId = "map"
     }
-
-    MenuItem {
-        id: nightModeAction
-        //icon.source: nightModeIcon
-        text: nightModeText
-        onClicked: triggerNightMode(root)
     }
-	}
 
-    PageHeader {
-	  /*
+    PageHeader { id: header
+        title: book.pageTitle
+        //description: mainView.endurance + "EP"
+    }
+    Item {
+        id: endurancebar
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: header.bottom
+        height: Theme.itemSizeLarge
+        //color: Theme.highlightDimmerColor
+
+        IconButton {
+            id: minus
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.margins: Theme.paddingSmall
+            //height: parent.height - Theme.paddingSmall
+            //width: height
+            icon.source: "image://theme/icon-splus-remove"
+            enabled: mainView.endurance > 0
+            onClicked: adjustEndurance(-1)
+        }
+        Label {
+            id: youenduranceLabel
+            text: mainView.endurance + "EP"
+            anchors.centerIn: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.capitalization: Font.SmallCaps
+            //font.pixelSize: 
+            width: parent.width - minus.width*2
+        }
+        IconButton {
+            id: plus
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.margins: Theme.paddingSmall
+            icon.source: "image://theme/icon-splus-add"
+            enabled: mainView.endurance < mainView.maxendurance
+            onClicked: adjustEndurance(1);
+        }
+    }
+      /*
         leadingActionBar.actions: [
             Action {
                 id: backAction
@@ -184,8 +224,7 @@ Page {
                 }
             }
         }
-		*/
-    }
+        */
 
     Book {
         id: book
@@ -193,11 +232,9 @@ Page {
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
-        // Only respect theme in night mode because in "normal" day mode,
-        // we want our background to blend with illustrations.
-        bgColor: mainView.nightModeEnabled ? Theme.palette.normal.field : "white"
-        textColor: Theme.palette.normal.fieldText
-        linkColor: Theme.palette.selected.selection
+        bgColor: "bisque"
+        textColor: "#212121"
+        linkColor:  Theme.highlightFromColor("lightbrown", Theme.DarkOnLight)
 
         property bool inBackMatter: false
 
@@ -215,153 +252,174 @@ Page {
         }
     }
 
+    Rectangle { id: viewBorder
+        border.color: "bisque"
+        border.width: Theme.horizontalPageMargin
+        color: "transparent"
+        anchors.centerIn: pageView
+        width: pageView.width + Theme.horizontalPageMargin*2
+        height: pageView.height + Theme.horizontalPageMargin*2
+    }
     WebView {
         id: pageView
         property string pageId: you.pageId
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: header.bottom
+        anchors.top: endurancebar.bottom
         anchors.bottom: navigation.top
-		/*
-        alertDialog: Item {
-            anchors.fill: parent
+        anchors.margins: Theme.horizontalPageMargin
 
-            Component.onCompleted: {
-                if (model.message == "random") {
-                    random.visible = true;
-                } else if (model.message == "action") {
-                    Haptics.play();
-                    actionChart.trigger();
-                    model.accept();
-                } else if (model.message.indexOf("combat,") == 0) {
-                    combat.props = model.message;
-                    combat.visible = true;
-                } else if (model.message.indexOf("external,") == 0) {
-                    Qt.openUrlExternally(model.message.split(',')[1]);
-                    model.accept();
-                } else if (model.message.indexOf("puzzle-page,") == 0) {
-                    puzzle.answers = model.message.split(',')[1];
-                    puzzle.visible = true;
-                } else if (model.message.indexOf("book,") == 0) {
-                    Haptics.play();
-                    you.book = model.message.split(',')[2];
-                    pageView.pageId = "";
-                    goToBookTab();
-                } else {
-                    Haptics.play();
-                    pageView.pageId = model.message;
-                    model.accept();
-                }
-            }
+        canShowSelectionMarkers: false
 
-            MouseArea {
-                anchors.fill: parent
-                // eat events that fall through
-            }
-
-            Combat {
-                id: combat
-                anchors.fill: parent
-                visible: false
-                you: root.you
-                onClose: model.accept()
-            }
-
-            Puzzle {
-                id: puzzle
-                anchors.fill: parent
-                visible: false
-                you: root.you
-                onClose: model.accept()
-                onGoTo: {
-                    pageView.pageId = page;
-                    model.accept();
-                }
-            }
-
-            Rectangle {
-                id: random
-                anchors.fill: parent
-                color: "black"
-                opacity: 0.95
-                visible: false
-                Column {
-                    spacing: units.gu(1)
-                    anchors.centerIn: parent
-                    Label {
-                        text: "Your random number is:"
-                        color: "white"
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        wrapMode: Text.Wrap
-                    }
-                    Label {
-                        text: Util.getRandom()
-                        fontSize: "x-large"
-                        color: "white"
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: model.accept()
-                }
-            }
+        popupProvider: PopupProvider {
+            alertPopup: alertDialog
         }
-		*/
+        Component.onCompleted: {
+            WebEngineSettings.pixelRatio = 2
+            WebEngineSettings.setPreference("font.default.serif", "serif", WebEngineSettings.StringPref)
+            WebEngineSettings.setPreference("font.default.sans-serif", "serif", WebEngineSettings.StringPref)
+            WebEngineSettings.setPreference("font.name-list.serif", "Souvenir, Linux Biolinum, Georgia, Times New Roman, serif, sans-serif", WebEngineSettings.StringPref)
+        }
     }
-
-    Rectangle {
+    Item {
         id: navigation
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: (previous.visible || next.visible || licenseButton.visible) ? units.gu(6) : 0
-        color: Theme.palette.normal.background
+        height: (previous.visible || next.visible || licenseButton.visible) ? Theme.itemSizeLarge : 0
+        //color: Theme.highlightDimmerColor
 
-        Button {
+        IconButton {
             id: previous
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.margins: units.gu(0.5)
-            height: parent.height - units.gu(1)
-            width: height
-            icon.source: "go-previous"
-            visible: book.prevPageId != ""
-            onClicked: pageView.pageId = book.prevPageId;
-        }
-        Button {
-            id: next
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.margins: units.gu(0.5)
-            height: parent.height - units.gu(1)
-            width: height
-            icon.source: "go-next"
-            visible: book.nextPageId != ""
-            onClicked: pageView.pageId = book.nextPageId
-        }
+                anchors.bottom: parent.bottom
+                anchors.margins: Theme.paddingSmall
+                //height: parent.height - Theme.paddingSmall
+                //width: height
+                icon.source: "image://theme/icon-m-previous"
+                visible: book.prevPageId != ""
+                onClicked: pageView.pageId = book.prevPageId;
+            }
+            IconButton {
+                id: next
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.margins: Theme.paddingSmall
+                //height: parent.height - Theme.paddingSmall
+                //width: height
+                icon.source: "image://theme/icon-m-next"
+                visible: book.nextPageId != ""
+                onClicked: pageView.pageId = book.nextPageId
+            }
 
-        Button {
-            id: licenseButton
-            text: "Accept"
-            color: theme.palette.normal.positive
-            visible: book.progress < 100
-            anchors.centerIn: parent
-            onClicked: {
-                cancelDownloadButton.visible = true; // can't actually cancel before this (we download xml synchronously)
-                progressBar.indeterminate = false;
-                downloadCover.visible = true;
-                pageView.pageId = "";
-                book.downloadImages();
+            Button {
+                id: licenseButton
+                text: "Accept"
+                //color: theme.palette.normal.positive
+                visible: book.progress < 100
+                anchors.centerIn: parent
+                onClicked: {
+                    cancelDownloadButton.visible = true; // can't actually cancel before this (we download xml synchronously)
+                    progressBar.indeterminate = false;
+                    downloadCover.visible = true;
+                    pageView.pageId = "";
+                    book.downloadImages();
+                }
             }
         }
     }
 
+    Component { id: alertDialog; AlertPopupInterface {
+        anchors.fill: parent
+
+        Component.onCompleted: {
+            if (model.message == "random") {
+                random.visible = true;
+            } else if (model.message == "action") {
+                Haptics.play();
+                actionChart.trigger();
+                model.accept();
+            } else if (model.message.indexOf("combat,") == 0) {
+                combat.props = model.message;
+                combat.visible = true;
+            } else if (model.message.indexOf("external,") == 0) {
+                Qt.openUrlExternally(model.message.split(',')[1]);
+                model.accept();
+            } else if (model.message.indexOf("puzzle-page,") == 0) {
+                puzzle.answers = model.message.split(',')[1];
+                puzzle.visible = true;
+            } else if (model.message.indexOf("book,") == 0) {
+                Haptics.play();
+                you.book = model.message.split(',')[2];
+                pageView.pageId = "";
+                goToBookTab();
+            } else {
+                Haptics.play();
+                pageView.pageId = model.message;
+                model.accept();
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            // eat events that fall through
+        }
+
+        Combat {
+            id: combat
+            anchors.fill: parent
+            visible: false
+            you: root.you
+            onClose: model.accept()
+        }
+
+        Puzzle {
+            id: puzzle
+            anchors.fill: parent
+            visible: false
+            you: root.you
+            onClose: model.accept()
+            onGoTo: {
+                pageView.pageId = page;
+                model.accept();
+            }
+        }
+
+        Rectangle {
+            id: random
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.95
+            visible: false
+            Column {
+                spacing: units.gu(1)
+                anchors.centerIn: parent
+                Label {
+                    text: "Your random number is:"
+                    color: Theme.primaryColor
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    wrapMode: Text.Wrap
+                }
+                Label {
+                    text: Util.getRandom()
+                    font.pixelSize: Theme.fontSizeExtraLarge
+                    color: Theme.primaryColor
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: model.accept()
+            }
+        }
+    }}
+
+
     Rectangle {
         id: downloadCover
-        color: Theme.palette.normal.background
+        color: Theme.highlightDimmerColor
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : 1
         Behavior on opacity { NumberAnimation {} }
@@ -374,8 +432,8 @@ Page {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: units.gu(2)
-            anchors.rightMargin: units.gu(2)
+            anchors.leftMargin: Theme.paddingSmall
+            anchors.rightMargin: Theme.paddingSmall
             height: childrenRect.height
             Label {
                 id: downloadLabel
@@ -390,18 +448,18 @@ Page {
                 maximumValue: 100
                 value: book.progress
                 anchors.top: downloadLabel.bottom
-                anchors.topMargin: units.gu(1)
+                anchors.topMargin: Theme.paddingSmall
                 anchors.left: parent.left
                 anchors.right: parent.right
-                indeterminate: true
+                //indeterminate: true
             }
-            Button {
+            SecondaryButton {
                 id: cancelDownloadButton
                 text: "Cancel"
                 visible: false
-                color: theme.palette.normal.negative
+                //color: theme.palette.normal.negative
                 anchors.top: progressBar.bottom
-                anchors.topMargin: units.gu(1)
+                anchors.topMargin: Theme.paddingSmall
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: pageStack.pop()
             }

@@ -5,13 +5,7 @@ import Lonewolf 1.0
 Page {
     id: root
 
-    PageHeader { title: "Lone Wolf" }
-	PullDownMenu {
-            MenuItem {
-                text: nightModeText
-                onClicked: triggerNightMode(root)
-            }
-	}
+    PageHeader { id: header; title: "Lone Wolf" }
 
     function startBook(book, pageId) {
         gameState.book = book;
@@ -26,22 +20,24 @@ Page {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         contentHeight: column.height + column.anchors.margins * 2
-        contentWidth: width
+        //contentWidth: width
 
         Column {
             id: column
-            spacing: units.gu(2)
-            x: anchors.margins
-            y: anchors.margins
-            anchors.margins: units.gu(2)
-            width: (flicker.contentWidth > units.gu(60) ? units.gu(60) : flicker.contentWidth) - anchors.margins * 2
-            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: Theme.paddingSmall
+			anchors.left: parent.left
+			anchors.right: parent.right
+            //x: anchors.margins
+            //y: anchors.margins
+            anchors.margins: Theme.horizontalPageMargin
+            //width: (flicker.contentWidth > units.gu(60) ? units.gu(60) : flicker.contentWidth) - anchors.margins * 2
+            //anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
                 text: "<p>Lone Wolf is a role-playing book series from the 80s.</p><br>" +
                       "<p>This app lets you play the old adventures, but the text is not updated.  It may refer to things like pencils that assume you are playing with an actual book.  And it relies on the honor system a bit.  Just roll with it.</p><br>" +
                       "<p>If you have any rules questions or encounter an ambiguity, try the <a href='http://www.projectaon.org/en/ReadersHandbook/Home'>Reader's Handbook</a>.</p>"
-                linkColor: Theme.palette.selected.backgroundText
+                linkColor: Theme.secondaryHighlightColor
                 onLinkActivated: Qt.openUrlExternally(link)
                 wrapMode: Text.Wrap
                 width: parent.width
@@ -50,14 +46,14 @@ Page {
             Button {
                 text: gameState.book == "" && gameState.pageId == "" ? "Start Book 1" : "Continue"
                 onClicked: goToBookTab()
-                color: theme.palette.normal.positive
+                //color: theme.palette.normal.positive
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Button {
+            SecondaryButton {
                 text: "Load Quick Save"
                 enabled: quickSaveState.pageId != ""
                 onClicked: loadQuickSave()
-                color: theme.palette.normal.negative
+                //color: theme.palette.normal.negative
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
@@ -154,8 +150,7 @@ Page {
                 width: 1
             }
         }
+		VerticalScrollDecorator { }
     }
-
-    VerticalScrollDecorator { }
 }
 

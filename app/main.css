@@ -1,4 +1,5 @@
-* { font-family: Ubuntu }
+/** { font-family: Ubuntu } */
+* { font-family: Souvenir, "Linux Biolinum", Garamond, Georgia, "Times New Roman", serif, sans-serif; }
 
 dt {
  font-weight: bold;

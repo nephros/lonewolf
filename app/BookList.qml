@@ -15,7 +15,7 @@ Item {
 
     Column {
         id: column
-        spacing: units.gu(2)
+        spacing: Theme.paddingSmall
         width: parent.width
 
         Item {
@@ -50,8 +50,8 @@ Item {
             id: buttonFlow
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - marginWidth * 2
-            spacing: units.gu(3)
-            property real buttonWidth: units.gu(6)
+            spacing: Theme.paddingMedium
+            property real buttonWidth: Theme.buttonWidthTiny
             property real marginWidth: (parent.width - buttonWidth) % (buttonWidth + spacing) / 2
             Repeater {
                 model: root.model

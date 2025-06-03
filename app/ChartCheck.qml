@@ -6,7 +6,6 @@ Row {
     property string prop
     property alias checked: box.checked
     property alias text: label.text
-    spacing: units.gu(0.5)
     Binding {
         target: you
         property: prop

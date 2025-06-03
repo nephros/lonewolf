@@ -10,18 +10,8 @@ Page {
 
     property var you
 
-    PageHeader {
+    PageHeader { id: header
         title: "Action Chart"
-		/*
-        trailingActionBar.actions: [
-            Action {
-                iconName: nightModeIcon
-                text: nightModeText
-                onTriggered: triggerNightMode(root)
-                visible: !mainView.twoColumnView
-            }
-        ]
-		*/
     }
 
     QtObject {
@@ -44,17 +34,17 @@ Page {
 
         Column {
             id: col
-            spacing: units.gu(1)
+            spacing: Theme.paddingSmall
             x: anchors.margins
             y: anchors.margins
-            anchors.margins: units.gu(2)
+            anchors.margins: Theme.paddingSmall
             width: flicker.contentWidth - anchors.margins * 2
 
             Grid {
                 columns: 3
                 verticalItemAlignment: Grid.AlignVCenter
-                columnSpacing: units.gu(2)
-                rowSpacing: units.gu(1)
+                columnSpacing: Theme.paddingSmall
+                rowSpacing: Theme.paddingSmall
 
                 Label {
                     text: "Combat Skill"
@@ -65,7 +55,7 @@ Page {
                     text: you.combatskill
                     you: root.you
                     prop: "combatskill"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -73,7 +63,7 @@ Page {
                     text: you.neworder_combatskill
                     you: root.you
                     prop: "neworder_combatskill"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: d.neworder
                 }
                 Item {height: 1; width: 1}
@@ -128,7 +118,7 @@ Page {
                     text: you.gold
                     you: root.you
                     prop: "gold"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -136,14 +126,14 @@ Page {
                     text: you.neworder_gold
                     you: root.you
                     prop: "neworder_gold"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: d.neworder
                 }
                 Label {
                     text: "Max 50"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    width: units.gu(8)
+                    width: Theme.paddingMedium
                 }
 
                 Label {
@@ -155,7 +145,7 @@ Page {
                     text: you.quiver
                     you: root.you
                     prop: "quiver"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: d.magnakai || d.grandmaster
                 }
                 ChartItem {
@@ -163,14 +153,14 @@ Page {
                     text: you.neworder_quiver
                     you: root.you
                     prop: "neworder_quiver"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: d.neworder
                 }
                 Label {
                     text: "Max 6"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    width: units.gu(8)
+                    width: Theme.paddingMedium
                     visible: d.magnakai || d.grandmaster || d.neworder
                 }
 
@@ -182,7 +172,7 @@ Page {
                     text: you.meals
                     you: root.you
                     prop: "meals"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -190,20 +180,20 @@ Page {
                     text: you.neworder_meals
                     you: root.you
                     prop: "neworder_meals"
-                    width: units.gu(6)
+                    width: Theme.paddingMedium
                     visible: d.neworder
                 }
                 Label {
                     text: "Each fills a backpack slot"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    width: units.gu(15)
+                    //width: Theme.paddingMedium
                 }
             }
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
             }
             Label {
                 text: "Weapons"
@@ -213,7 +203,6 @@ Page {
                 columns: 2
                 rows: 1
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
                 property real itemWidth: (col.width - spacing) / 2
                 visible: !d.neworder
 
@@ -235,7 +224,6 @@ Page {
                 columns: 2
                 rows: 1
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
                 visible: d.neworder
 
                 ChartItem {
@@ -254,7 +242,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
             }
             Label {
                 text: "Backpack Items"
@@ -264,7 +252,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.LeftToRight
-                spacing: units.gu(1)
+                spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
                 visible: !d.neworder
 
@@ -336,7 +324,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.LeftToRight
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.neworder
 
                 ChartItem {
@@ -403,7 +391,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.neworder
             }
             Label {
@@ -420,7 +408,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
             }
             Label {
                 text: "Special Items"
@@ -430,7 +418,7 @@ Page {
                 columns: 1
                 rows: 12
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 property real itemWidth: col.width
                 visible: !d.neworder
 
@@ -512,7 +500,7 @@ Page {
                 columns: 1
                 rows: 12
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.neworder
 
                 ChartItem {
@@ -591,7 +579,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.kai
             }
             Label {
@@ -603,7 +591,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
                 visible: d.kai
 
@@ -683,7 +671,7 @@ Page {
                 columns: 2
                 rows: 1
                 visible: d.kai
-                spacing: units.gu(1)
+                spacing: 1
                 verticalItemAlignment: Grid.AlignVCenter
 
                 Label {
@@ -693,13 +681,13 @@ Page {
                     text: you.weaponskill_weapon
                     you: root.you
                     prop: "weaponskill_weapon"
-                    width: units.gu(16)
+                    width: Theme.paddingMedium
                 }
             }
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.magnakai
             }
             Label {
@@ -710,7 +698,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.magnakai
 
                 ChartCheck {
@@ -787,7 +775,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.magnakai
             }
             Label {
@@ -798,7 +786,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.magnakai
 
                 ChartCheck {
@@ -875,7 +863,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.grandmaster
             }
             Label {
@@ -886,7 +874,7 @@ Page {
                 columns: 2
                 rows: 6
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.grandmaster
 
                 ChartCheck {
@@ -977,7 +965,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.grandmaster
             }
             Label {
@@ -988,7 +976,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.grandmaster
 
                 ChartCheck {
@@ -1065,7 +1053,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.neworder
             }
             Label {
@@ -1076,7 +1064,7 @@ Page {
                 columns: 2
                 rows: 8
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.neworder
 
                 ChartCheck {
@@ -1195,7 +1183,7 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
                 visible: d.neworder
             }
             Label {
@@ -1206,7 +1194,7 @@ Page {
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
-                spacing: units.gu(1)
+                spacing: 1
                 visible: d.neworder
 
                 ChartCheck {
@@ -1283,14 +1271,14 @@ Page {
 
             Item {
                 width: 1
-                height: units.gu(1)
+                height: 1
             }
             Label {
                 text: "Notes"
             }
             TextArea {
                 id: notes
-                height: units.gu(20)
+                height: Theme.paddingLarge
                 width: parent.width
                 text: you.notes
                 visible: !d.neworder
@@ -1302,7 +1290,7 @@ Page {
             }
             TextArea {
                 id: neworder_notes
-                height: units.gu(20)
+                //height: Theme.paddingLarge
                 width: parent.width
                 text: you.neworder_notes
                 visible: d.neworder
