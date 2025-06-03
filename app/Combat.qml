@@ -65,7 +65,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.topMargin: units.gu(1)
+        anchors.topMargin: Theme.dp(1)
         horizontalAlignment: Text.AlignHCenter
         text: "Round " + d.round
         color: Theme.primaryColor
@@ -76,7 +76,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: fleeButton.top
-        anchors.topMargin: units.gu(6)
+        anchors.topMargin: Theme.dp(6)
         Column {
             anchors.right: parent.horizontalCenter
             anchors.left: parent.left
@@ -86,7 +86,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Label {
                 id: youenduranceLabel
                 text: d.youendurance > 0 || youenduranceTitle.text != "ENDURANCE"  ? d.youendurance : "DEAD"
@@ -96,18 +96,18 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
                     anchors.left: youenduranceLabel.right
-                    anchors.leftMargin: units.gu(1)
+                    anchors.leftMargin: Theme.dp(1)
                     anchors.verticalCenter: youenduranceLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "+"
                     onClicked: d.youendurance += 1
                     color: "transparent"
                 }
                 Button {
                     anchors.right: youenduranceLabel.left
-                    anchors.rightMargin: units.gu(1)
+                    anchors.rightMargin: Theme.dp(1)
                     anchors.verticalCenter: youenduranceLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "-"
                     onClicked: d.youendurance -= 1
                     color: "transparent"
@@ -120,7 +120,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Label {
                 id: youcombatskillLabel
                 text: d.youcombatskill
@@ -130,9 +130,9 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
                     anchors.left: youcombatskillLabel.right
-                    anchors.leftMargin: units.gu(1)
+                    anchors.leftMargin: Theme.dp(1)
                     anchors.verticalCenter: youcombatskillLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "+"
                     enabled: !d.done
                     onClicked: d.youcombatskill += 1
@@ -140,9 +140,9 @@ Rectangle {
                 }
                 Button {
                     anchors.right: youcombatskillLabel.left
-                    anchors.rightMargin: units.gu(1)
+                    anchors.rightMargin: Theme.dp(1)
                     anchors.verticalCenter: youcombatskillLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "-"
                     enabled: !d.done
                     onClicked: d.youcombatskill -= 1
@@ -155,7 +155,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Row {
                 Switch {
                     id: youDoubleDamage
@@ -186,7 +186,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Label {
                 id: enduranceLabel
                 text: d.endurance > 0 || enduranceTitle.text != "ENDURANCE" ? d.endurance : "DEAD"
@@ -196,18 +196,18 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
                     anchors.left: enduranceLabel.right
-                    anchors.leftMargin: units.gu(1)
+                    anchors.leftMargin: Theme.dp(1)
                     anchors.verticalCenter: enduranceLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "+"
                     onClicked: d.endurance += 1
                     color: "transparent"
                 }
                 Button {
                     anchors.right: enduranceLabel.left
-                    anchors.rightMargin: units.gu(1)
+                    anchors.rightMargin: Theme.dp(1)
                     anchors.verticalCenter: enduranceLabel.verticalCenter
-                    width: units.gu(3)
+                    width: Theme.dp(3)
                     text: "-"
                     onClicked: d.endurance -= 1
                     color: "transparent"
@@ -220,7 +220,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Label {
                 id: combatskillLabel
                 text: d.combatskill
@@ -235,7 +235,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Item { height: units.gu(3); width: units.gu(1); }
+            Item { height: Theme.dp(3); width: Theme.dp(1); }
             Row {
                 Switch {
                     id: doubleDamage
@@ -265,7 +265,7 @@ Rectangle {
         color: UbuntuColors.lightGrey
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: fleeButton.top
-        anchors.bottomMargin: units.gu(1)
+        anchors.bottomMargin: Theme.dp(1)
         visible: d.round == 1 || d.done
         onClicked: {
             root.close();
@@ -278,10 +278,10 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.topMargin: units.gu(1)
-        anchors.bottomMargin: units.gu(1)
-        anchors.leftMargin: units.gu(1)
-        anchors.rightMargin: units.gu(0.5)
+        anchors.topMargin: Theme.dp(1)
+        anchors.bottomMargin: Theme.dp(1)
+        anchors.leftMargin: Theme.dp(1)
+        anchors.rightMargin: Theme.dp(0.5)
         enabled: !d.done
         onClicked: {
             var rand = Util.getRandom();
@@ -305,10 +305,10 @@ Rectangle {
         anchors.right: parent.right
         anchors.left: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.topMargin: units.gu(1)
-        anchors.bottomMargin: units.gu(1)
-        anchors.rightMargin: units.gu(1)
-        anchors.leftMargin: units.gu(0.5)
+        anchors.topMargin: Theme.dp(1)
+        anchors.bottomMargin: Theme.dp(1)
+        anchors.rightMargin: Theme.dp(1)
+        anchors.leftMargin: Theme.dp(0.5)
         enabled: !d.done
         onClicked: {
             var rand = Util.getRandom();

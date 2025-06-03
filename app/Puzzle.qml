@@ -25,7 +25,7 @@ Rectangle {
 
     Column {
         anchors.top: parent.top
-        anchors.topMargin: units.gu(4)
+        anchors.topMargin: Theme.dp(4)
         anchors.left: parent.left
         anchors.right: parent.right
         Label {
@@ -37,16 +37,16 @@ Rectangle {
             font.pixelSize: Theme.fontSizeExtraLarge
         }
 
-        Item { width: units.gu(1); height: units.gu(2); }
+        Item { width: Theme.dp(1); height: Theme.dp(2); }
 
         Row {
-            spacing: units.gu(1)
+            spacing: Theme.dp(1)
             anchors.horizontalCenter: parent.horizontalCenter
 
             TextField {
                 id: entry
-                width: units.gu(10)
-                height: FontUtils.sizeToPixels("x-large") + units.gu(2)
+                width: Theme.dp(10)
+                height: FontUtils.sizeToPixels("x-large") + Theme.dp(2)
                 inputMethodHints: Qt.ImhDigitsOnly
                 //hasClearButton: false
                 horizontalAlignment: TextInput.AlignHCenter
@@ -73,7 +73,7 @@ Rectangle {
             }
         }
 
-        Item { width: units.gu(1); height: units.gu(2); }
+        Item { width: Theme.dp(1); height: Theme.dp(2); }
 
         Label {
             anchors.left: parent.left
@@ -92,8 +92,8 @@ Rectangle {
         color: UbuntuColors.lightGrey
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.topMargin: units.gu(1)
-        anchors.bottomMargin: units.gu(1)
+        anchors.topMargin: Theme.dp(1)
+        anchors.bottomMargin: Theme.dp(1)
         onClicked: root.close()
     }
 }
