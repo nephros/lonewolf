@@ -1,0 +1,93 @@
+Name: lonewolf
+Summary: The Lone Wolf Adventures
+Version: 0.1.1
+Release: 0
+Group: Applications
+License: GPLv3
+URL: https://github.com/timsueberkrueb/lonewolf
+SCM: https://github.com/timsueberkrueb/lonewolf
+Sources:
+    - '%{name}-%{version}.tar.gz'
+    - lonewolf-bighead.png
+    - lonewolf-app-icon.svg
+Patches:
+  - SailfishOS-build.patch
+  - SailfishOS-qml-1.patch
+  - SailfishOS-qml-2.patch
+#SetupOptions: -q -n %{name}-%{version}/upstream
+Macros:
+  - 'orgname;%{name}'
+  - 'appname;%{name}'
+  - 'pkgname;%{name}'
+Description: |
+    %{summary}.
+
+    Lone Wolf is a role-playing book series from the 80s.
+
+    You are the sole survivor of a devastating attack on the monastery where
+    you were learning the skills of the Kai Lords. You swear vengeance on the
+    Darklords for the massacre of the Kai warriors, and with a sudden flash of
+    insight you know what you must do. You must set off on a perilous journey
+    to the capital city to warn the King of the terrible threat that faces his
+    people: For you are now the last of the Kai.
+
+    You are now Lone Wolf.
+
+    %if "%{?vendor}" == "chum"
+    Title: Lonewolf
+    Type: desktop-application
+    PackagedBy: nephros
+    Categories:
+     - Games
+    Custom:
+      Repo: %{url}
+      PackagingRepo: https://github.com/nephros/lonewolf
+    PackageIcon: https://www.projectaon.org/en/images/logotop.gif
+    Links:
+      Homepage: https://www.projectaon.org/
+      Help: https://www.projectaon.org/en/ReadersHandbook/Home
+    %endif
+
+Requires:
+  - libsailfishapp-launcher
+  - qt5-qtdeclarative-import-Lonewolf
+PkgBR:
+  - sailfish-svg2png
+  - qml-rpm-macros
+  - cmake
+  - gettext
+  - intltool
+PkgConfigBR:
+  - Qt5Core
+  - Qt5Qml
+  - Qt5Quick
+  - Qt5XmlPatterns
+  - sailfishapp
+  - glesv2
+  - icu-i18n
+  - libxml-2.0
+Configure: cmake
+Builder: cmake
+ConfigOptions:
+  - '-DQT_IMPORTS_DIR=%{_libdir}/qt5/qml'
+  - '-DLONEWOLF_DIR=%{_datadir}/%{name}'
+  - '-DINSTALL_TESTS=off'
+  - '-DCLICK_MODE=off'
+NoIconCache: true
+NoAutoLocale: true
+#BuildArch: noarch
+Files:
+  - '%{_datadir}/applications/%{name}.desktop'
+  - '%{_datadir}/icons/*/*/apps/%{name}.png'
+  - '%{_datadir}/icons/*/*/apps/%{name}.svg'
+  - '%{_datadir}/%{name}'
+
+
+SubPackages:
+    - Name:  qt5-qtdeclarative-import-Lonewolf
+      AsWholeName: true
+      AutoDepend: false
+      Summary: Lonewolf player for QML
+      Group: Libraries
+      Files:
+        - '%{_libdir}/qt5/qml/Lonewolf/'
