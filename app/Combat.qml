@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 import Lonewolf 1.0
 
 Rectangle {
@@ -91,7 +91,7 @@ Rectangle {
                 id: youenduranceLabel
                 text: d.youendurance > 0 || youenduranceTitle.text != "ENDURANCE"  ? d.youendurance : "DEAD"
                 color: d.youendurance > 0 ? "white" : theme.palette.normal.negative
-                fontSize: "x-large"
+                font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
@@ -125,7 +125,7 @@ Rectangle {
                 id: youcombatskillLabel
                 text: d.youcombatskill
                 color: "white"
-                fontSize: "x-large"
+                font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
@@ -157,7 +157,7 @@ Rectangle {
             }
             Item { height: units.gu(3); width: units.gu(1); }
             Row {
-                CheckBox {
+                Switch {
                     id: youDoubleDamage
                 }
                 Label {
@@ -171,7 +171,7 @@ Rectangle {
                 text: "(only enable if instructed)"
                 color: "white"
                 font.italic: true
-                fontSize: "small"
+                font.pixelSize: Theme.fontSizeSmall
                 width: root.width / 2
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -191,7 +191,7 @@ Rectangle {
                 id: enduranceLabel
                 text: d.endurance > 0 || enduranceTitle.text != "ENDURANCE" ? d.endurance : "DEAD"
                 color: d.endurance > 0 ? "white" : theme.palette.normal.negative
-                fontSize: "x-large"
+                font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
@@ -225,7 +225,7 @@ Rectangle {
                 id: combatskillLabel
                 text: d.combatskill
                 color: "white"
-                fontSize: "x-large"
+                font.pixelSize: Theme.fontSizeExtraLarge
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -237,7 +237,7 @@ Rectangle {
             }
             Item { height: units.gu(3); width: units.gu(1); }
             Row {
-                CheckBox {
+                Switch {
                     id: doubleDamage
                 }
                 Label {
@@ -251,7 +251,7 @@ Rectangle {
                 text: "(only enable if instructed)"
                 color: "white"
                 font.italic: true
-                fontSize: "small"
+                font.pixelSize: Theme.fontSizeSmall
                 width: root.width / 2
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter

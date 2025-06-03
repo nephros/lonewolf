@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 import Lonewolf 1.0
 
 Rectangle {
@@ -34,7 +34,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             text: "Enter number"
             color: "white"
-            fontSize: "x-large"
+            font.pixelSize: Theme.fontSizeExtraLarge
         }
 
         Item { width: units.gu(1); height: units.gu(2); }
@@ -48,9 +48,9 @@ Rectangle {
                 width: units.gu(10)
                 height: FontUtils.sizeToPixels("x-large") + units.gu(2)
                 inputMethodHints: Qt.ImhDigitsOnly
-                hasClearButton: false
+                //hasClearButton: false
                 horizontalAlignment: TextInput.AlignHCenter
-                font.pixelSize: FontUtils.sizeToPixels("x-large")
+                font.pixelSize: Theme.fontSizeExtraLarge
                 onTextChanged: {
                     d.wrong = false;
                 }
@@ -82,7 +82,7 @@ Rectangle {
             visible: d.wrong
             text: "Wrong"
             color: theme.palette.normal.negative
-            fontSize: "x-large"
+            font.pixelSize: Theme.fontSizeExtraLarge
         }
     }
 

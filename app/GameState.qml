@@ -1,9 +1,11 @@
 import QtQuick 2.4
-import Qt.labs.settings 1.0
-import Ubuntu.Components 1.3
+import Nemo.Configuration 1.0
+//import Qt.labs.settings 1.0
+//import Ubuntu.Components 1.3
 
 
-Settings {
+ConfigurationGroup {
+    scope: settings
     property string book
     property string pageId
 

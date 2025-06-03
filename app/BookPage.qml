@@ -1,12 +1,11 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.0
-import Ubuntu.Web 0.2
+import Sailfish.Silica 1.0
+import Sailfish.WebView 1.0
+//import Sailfish.WebView.Popups 1.0
 import Lonewolf 1.0
 
 Page {
     id: root
-    flickable: null
 
     property var you
     //readonly property product: bookProduct()
@@ -15,8 +14,10 @@ Page {
         id: saveDialog
         Dialog {
             id: dialog
-            title: "Quick Save"
+            PageHeader { title: "Quick Save" }
+			Label {
             text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
+			}
             Button {
                 text: "Got it"
                 onClicked: PopupUtils.close(dialog)
@@ -53,21 +54,22 @@ Page {
         backAction.visible = true;
     }
 
-    Action {
+	PullDownMenu {
+    MenuItem {
         id: actionChart
-        iconName: "note"
+        //icon.source: "note"
         text: i18n.tr("Action Chart")
         visible: book.progress == 100 && !mainView.twoColumnView
-        onTriggered: pageStack.addPageToNextColumn(root, chartPage)
+        onClicked: pageStack.addPageToNextColumn(root, chartPage)
     }
 
-    Action {
+    MenuItem {
         id: quickSave
-        iconName: "save"
+        //icon.source: "save"
         text: i18n.tr("Quick Save")
         visible: book.progress == 100
         enabled: !book.inBackMatter && mainView.endurance > 0
-        onTriggered: {
+        onClicked: {
             if (quickSaveState.pageId == "") {
                 PopupUtils.open(saveDialog);
             }
@@ -75,22 +77,24 @@ Page {
         }
     }
 
-    Action {
+    MenuItem {
         id: mapAction
-        iconName: "location"
+        //icon.source: "location"
         text: i18n.tr("Map")
         visible: book.progress == 100
-        onTriggered: pageView.pageId = "map"
+        onClicked: pageView.pageId = "map"
     }
 
-    Action {
+    MenuItem {
         id: nightModeAction
-        iconName: nightModeIcon
+        //icon.source: nightModeIcon
         text: nightModeText
-        onTriggered: triggerNightMode(root)
+        onClicked: triggerNightMode(root)
     }
+	}
 
-    header: PageHeader {
+    PageHeader {
+	  /*
         leadingActionBar.actions: [
             Action {
                 id: backAction
@@ -180,6 +184,7 @@ Page {
                 }
             }
         }
+		*/
     }
 
     Book {
@@ -217,6 +222,7 @@ Page {
         anchors.right: parent.right
         anchors.top: header.bottom
         anchors.bottom: navigation.top
+		/*
         alertDialog: Item {
             anchors.fill: parent
 
@@ -303,6 +309,7 @@ Page {
                 }
             }
         }
+		*/
     }
 
     Rectangle {
@@ -320,7 +327,7 @@ Page {
             anchors.margins: units.gu(0.5)
             height: parent.height - units.gu(1)
             width: height
-            iconName: "go-previous"
+            icon.source: "go-previous"
             visible: book.prevPageId != ""
             onClicked: pageView.pageId = book.prevPageId;
         }
@@ -331,7 +338,7 @@ Page {
             anchors.margins: units.gu(0.5)
             height: parent.height - units.gu(1)
             width: height
-            iconName: "go-next"
+            icon.source: "go-next"
             visible: book.nextPageId != ""
             onClicked: pageView.pageId = book.nextPageId
         }
@@ -357,7 +364,7 @@ Page {
         color: Theme.palette.normal.background
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : 1
-        Behavior on opacity { UbuntuNumberAnimation {} }
+        Behavior on opacity { NumberAnimation {} }
         MouseArea {
             anchors.fill: parent
             enabled: parent.opacity == 1

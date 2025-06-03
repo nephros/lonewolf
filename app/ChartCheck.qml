@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 
 Row {
     property var you
@@ -12,7 +12,7 @@ Row {
         property: prop
         value: box.checked
     }
-    CheckBox {
+    Switch {
         id: box
         anchors.verticalCenter: parent.verticalCenter
     }

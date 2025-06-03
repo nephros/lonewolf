@@ -1,21 +1,17 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 import Lonewolf 1.0
 
 Page {
     id: root
-    flickable: null
 
-    header: PageHeader {
-        title: "Lone Wolf"
-        trailingActionBar.actions: [
-            Action {
-                iconName: nightModeIcon
+    PageHeader { title: "Lone Wolf" }
+	PullDownMenu {
+            MenuItem {
                 text: nightModeText
-                onTriggered: triggerNightMode(root)
+                onClicked: triggerNightMode(root)
             }
-        ]
-    }
+	}
 
     function startBook(book, pageId) {
         gameState.book = book;
@@ -23,7 +19,7 @@ Page {
         goToBookTab();
     }
 
-    Flickable {
+    SilicaFlickable {
         id: flicker
         anchors.top: header.bottom
         anchors.left: parent.left
@@ -160,9 +156,6 @@ Page {
         }
     }
 
-    Scrollbar {
-        id: scrollbar
-        flickableItem: flicker
-    }
+    VerticalScrollDecorator { }
 }
 

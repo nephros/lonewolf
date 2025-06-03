@@ -1,32 +1,17 @@
 import QtQuick 2.4
-import Qt.labs.settings 1.0
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
+//import Qt.labs.settings 1.0
+//import Ubuntu.Components 1.3
 import Lonewolf 1.0
+import Nemo.Configuration 1.0
 
-MainView {
+ApplicationWindow {
     id: mainView
     objectName: "mainView"
-    applicationName: "lonewolf.timsueberkrueb"
-    automaticOrientation: true
-    anchorToKeyboard: true
-    focus: true
-
-    width: units.gu(100)
-    height: units.gu(60)
-
-    Keys.onPressed: {
-        if (event.matches(StandardKey.Quit)) {
-            actionManager.quit();
-        }
-    }
+    //applicationName: "lonewolf.timsueberkrueb"
+    allowedOrientations: Orientation.All
 
     property bool nightModeEnabled: settings.nightMode
-
-    Binding {
-        target: Theme
-        property: "name"
-        value: nightModeEnabled ? "Ubuntu.Components.Themes.SuruDark" : "Ubuntu.Components.Themes.Ambiance"
-    }
 
     property string nightModeIcon: nightModeEnabled ? "display-brightness-symbolic" : "night-mode"
     property string nightModeText: nightModeEnabled ? "Day Mode" : "Night Mode"
@@ -35,22 +20,23 @@ MainView {
         settings.nightMode = !settings.nightMode;
     }
 
-    Settings {
+    ConfigurationGroup {
         id: settings
+        path: "apps/games/lonewolf"
         property bool nightMode
     }
 
     GameState {
-        category: "quicksave"
+        path: "quicksave"
         id: quickSaveState
     }
 
     GameState {
-        category: "current"
+        path: "current"
         id: gameState
     }
 
-    property bool twoColumnView: width > units.gu(80) && !menuPage.visible
+    property bool twoColumnView: false //isLandscape && !menuPage.visible
 
     function goToBookTab()
     {
@@ -71,6 +57,8 @@ MainView {
         goToBookTab();
     }
 
+    initialPage: menuPage
+/*
     AdaptivePageLayout {
         id: pageLayout
         anchors.fill: parent
@@ -87,6 +75,8 @@ MainView {
                 preferredWidth: units.gu(40)
             }
         }
+    }
+    */
 
         MenuPage {
             id: menuPage
@@ -98,7 +88,6 @@ MainView {
                 you: gameState
             }
         }
-    }
 
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance

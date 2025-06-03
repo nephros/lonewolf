@@ -1,18 +1,18 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 import Lonewolf 1.0
 
 // This is not a class I am proud of.  So much weird duplication of code.
 
 Page {
     id: root
-    flickable: null
     clip: true
 
     property var you
 
-    header: PageHeader {
+    PageHeader {
         title: "Action Chart"
+		/*
         trailingActionBar.actions: [
             Action {
                 iconName: nightModeIcon
@@ -21,6 +21,7 @@ Page {
                 visible: !mainView.twoColumnView
             }
         ]
+		*/
     }
 
     QtObject {
@@ -32,7 +33,7 @@ Page {
         readonly property int neworder: mainView.inneworder
     }
 
-    Flickable {
+    SilicaFlickable {
         id: flicker
         anchors.top: header.bottom
         anchors.left: parent.left
@@ -61,7 +62,6 @@ Page {
                 ChartItem {
                     id: combatSkillBox
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.combatskill
                     you: root.you
                     prop: "combatskill"
@@ -70,7 +70,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_combatskill
                     you: root.you
                     prop: "neworder_combatskill"
@@ -84,7 +83,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.endurance
                     you: root.you
                     prop: "endurance"
@@ -93,7 +91,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_endurance
                     you: root.you
                     prop: "neworder_endurance"
@@ -107,7 +104,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.maxendurance
                     you: root.you
                     prop: "maxendurance"
@@ -116,7 +112,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_maxendurance
                     you: root.you
                     prop: "neworder_maxendurance"
@@ -130,7 +125,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.gold
                     you: root.you
                     prop: "gold"
@@ -139,7 +133,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_gold
                     you: root.you
                     prop: "neworder_gold"
@@ -159,7 +152,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.quiver
                     you: root.you
                     prop: "quiver"
@@ -168,7 +160,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_quiver
                     you: root.you
                     prop: "neworder_quiver"
@@ -188,7 +179,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.meals
                     you: root.you
                     prop: "meals"
@@ -197,7 +187,6 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    hasClearButton: false
                     text: you.neworder_meals
                     you: root.you
                     prop: "neworder_meals"
@@ -229,14 +218,12 @@ Page {
                 visible: !d.neworder
 
                 ChartItem {
-                    hasClearButton: false
                     text: you.weapon1
                     you: root.you
                     prop: "weapon1"
                     width: weapons.itemWidth
                 }
                 ChartItem {
-                    hasClearButton: false
                     text: you.weapon2
                     you: root.you
                     prop: "weapon2"
@@ -252,14 +239,12 @@ Page {
                 visible: d.neworder
 
                 ChartItem {
-                    hasClearButton: false
                     text: you.neworder_weapon1
                     you: root.you
                     prop: "neworder_weapon1"
                     width: weapons.itemWidth
                 }
                 ChartItem {
-                    hasClearButton: false
                     text: you.neworder_weapon2
                     you: root.you
                     prop: "neworder_weapon2"
@@ -426,7 +411,6 @@ Page {
                 visible: d.neworder
             }
             ChartItem {
-                hasClearButton: false
                 text: you.neworder_kaiweapon
                 you: root.you
                 prop: "neworder_kaiweapon"
@@ -706,7 +690,6 @@ Page {
                     text: "Weaponskill Weapon:"
                 }
                 ChartItem {
-                    hasClearButton: false
                     text: you.weaponskill_weapon
                     you: root.you
                     prop: "weaponskill_weapon"
@@ -1330,11 +1313,6 @@ Page {
                 }
             }
         }
-    }
-
-    Scrollbar {
-        id: scrollbar
-        flickableItem: flicker
     }
 }
 

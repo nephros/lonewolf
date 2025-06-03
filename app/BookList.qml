@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3
+import Sailfish.Silica 1.0
 
 Item {
     id: root
@@ -24,7 +24,7 @@ Item {
             Label {
                 id: title
                 text: root.title
-                fontSize: "large"
+                font.pixelSize: Theme.fontSizeLarge
                 font.bold: true
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
@@ -56,12 +56,12 @@ Item {
             Repeater {
                 model: root.model
                 delegate: Button {
-                    iconName: (root.product && !root.product.bought) ? "locked" : ""
+                    icon.source: (root.product && !root.product.bought) ? "locked" : ""
                     text: (root.product && !root.product.bought) ? "" : index + 1
                     onClicked: root.startBook(book)
                     width: buttonFlow.buttonWidth
                     height: width
-                    color: "#203432"
+                    //color: "#203432"
                     //enabled: !root.product || root.product.bought
                 }
             }
