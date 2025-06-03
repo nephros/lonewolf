@@ -11,19 +11,9 @@ ApplicationWindow {
     //applicationName: "lonewolf.timsueberkrueb"
     allowedOrientations: Orientation.All
 
-    property bool nightModeEnabled: settings.nightMode
-
-    property string nightModeIcon: nightModeEnabled ? "display-brightness-symbolic" : "night-mode"
-    property string nightModeText: nightModeEnabled ? "Day Mode" : "Night Mode"
-
-    function triggerNightMode(page) {
-        settings.nightMode = !settings.nightMode;
-    }
-
     ConfigurationGroup {
         id: settings
         path: "apps/games/lonewolf"
-        property bool nightMode
     }
 
     GameState {
@@ -36,18 +26,16 @@ ApplicationWindow {
         id: gameState
     }
 
-    property bool twoColumnView: false //isLandscape && !menuPage.visible
-
     initialPage: menuPage
     cover: coverPage
 
 
     function goToBookTab() {
-	  pageStack.replace(bookComponent)
-	}
+      pageStack.replace(bookComponent)
+    }
     function popBookTab() {
-	  pageStack.replace(menuPage)
-	}
+      pageStack.replaceAbove(null, menuPage)
+    }
 /*
     function goToBookTab()
     {
@@ -61,31 +49,13 @@ ApplicationWindow {
         pageLayout.primaryPage.enabled = true;
         pageLayout.removePages(pageLayout.primaryPage);
     }
+    */
 
     function loadQuickSave()
     {
         quickSaveState.copyTo(gameState);
         goToBookTab();
     }
-
-    AdaptivePageLayout {
-        id: pageLayout
-        anchors.fill: parent
-        primaryPage: menuPage
-
-        layouts: PageColumnsLayout {
-            when: twoColumnView
-            PageColumn {
-                fillWidth: true
-            }
-            PageColumn {
-                minimumWidth: units.gu(40)
-                maximumWidth: units.gu(40)
-                preferredWidth: units.gu(40)
-            }
-        }
-    }
-    */
 
     MenuPage {
         id: menuPage

@@ -9,6 +9,7 @@ Page {
     id: root
 
     property var you
+    property bool canDoBackAction: false
     //readonly property product: bookProduct()
 
     Component {
@@ -29,23 +30,22 @@ Page {
     Component {
         id: chartPage
         ChartPage {
+            objectName: "chart"
             you: root.you
         }
     }
 
-    property bool shouldShowChart: mainView.twoColumnView && book.progress == 100
+    property bool shouldShowChart: book.progress == 100
 
     function ensureChartPage() {
         if (shouldShowChart) {
-            //pageStack.addPageToNextColumn(root, chartPage);
-            pageStack.pushAttached(chartPage);
-        } else {
-            //pageStack.popAttached(root, PageStackAction.Immediate);
-            //pageStack.removePages(chartPage);
+            const np = pageStack.nextPage()
+            if (np.objectName != "chart") {
+                pageStack.pushAttached(chartPage);
+            }
         }
     }
 
-    onShouldShowChartChanged: ensureChartPage()
     onVisibleChanged: if (visible) ensureChartPage()
 
     Component.onCompleted: {
@@ -56,17 +56,31 @@ Page {
             book.inBackMatter = false;
             downloadCover.visible = false;
         }
-        //backAction.visible = true;
+        canDoBackAction = true;
     }
 
     SilicaFlickable {
       anchors.fill: parent
     PullDownMenu {
     MenuItem {
+        id: backAction
+        text: qsTr("Back")
+        enabled: canDoBackAction
+        visible: book.progress == 100
+        onClicked: {
+            if (book.inBackMatter) {
+                pageView.pageId = you.pageId; // go back to saved place
+                book.inBackMatter = false;
+            } else {
+                popBookTab();
+            }
+        }
+    }
+    MenuItem {
         id: actionChart
         //icon.source: "note"
         text: qsTr("Action Chart")
-        visible: book.progress == 100 && !mainView.twoColumnView
+        visible: book.progress == 100
         onClicked: pageStack.push(chartPage)
     }
     MenuItem {
@@ -121,6 +135,7 @@ Page {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font.capitalization: Font.SmallCaps
+            //font.family: "serif"
             //font.pixelSize: 
             width: parent.width - minus.width*2
         }
@@ -134,100 +149,10 @@ Page {
             onClicked: adjustEndurance(1);
         }
     }
-      /*
-        leadingActionBar.actions: [
-            Action {
-                id: backAction
-                iconName: "back"
-                text: "Back"
-                visible: false
-                onTriggered: {
-                    if (book.inBackMatter) {
-                        pageView.pageId = you.pageId; // go back to saved place
-                        book.inBackMatter = false;
-                    } else {
-                        popBookTab();
-                    }
-                }
-            }
-        ]
-        trailingActionBar.actions: [
-            actionChart, quickSave, mapAction, nightModeAction
-        ]
-        trailingActionBar.numberOfSlots: mainView.twoColumnView ? 1 : 2
-        contents: Item {
-            anchors.fill: parent
-
-            Label {
-                id: headTitle
-                text: book.pageTitle
-                fontSize: "large"
-                font.weight: Font.Light
-                elide: Text.ElideRight
-                anchors.left: parent.left
-                anchors.leftMargin: units.gu(1)
-                anchors.right: headEndurance.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Item {
-                id: headEndurance
-                visible: Number(headTitle.text) > 0
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-
-                Label {
-                    id: youenduranceLabel
-                    text: mainView.endurance + " <span style='font-variant: small-caps'>EP</span>"
-                    textFormat: Text.RichText
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: units.gu(4)
-                    anchors.right: parent.right
-                    verticalAlignment: Text.AlignVCenter
-                    Label {
-                        anchors.left: parent.right
-                        anchors.leftMargin: units.gu(1)
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: "+"
-                        visible: mainView.endurance < mainView.maxendurance
-                    }
-                    Label {
-                        anchors.right: parent.left
-                        anchors.rightMargin: units.gu(1)
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: "-"
-                        visible: mainView.endurance > 0
-                    }
-                    MouseArea {
-                        anchors.left: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        width: parent.width / 2 + units.gu(4)
-                        enabled: mainView.endurance < mainView.maxendurance && visible
-                        onClicked: {
-                            Haptics.play();
-                            adjustEndurance(1);
-                        }
-                    }
-                    MouseArea {
-                        anchors.right: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        width: parent.width / 2 + units.gu(4)
-                        enabled: mainView.endurance > 0 && visible
-                        onClicked: {
-                            Haptics.play();
-                            adjustEndurance(-1);
-                        }
-                    }
-                }
-            }
-        }
-        */
 
     Book {
         id: book
+        onDirChanged: console.debug("Book dir:", dir, cacheDir)
         dir: Qt.resolvedUrl(".")
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
@@ -278,7 +203,7 @@ Page {
             WebEngineSettings.pixelRatio = 2
             WebEngineSettings.setPreference("font.default.serif", "serif", WebEngineSettings.StringPref)
             WebEngineSettings.setPreference("font.default.sans-serif", "serif", WebEngineSettings.StringPref)
-            WebEngineSettings.setPreference("font.name-list.serif", "Souvenir, Linux Biolinum, Georgia, Times New Roman, serif, sans-serif", WebEngineSettings.StringPref)
+            WebEngineSettings.setPreference("font.name-list.serif", 'Souvenir, "Linux Biolinum", Georgia, "Times New Roman", serif, sans-serif', WebEngineSettings.StringPref)
         }
     }
     Item {
@@ -312,7 +237,7 @@ Page {
                 onClicked: pageView.pageId = book.nextPageId
             }
 
-            Button {
+            SecondaryButton {
                 id: licenseButton
                 text: "Accept"
                 //color: theme.palette.normal.positive
@@ -331,6 +256,7 @@ Page {
 
     Component { id: alertDialog; AlertPopupInterface {
         anchors.fill: parent
+        property var model
 
         Component.onCompleted: {
             if (model.message == "random") {
