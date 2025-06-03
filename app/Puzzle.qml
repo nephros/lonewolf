@@ -46,7 +46,7 @@ Rectangle {
             TextField {
                 id: entry
                 width: Theme.dp(10)
-                height: FontUtils.sizeToPixels("x-large") + Theme.dp(2)
+                height: Theme.fontSizeExtraLarge + Theme.dp(2)
                 inputMethodHints: Qt.ImhDigitsOnly
                 //hasClearButton: false
                 horizontalAlignment: TextInput.AlignHCenter
@@ -86,10 +86,9 @@ Rectangle {
         }
     }
 
-    Button {
+    SecondaryButton {
         id: cancelButton
         text: "Back to Page"
-        color: UbuntuColors.lightGrey
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.topMargin: Theme.dp(1)

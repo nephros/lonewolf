@@ -259,10 +259,9 @@ Rectangle {
         }
     }
 
-    Button {
+    SecondaryButton {
         id: cancelButton
         text: "Back to Page"
-        color: UbuntuColors.lightGrey
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: fleeButton.top
         anchors.bottomMargin: Theme.dp(1)
