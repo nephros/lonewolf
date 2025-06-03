@@ -41,9 +41,9 @@ WebViewPage {
         }
         canDoBackAction = true;
         // Debug some engine events:
-        WebEngine.onRecvObserve.connect(function(message, data) {
-            console.log("Engine event contents: ", message, JSON.stringify(data));
-        })
+        //WebEngine.onRecvObserve.connect(function(message, data) {
+        //    console.log("Engine event contents: ", message, JSON.stringify(data));
+        //})
     }
 
     SilicaFlickable {
@@ -176,6 +176,7 @@ WebViewPage {
         width: pageView.width + Theme.horizontalPageMargin*2
         height: pageView.height + Theme.horizontalPageMargin*2
     }
+
     WebView {
         id: pageView
         property string pageId: you.pageId
@@ -188,21 +189,11 @@ WebViewPage {
         canShowSelectionMarkers: false
         chromeGestureEnabled: false
         //onTitleChanged: console.debug("Webview title:", title)
-        //onRecvAsyncMessage: {
-        //    console.debug("Webview Message")
-        //    switch (message) {
-        //    }
-        //}
-        //onViewInitialized: {
-        //    webview.loadFrameScript(Qt.resolvedUrl("framescript.js"));
-        //    webview.addMessageListener("webview:action")
-        //}
         Component.onCompleted: {
             WebEngineSettings.pixelRatio = 2
             WebEngineSettings.autoLoadImages = true
             WebEngineSettings.popupEnabled = true
-            WebEngineSettings.javascriptEnabled = true
-            // ^^^ This apparently does not work, but the following does:
+            WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
             WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
             WebEngineSettings.setPreference("font.default.serif",      "serif", WebEngineSettings.StringPref)
@@ -213,9 +204,6 @@ WebViewPage {
         }
 
 
-        onLinkClicked: {
-          console.debug("Click!!")
-        }
         popupProvider: PopupProvider {
             alertPopup: alertDialog
         }
