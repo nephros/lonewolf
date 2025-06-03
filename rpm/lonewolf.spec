@@ -12,7 +12,7 @@ Name:       lonewolf
 %define appname %{name}
 %define pkgname %{name}
 
-Summary:    The Lone Wolf Adventures
+Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.1
 Release:    0
 Group:      Applications
@@ -57,9 +57,13 @@ people: For you are now the last of the Kai.
 
 You are now Lone Wolf.
 
+This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
+the original Lone Wolf app for Ubuntu Phone by Michael Terry.
+
 %if "%{?vendor}" == "chum"
 Title: Lonewolf
 Type: desktop-application
+DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
 PackagedBy: nephros
 Categories:
  - Games
