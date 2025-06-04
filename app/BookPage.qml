@@ -82,7 +82,7 @@ WebViewPage {
                     if (quickSaveState.pageId == "") {
                         pageStack.push(saveDialog);
                     }
-                    you.copyTo(quickSaveState);
+                    Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
                 }
             }
             MenuItem {
