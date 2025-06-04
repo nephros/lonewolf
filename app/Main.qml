@@ -16,6 +16,14 @@ ApplicationWindow {
         path: "/apps/games/lonewolf"
     }
 
+    ConfigurationGroup {
+        id: uisettings
+        scope: settings
+        path: "ui"
+        property int font: 2
+    }
+
+
     GameState {
         path: "quicksave"
         id: quickSaveState

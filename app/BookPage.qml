@@ -189,8 +189,12 @@ WebViewPage {
         canShowSelectionMarkers: false
         chromeGestureEnabled: false
         //onTitleChanged: console.debug("Webview title:", title)
+        Connections {
+            target: WebEngineSettings
+            onPixelRatioChanged: uisettings.font = WebEngineSettings.pixelRatio
+        }
         Component.onCompleted: {
-            WebEngineSettings.pixelRatio = 2
+            WebEngineSettings.pixelRatio = Math.ceil(uisettings.font)
             WebEngineSettings.autoLoadImages = true
             WebEngineSettings.popupEnabled = true
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
@@ -202,7 +206,6 @@ WebViewPage {
             //WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
             //WebEngineSettings.setPreference("security.disable_cors_checks", false, WebEngineSettings.BoolPref)
         }
-
 
         popupProvider: PopupProvider {
             alertPopup: alertDialog
