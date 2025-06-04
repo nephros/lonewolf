@@ -10,10 +10,6 @@ Page {
 
     property var you
 
-    PageHeader { id: header
-        title: "Action Chart"
-    }
-
     QtObject {
         id: d
         // deprecated aliases, didn't want to bother searching and replacing
@@ -25,10 +21,7 @@ Page {
 
     SilicaFlickable {
         id: flicker
-        anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
         contentHeight: col.height + col.anchors.margins * 2
         contentWidth: width
 
@@ -39,6 +32,10 @@ Page {
             y: anchors.margins
             anchors.margins: Theme.paddingSmall
             width: flicker.contentWidth - anchors.margins * 2
+
+            PageHeader { id: header
+                title: "Action Chart"
+            }
 
             Grid {
                 columns: 3
@@ -120,6 +117,7 @@ Page {
                     prop: "gold"
                     width: Theme.buttonWidthSmall
                     visible: !d.neworder
+                    description: "Max 50"
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -128,10 +126,12 @@ Page {
                     prop: "neworder_gold"
                     width: Theme.buttonWidthSmall
                     visible: d.neworder
+                    description: "Max 50"
                 }
                 Label {
-                    text: "Max 50"
+                    text: ""
                     font.italic: true
+                    font.pixelSize: Theme.fontSizeExtraSmall
                     wrapMode: Text.Wrap
                     width: Theme.buttonWidthSmall
                 }
@@ -147,6 +147,7 @@ Page {
                     prop: "quiver"
                     width: Theme.buttonWidthSmall
                     visible: d.magnakai || d.grandmaster
+                    description: "Max 6"
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -155,9 +156,10 @@ Page {
                     prop: "neworder_quiver"
                     width: Theme.buttonWidthSmall
                     visible: d.neworder
+                    description: "Max 6"
                 }
                 Label {
-                    text: "Max 6"
+                    text: ""
                     font.italic: true
                     wrapMode: Text.Wrap
                     width: Theme.buttonWidthSmall
@@ -174,6 +176,7 @@ Page {
                     prop: "meals"
                     width: Theme.buttonWidthSmall
                     visible: !d.neworder
+                    description: "Each fills a backpack slot"
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -182,12 +185,14 @@ Page {
                     prop: "neworder_meals"
                     width: Theme.buttonWidthSmall
                     visible: d.neworder
+                    description: "Each fills a backpack slot"
                 }
                 Label {
-                    text: "Each fills a backpack slot"
+                    text: ""
                     font.italic: true
+                    font.pixelSize: Theme.fontSizeExtraSmall
                     wrapMode: Text.Wrap
-                    //width: Theme.buttonWidthSmall
+                    width: Theme.buttonWidthSmall
                 }
             }
 
@@ -195,7 +200,7 @@ Page {
                 width: 1
                 height: 1
             }
-            Label {
+            SectionHeader {
                 text: "Weapons"
             }
             Grid {
@@ -244,7 +249,7 @@ Page {
                 width: 1
                 height: 1
             }
-            Label {
+            SectionHeader {
                 text: "Backpack Items"
             }
             Grid {
@@ -410,7 +415,7 @@ Page {
                 width: 1
                 height: 1
             }
-            Label {
+            SectionHeader {
                 text: "Special Items"
             }
             Grid {
@@ -582,7 +587,7 @@ Page {
                 height: 1
                 visible: d.kai
             }
-            Label {
+            SectionHeader {
                 text: "Kai Disciplines"
                 visible: d.kai
             }
@@ -1279,6 +1284,7 @@ Page {
             TextArea {
                 id: notes
                 width: parent.width
+                height: Theme.itemSizeLarge
                 text: you.notes
                 visible: !d.neworder
                 Binding {
@@ -1289,7 +1295,7 @@ Page {
             }
             TextArea {
                 id: neworder_notes
-                //height: Theme.paddingLarge
+                height: Theme.itemSizeLarge
                 width: parent.width
                 text: you.neworder_notes
                 visible: d.neworder
