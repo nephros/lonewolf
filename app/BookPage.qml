@@ -19,9 +19,10 @@ WebViewPage {
         id: saveDialog
         Dialog {
             id: dialog
-            DialogHeader { id: header; title: "Quick Save"; acceptText: "Got it" }
+            DialogHeader { id: header; title: "Quick Save"; cancelText: "OK"; acceptText: "Got it" }
             Label {
                 anchors.fill: parent
+                anchors.topMargin: Screen.hasCutouts ? Screen.topCutout.height : 0
                 text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
                 wrapMode: Text.Wrap
             }

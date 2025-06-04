@@ -7,6 +7,8 @@ Rectangle {
     color: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
     opacity: Theme.opacityOverlay
 
+    anchors.topMargin: Screen.hasCutouts ? Screen.topCutout.height : 0
+
     property string props
     property var you
     signal close()
@@ -92,6 +94,7 @@ Rectangle {
                 text: d.youendurance > 0 || youenduranceTitle.text != "ENDURANCE"  ? d.youendurance : "DEAD"
                 color: d.youendurance > 0 ? Theme.primaryColor : Theme.errorColor
                 font.pixelSize: Theme.fontSizeExtraLarge
+                font.capitalization: Font.SmallCaps
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 Button {
@@ -101,7 +104,7 @@ Rectangle {
                     width: Theme.dp(3)
                     text: "+"
                     onClicked: d.youendurance += 1
-                    color: "transparent"
+                    //color: "transparent"
                 }
                 Button {
                     anchors.right: youenduranceLabel.left
@@ -110,12 +113,13 @@ Rectangle {
                     width: Theme.dp(3)
                     text: "-"
                     onClicked: d.youendurance -= 1
-                    color: "transparent"
+                    //color: "transparent"
                 }
             }
             Label {
                 id: youenduranceTitle
                 text: "ENDURANCE"
+                font.capitalization: Font.SmallCaps
                 color: Theme.primaryColor
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -136,7 +140,6 @@ Rectangle {
                     text: "+"
                     enabled: !d.done
                     onClicked: d.youcombatskill += 1
-                    color: "transparent"
                 }
                 Button {
                     anchors.right: youcombatskillLabel.left
@@ -146,7 +149,6 @@ Rectangle {
                     text: "-"
                     enabled: !d.done
                     onClicked: d.youcombatskill -= 1
-                    color: "transparent"
                 }
             }
             Label {
@@ -201,7 +203,6 @@ Rectangle {
                     width: Theme.dp(3)
                     text: "+"
                     onClicked: d.endurance += 1
-                    color: "transparent"
                 }
                 Button {
                     anchors.right: enduranceLabel.left
@@ -210,13 +211,13 @@ Rectangle {
                     width: Theme.dp(3)
                     text: "-"
                     onClicked: d.endurance -= 1
-                    color: "transparent"
                 }
             }
             Label {
                 id: enduranceTitle
                 text: "ENDURANCE"
                 color: Theme.primaryColor
+                font.capitalization: Font.SmallCaps
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -273,7 +274,7 @@ Rectangle {
     SecondaryButton {
         id: fleeButton
         text: "Evade"
-        //color: theme.palette.normal.negative
+        color: Theme.errorColor
         anchors.left: parent.left
         anchors.right: parent.horizontalCenter
         anchors.bottom: parent.bottom

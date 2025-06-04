@@ -9,7 +9,8 @@ ApplicationWindow {
     id: mainView
     objectName: "mainView"
     //applicationName: "lonewolf.timsueberkrueb"
-    allowedOrientations: Orientation.All
+    // SFOS: TODO: restore twocolumn layout
+    allowedOrientations: Orientation.PortraitMask
 
     ConfigurationGroup {
         id: settings
@@ -22,7 +23,6 @@ ApplicationWindow {
         path: "ui"
         property int font: 2
     }
-
 
     GameState {
         path: "quicksave"

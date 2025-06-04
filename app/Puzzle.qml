@@ -7,6 +7,8 @@ Rectangle {
     color: Theme.highlightDimmerFromColor("goldenrod", Theme.colorScheme)
     opacity: Theme.opacityOverlay
 
+    anchors.topMargin: Screen.hasCutouts ? Screen.topCutout.height : 0
+
     property var you
     property string answers
     signal close()
