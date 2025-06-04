@@ -55,7 +55,7 @@ Page {
                     text: you.combatskill
                     you: root.you
                     prop: "combatskill"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -63,7 +63,7 @@ Page {
                     text: you.neworder_combatskill
                     you: root.you
                     prop: "neworder_combatskill"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
                 Item {height: 1; width: 1}
@@ -118,7 +118,7 @@ Page {
                     text: you.gold
                     you: root.you
                     prop: "gold"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -126,14 +126,14 @@ Page {
                     text: you.neworder_gold
                     you: root.you
                     prop: "neworder_gold"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
                 Label {
                     text: "Max 50"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                 }
 
                 Label {
@@ -145,7 +145,7 @@ Page {
                     text: you.quiver
                     you: root.you
                     prop: "quiver"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.magnakai || d.grandmaster
                 }
                 ChartItem {
@@ -153,14 +153,14 @@ Page {
                     text: you.neworder_quiver
                     you: root.you
                     prop: "neworder_quiver"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
                 Label {
                     text: "Max 6"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.magnakai || d.grandmaster || d.neworder
                 }
 
@@ -172,7 +172,7 @@ Page {
                     text: you.meals
                     you: root.you
                     prop: "meals"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: !d.neworder
                 }
                 ChartItem {
@@ -180,14 +180,14 @@ Page {
                     text: you.neworder_meals
                     you: root.you
                     prop: "neworder_meals"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
                 Label {
                     text: "Each fills a backpack slot"
                     font.italic: true
                     wrapMode: Text.Wrap
-                    //width: Theme.paddingMedium
+                    //width: Theme.buttonWidthSmall
                 }
             }
 
@@ -681,7 +681,7 @@ Page {
                     text: you.weaponskill_weapon
                     you: root.you
                     prop: "weaponskill_weapon"
-                    width: Theme.paddingMedium
+                    width: Theme.buttonWidthSmall
                 }
             }
 
@@ -1278,7 +1278,6 @@ Page {
             }
             TextArea {
                 id: notes
-                height: Theme.paddingLarge
                 width: parent.width
                 text: you.notes
                 visible: !d.neworder
