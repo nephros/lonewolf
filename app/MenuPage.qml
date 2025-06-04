@@ -5,7 +5,6 @@ import Lonewolf 1.0
 Page {
     id: root
 
-    PageHeader { id: header; title: "Lone Wolf" }
 
     function startBook(book, pageId) {
         gameState.book = book;
@@ -25,10 +24,7 @@ Page {
 
     SilicaFlickable {
         id: flicker
-        anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
         contentHeight: column.height + column.anchors.margins * 2
         //contentWidth: width
         PullDownMenu {
@@ -50,6 +46,7 @@ Page {
             anchors.margins: Theme.horizontalPageMargin
             //width: (flicker.contentWidth > units.gu(60) ? units.gu(60) : flicker.contentWidth) - anchors.margins * 2
             //anchors.horizontalCenter: parent.horizontalCenter
+			PageHeader { id: header; title: "Lone Wolf" }
 
             Label {
                 text: "<p>Lone Wolf is a role-playing book series from the 80s.</p><br>" +
