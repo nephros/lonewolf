@@ -303,6 +303,11 @@ WebViewPage {
     Component { id: alertDialog; AlertPopupInterface {
         id: alertPopup
         anchors.fill: parent
+        signal handled
+        onHandled: {
+            console.debug("Alert handled")
+            accepted(); visible = false
+        }
         //preventDialogsPrefillValue: false
         //preventDialogsValue: false
         //preventDialogsVisible: false
@@ -310,18 +315,18 @@ WebViewPage {
         onTextChanged: {
             console.debug("Executing alert action:", text)
             if (alertPopup.text == "random") {
-                random.visible = true;
+                random.visible = true
             } else if (alertPopup.text == "action") {
-                haptics.play();
+                haptics.play()
                 pageStack.push(chartPage)
-                alertPopup.accepted(); alertPopup.visible = false
+                alertPopup.handled()
             } else if (alertPopup.text.indexOf("combat,") == 0) {
                 haptics.play(ThemeEffect.PressStrong);
                 combat.props = alertPopup.text;
                 combat.visible = true;
             } else if (alertPopup.text.indexOf("external,") == 0) {
                 Qt.openUrlExternally(alertPopup.text.split(',')[1]);
-                alertPopup.accepted(); alertPopup.visible = false
+                alertPopup.handled()
             } else if (alertPopup.text.indexOf("puzzle-page,") == 0) {
                 puzzle.answers = alertPopup.text.split(',')[1];
                 puzzle.visible = true;
@@ -333,7 +338,8 @@ WebViewPage {
             } else {
                 haptics.play();
                 pageView.pageId = alertPopup.text;
-                alertPopup.accepted(); alertPopup.visible = false
+                console.debug("Turned to page:", text)
+                alertPopup.handled()
             }
         }
 
@@ -342,7 +348,7 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: { alertPopup.accepted(); alertPopup.visible = false }
+            onClose: { alertPopup.handled() }
         }
 
         Puzzle {
@@ -350,10 +356,10 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: { alertPopup.accepted(); alertPopup.visible = false }
+            onClose: { alertPopup.handled() }
             onGoTo: {
                 pageView.pageId = page;
-                alertPopup.accepted(); alertPopup.visible = false
+                alertPopup.handled()
             }
         }
 
@@ -390,11 +396,10 @@ WebViewPage {
                     Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
                 }
             }
-            BackgroundItem {
+            MouseArea {
                 anchors.fill: parent
                 enabled: random.numberRevealed
-                highlighted: false
-                onClicked: { parent.visible = false; alertPopup.accepted(); } //alertPopup.visible = false }
+                onClicked: { random.visible = false; alertPopup.handled() }
             }
         }
     }}
