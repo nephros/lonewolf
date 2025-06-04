@@ -6,7 +6,6 @@
 Name:       lonewolf
 
 # >> macros
-%bcond_with harbour
 # << macros
 %define orgname %{name}
 %define appname %{name}
@@ -114,6 +113,8 @@ install -pm644 %{S:1} %{buildroot}/%{_datadir}/%{name}/qml/
 #install -Dpm644 app/graphics/%%{name}.png %%{buildroot}/%%{_datadir}/icons/hicolor/256x256/apps/%%{name}.png
 
 desktop-file-edit  \
+--set-key=Exec \
+--set-value="/usr/bin/invoker --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
 --set-key=X-Nemo-Application-Type \
 --set-value=silica-qt5 \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
