@@ -310,7 +310,7 @@ WebViewPage {
         onTextChanged: {
             console.debug("Executing alert action:", text)
             if (alertPopup.text == "random") {
-                pageStack.push(random)
+                random.visible = true;
             } else if (alertPopup.text == "action") {
                 haptics.play();
                 pageStack.push(chartPage)
@@ -367,18 +367,16 @@ WebViewPage {
             onVisibleChanged: numberRevealed = !visible
             Column {
                 spacing: Theme.paddingLarge
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.horizontalPageMargin
-                anchors.leftMargin: Theme.horizontalPageMargin
+                width: parent.width
+                anchors.centerIn: parent
                 Label { id: islabel
                     width: parent.width
-                    height: Theme.itemSizeLarge*3
                     font.pixelSize: Theme.fontSizeLarge
                     text: "Your random number is:"
                     color: Theme.highlightColor
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
+                    Behavior on y { PropertyAnimation { } }
                 }
                 Label { id: number
                     width: parent.width
@@ -387,14 +385,15 @@ WebViewPage {
                     color: Theme.highlightColor
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
-                    visible: random.numberRevealed
-                    opacity: visible ? 1.0 : 0.0
+                    opacity: random.numberRevealed ? 1.0 : 0.0
                     Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
                 }
             }
             BackgroundItem {
                 anchors.fill: parent
-                onClicked: { alertPopup.accepted(); alertPopup.visible = false }
+                enabled: random.numberRevealed
+                highlighted: false
+                onClicked: { parent.visible = false; alertPopup.accepted(); } //alertPopup.visible = false }
             }
         }
     }}
