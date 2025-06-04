@@ -410,7 +410,7 @@ WebViewPage {
         color: Theme.highlightDimmerColor
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : 1
-        Behavior on opacity { NumberAnimation {} }
+        Behavior on opacity { FadeAnimation {} }
         MouseArea {
             anchors.fill: parent
             enabled: parent.opacity == 1
