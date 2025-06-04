@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtFeedback 5.0
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
 import Sailfish.WebEngine 1.0
@@ -47,6 +48,7 @@ WebViewPage {
         //})
     }
 
+    ThemeEffect { id: haptics; effect: Effect.PressWeak }
     SilicaFlickable {
         anchors.fill: parent
         PullDownMenu {
@@ -116,7 +118,10 @@ WebViewPage {
             //width: height
             icon.source: "image://theme/icon-splus-remove"
             enabled: mainView.endurance > 0
-            onClicked: adjustEndurance(-1)
+            onClicked: {
+                haptics.play();
+                adjustEndurance(-1)
+            }
         }
         Label {
             id: youenduranceLabel
@@ -136,7 +141,10 @@ WebViewPage {
             anchors.margins: Theme.paddingSmall
             icon.source: "image://theme/icon-splus-add"
             enabled: mainView.endurance < mainView.maxendurance
-            onClicked: adjustEndurance(1);
+            onClicked: {
+                haptics.play();
+                adjustEndurance(1)
+            }
         }
     }
 
@@ -274,7 +282,9 @@ WebViewPage {
             if (alertPopup.text == "random") {
                 pageStack.push(random)
             } else if (alertPopup.text == "action") {
+                haptics.play();
                 pageStack.push(chartPage)
+                alertPopup.accepted(); alertPopup.visible = false
             } else if (alertPopup.text.indexOf("combat,") == 0) {
                 combat.props = alertPopup.text;
                 combat.visible = true;
@@ -285,10 +295,12 @@ WebViewPage {
                 puzzle.answers = alertPopup.text.split(',')[1];
                 puzzle.visible = true;
             } else if (alertPopup.text.indexOf("book,") == 0) {
+                haptics.play();
                 you.book = alertPopup.text.split(',')[2];
                 pageView.pageId = "";
                 goToBookTab();
             } else {
+                haptics.play();
                 pageView.pageId = alertPopup.text;
                 alertPopup.accepted(); alertPopup.visible = false
             }
