@@ -4,8 +4,8 @@ import Lonewolf 1.0
 
 Rectangle {
     id: root
-    color: "black"
-    opacity: 0.95
+    color: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
+    opacity: Theme.opacityOverlay
 
     property string props
     property var you
