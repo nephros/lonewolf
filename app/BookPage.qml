@@ -208,7 +208,8 @@ WebViewPage {
         }
 
         popupProvider: PopupProvider {
-            alertPopup: alertDialog
+            //alertPopup: alertDialog
+            alertPopup: { "type": "item", "component": alertDialog }
         }
     }
 
@@ -263,8 +264,11 @@ WebViewPage {
     Component { id: alertDialog; AlertPopupInterface {
         id: alertPopup
         anchors.fill: parent
-
-        Component.onCompleted: {
+        //preventDialogsPrefillValue: false
+        //preventDialogsValue: false
+        //preventDialogsVisible: false
+        //Component.onCompleted: {
+        onTextChanged: {
             console.debug("Executing alert action:", text)
             if (alertPopup.text == "random") {
                 pageStack.push(random)
