@@ -49,7 +49,7 @@ WebViewPage {
         //})
     }
 
-    ThemeEffect { id: haptics; effect: Effect.PressWeak }
+    ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
     SilicaFlickable {
         anchors.fill: parent
         PullDownMenu {
