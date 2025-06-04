@@ -25,8 +25,8 @@ Page {
         Column {
             id: column
             spacing: Theme.paddingSmall
-			anchors.left: parent.left
-			anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.right: parent.right
             //x: anchors.margins
             //y: anchors.margins
             anchors.margins: Theme.horizontalPageMargin
@@ -150,7 +150,7 @@ Page {
                 width: 1
             }
         }
-		VerticalScrollDecorator { }
+        VerticalScrollDecorator { }
     }
 }
 
