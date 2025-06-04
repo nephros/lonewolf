@@ -117,6 +117,7 @@ desktop-file-edit  \
 --set-value="/usr/bin/invoker --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
 --set-key=X-Nemo-Application-Type \
 --set-value=silica-qt5 \
+--remove-key=X-Ubuntu-Touch \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
 printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPermissions=WebView;Internet\n' \
 >> %{buildroot}%{_datadir}/applications/%{name}.desktop
