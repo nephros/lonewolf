@@ -316,6 +316,7 @@ WebViewPage {
                 pageStack.push(chartPage)
                 alertPopup.accepted(); alertPopup.visible = false
             } else if (alertPopup.text.indexOf("combat,") == 0) {
+                haptics.play(ThemeEffect.PressStrong);
                 combat.props = alertPopup.text;
                 combat.visible = true;
             } else if (alertPopup.text.indexOf("external,") == 0) {
