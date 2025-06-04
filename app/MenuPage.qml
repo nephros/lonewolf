@@ -43,18 +43,16 @@ Page {
                 width: parent.width
             }
 
-            Button {
-                text: gameState.book == "" && gameState.pageId == "" ? "Start Book 1" : "Continue"
-                onClicked: goToBookTab()
-                //color: theme.palette.normal.positive
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            SecondaryButton {
-                text: "Load Quick Save"
-                enabled: quickSaveState.pageId != ""
-                onClicked: loadQuickSave()
-                //color: theme.palette.normal.negative
-                anchors.horizontalCenter: parent.horizontalCenter
+            ButtonLayout {
+                Button {
+                    text: gameState.book == "" && gameState.pageId == "" ? "Start Book 1" : "Continue"
+                    onClicked: goToBookTab()
+                }
+                SecondaryButton {
+                    text: "Load Quick Save"
+                    enabled: quickSaveState.pageId != ""
+                    onClicked: loadQuickSave()
+                }
             }
 
             ListModel {
