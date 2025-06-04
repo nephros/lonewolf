@@ -326,41 +326,46 @@ WebViewPage {
             }
         }
 
-        Dialog {
+        Rectangle {
             id: random
-            onAccepted: { alertPopup.accepted(); alertPopup.visible = false }
-            onRejected: { alertPopup.accepted(); alertPopup.visible = false }
+            anchors.fill: parent
+            color: Theme.overlayBackgroundColor
+            opacity: Theme.opacityOverlay
+            visible: false
+            property bool numberRevealed: false
             Component.onCompleted: timer.start()
-            DialogHeader { id: header; acceptText: "Great"; cancelText: "Alright" }
-            Label { id: islabel
-                anchors.top: header.bottom
+            Timer { id: timer; interval: 1000; onTriggered: numberRevealed = true }
+            Column {
+                spacing: Theme.paddingLarge
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.horizontalPageMargin
                 anchors.leftMargin: Theme.horizontalPageMargin
-                font.pixelSize: Theme.fontSizeLarge
-                text: "Your random number is:"
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
+                Label { id: islabel
+                    width: parent.width
+                    height: Theme.itemSizeLarge*3
+                    font.pixelSize: Theme.fontSizeLarge
+                    text: "Your random number is:"
+                    color: Theme.highlightColor
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                }
+                Label { id: number
+                    width: parent.width
+                    font.pixelSize: Theme.fontSizeHuge
+                    text: Util.getRandom()
+                    color: Theme.highlightColor
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                    visible: random.numberRevealed
+                    opacity: visible ? 1.0 : 0.0
+                    Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
+                }
             }
-            Label { id: number
-                anchors.top: islabel.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.topMargin: Theme.itemSizeLarge
-                anchors.rightMargin: Theme.horizontalPageMargin
-                anchors.leftMargin: Theme.horizontalPageMargin
-                font.pixelSize: Theme.fontSizeHuge
-                text: Util.getRandom()
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                visible: false
-                opacity: visible ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
+            BackgroundItem {
+                anchors.fill: parent
+                onClicked: { alertPopup.accepted(); alertPopup.visible = false }
             }
-            Timer { id: timer; interval: 1000; onTriggered: number.visible = true }
         }
     }}
 
