@@ -57,43 +57,44 @@ Page {
 
             ListModel {
                 id: kaiModel
-                ListElement { book: "01fftd" }
-                ListElement { book: "02fotw" }
-                ListElement { book: "03tcok" }
-                ListElement { book: "04tcod" }
-                ListElement { book: "05sots" }
+                ListElement { book: "01fftd" ; title: "Flight from the Dark" }
+                ListElement { book: "02fotw" ; title: "Fire on the Water" }
+                ListElement { book: "03tcok" ; title: "The Caverns of Kalte" }
+                ListElement { book: "04tcod" ; title: "The Chasm of Doom" }
+                ListElement { book: "05sots" ; title: "Shadow on the Sand" }
             }
             ListModel {
                 id: magnakaiModel
-                ListElement { book: "06tkot" }
-                ListElement { book: "07cd" }
-                ListElement { book: "08tjoh" }
-                ListElement { book: "09tcof" }
-                ListElement { book: "10tdot" }
-                ListElement { book: "11tpot" }
-                ListElement { book: "12tmod" }
+                ListElement { book: "06tkot" ; title: "The Kingdoms of Terror" }
+                ListElement { book: "07cd"   ; title: "Castle Death" }
+                ListElement { book: "08tjoh" ; title: "The Jungle of Horrors" }
+                ListElement { book: "09tcof" ; title: "The Cauldron of Fear" }
+                ListElement { book: "10tdot" ; title: "The Dungeons of Torgar" }
+                ListElement { book: "11tpot" ; title: "The Prisoners of Time" }
+                ListElement { book: "12tmod" ; title: "The Masters of Darkness" }
             }
             ListModel {
                 id: grandmasterModel
-                ListElement { book: "13tplor" }
-                ListElement { book: "14tcok" }
-                ListElement { book: "15tdc" }
-                ListElement { book: "16tlov" }
-                ListElement { book: "17tdoi" }
-                ListElement { book: "18dotd" }
-                ListElement { book: "19wb" }
-                ListElement { book: "20tcon" }
+                ListElement { book: "13tplor" ; title: "The Plague Lords of Ruel" }
+                ListElement { book: "14tcok"  ; title: "The Captives of Kaag" }
+                ListElement { book: "15tdc"   ; title: "The Darke Crusade" }
+                ListElement { book: "16tlov"  ; title: "The Legacy of Vashna" }
+                ListElement { book: "17tdoi"  ; title: "The Deathlord of Ixia" }
+                ListElement { book: "18dotd"  ; title: "Dawn of the Dragons" }
+                ListElement { book: "19wb"    ; title: "Wolf's Bane" }
+                ListElement { book: "20tcon"  ; title: "The Curse of Naar" }
+
             }
             ListModel {
                 id: neworderModel
-                ListElement { book: "21votm" }
-                ListElement { book: "22tbos" }
-                ListElement { book: "23mh" }
-                ListElement { book: "24rw" }
-                ListElement { book: "25totw" }
-                ListElement { book: "26tfobm" }
-                ListElement { book: "27v" }
-                ListElement { book: "28thos" }
+                ListElement { book: "21votm" ; title: "Voyage of the Moonstone" }
+                ListElement { book: "22tbos" ; title: "The Buccaneers of Shadaki" }
+                ListElement { book: "23mh"   ; title: "Mydnight's Hero" }
+                ListElement { book: "24rw"   ; title: "Rune War" }
+                ListElement { book: "25totw" ; title: "Trail of the Wolf" }
+                ListElement { book: "26tfobm"; title: "The Fall of Blood Mountain" }
+                ListElement { book: "27v"    ; title: "Vampirium" }
+                ListElement { book: "28thos" ; title: "The Hunger of Sejanoz" }
             }
 
             Item {

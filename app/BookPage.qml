@@ -110,7 +110,7 @@ WebViewPage {
 
     PageHeader { id: header
         title: book.pageTitle
-        //description: mainView.endurance + "EP"
+        description: gameState.bookTitle
     }
     Item {
         id: endurancebar
