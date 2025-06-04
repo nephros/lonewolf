@@ -18,7 +18,7 @@ WebViewPage {
         id: saveDialog
         Dialog {
             id: dialog
-            DialogHeader { id: header; title: "Quick Save"; acceptText: "Got it" }
+            //DialogHeader { id: header; title: "Quick Save"; acceptText: "Got it" }
             Label {
                 anchors.fill: parent
                 text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
@@ -26,10 +26,20 @@ WebViewPage {
         }
     }
 
+    /*
     ChartPage {
         id: chartPage
         objectName: "chart"
         you: root.you
+    }
+    */
+
+    ChartPanel {
+        id: chartPage
+        objectName: "chart"
+        you: root.you
+        width: parent.width
+        height: parent.height - header.height
     }
 
     Component.onCompleted: {
@@ -67,7 +77,7 @@ WebViewPage {
                 id: actionChart
                 //icon.source: "note"
                 text: "Action Chart"
-                onClicked: pageStack.push(chartPage)
+                onClicked: chartPage.open = !chartPage.open
             }
             MenuItem {
                 id: quickSave
@@ -205,7 +215,8 @@ WebViewPage {
 
 
         popupProvider: PopupProvider {
-            alertPopup: alertDialog
+            //alertPopup: alertDialog
+            alertPopup: { "type": "item", "component": alertDialog }
         }
     }
 
@@ -260,13 +271,17 @@ WebViewPage {
     Component { id: alertDialog; AlertPopupInterface {
         id: alertPopup
         anchors.fill: parent
-
-        Component.onCompleted: {
+        //preventDialogsPrefillValue: false
+        //preventDialogsValue: false
+        //preventDialogsVisible: false
+        //Component.onCompleted: {
+        onTextChanged: {
             console.debug("Executing alert action:", text)
             if (alertPopup.text == "random") {
-                pageStack.push(random)
+                random.visible = true;
             } else if (alertPopup.text == "action") {
-                pageStack.push(chartPage)
+                chartPage.open = !chartPage.open
+                alertPopup.accepted(); alertPopup.visible = false
             } else if (alertPopup.text.indexOf("combat,") == 0) {
                 combat.props = alertPopup.text;
                 combat.visible = true;
@@ -282,7 +297,7 @@ WebViewPage {
                 goToBookTab();
             } else {
                 pageView.pageId = alertPopup.text;
-                alertPopup.accepted(); alertPopup.visible = false
+                //alertPopup.accepted(); alertPopup.visible = false
             }
         }
 
@@ -306,16 +321,19 @@ WebViewPage {
             }
         }
 
-        Dialog {
-            id: random
-            onAccepted: { alertPopup.accepted(); alertPopup.visible = false }
-            onRejected: { alertPopup.accepted(); alertPopup.visible = false }
-            Component.onCompleted: timer.start()
-            DialogHeader { id: header; acceptText: "Great"; cancelText: "Alright" }
+        Rectangle { id: random
+            anchors.fill: parent
+            visible: false
+            color: Theme.overlayBackgroundColor //"black"
+            opacity: Theme.opacityOverlay
+            signal numberDone
+            onNumberDone: { alertPopup.accepted(); alertPopup.visible = false }
+            onVisibleChanged: timer.start()
             Label { id: islabel
-                anchors.top: header.bottom
+                anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.topMargin: Theme.itemSizeLarge
                 anchors.rightMargin: Theme.horizontalPageMargin
                 anchors.leftMargin: Theme.horizontalPageMargin
                 font.pixelSize: Theme.fontSizeLarge
@@ -341,6 +359,7 @@ WebViewPage {
                 Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
             }
             Timer { id: timer; interval: 1000; onTriggered: number.visible = true }
+            BackgroundItem { anchors.fill: parent; onClicked: parent.numberDone() }
         }
     }}
 
