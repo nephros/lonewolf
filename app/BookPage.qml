@@ -228,8 +228,8 @@ WebViewPage {
         }
 
         popupProvider: PopupProvider {
-            //alertPopup: alertDialog
-            alertPopup: { "type": "item", "component": alertDialog }
+            //alertPopup: customAlertPopup
+            alertPopup: { "type": "item", "component": customAlertPopup }
         }
     }
 
@@ -300,46 +300,46 @@ WebViewPage {
         }
     }
 
-    Component { id: alertDialog; AlertPopupInterface {
-        id: alertPopup
+    Component { id: customAlertPopup; AlertPopupInterface {
+        id: alertIface
         anchors.fill: parent
         signal handled
         onHandled: {
             console.debug("Alert handled")
-            accepted(); visible = false
+            preventDialogsValue = false
+            accepted()
+            //visible = false
         }
-        //preventDialogsPrefillValue: false
-        //preventDialogsValue: false
-        //preventDialogsVisible: false
+
         //Component.onCompleted: {
         onTextChanged: {
             console.debug("Executing alert action:", text)
-            if (alertPopup.text == "random") {
+            if (alertIface.text == "random") {
                 random.visible = true
-            } else if (alertPopup.text == "action") {
+            } else if (alertIface.text == "action") {
                 haptics.play()
                 pageStack.push(chartPage)
-                alertPopup.handled()
-            } else if (alertPopup.text.indexOf("combat,") == 0) {
+                alertIface.handled()
+            } else if (alertIface.text.indexOf("combat,") == 0) {
                 haptics.play(ThemeEffect.PressStrong);
-                combat.props = alertPopup.text;
+                combat.props = alertIface.text;
                 combat.visible = true;
-            } else if (alertPopup.text.indexOf("external,") == 0) {
-                Qt.openUrlExternally(alertPopup.text.split(',')[1]);
-                alertPopup.handled()
-            } else if (alertPopup.text.indexOf("puzzle-page,") == 0) {
-                puzzle.answers = alertPopup.text.split(',')[1];
+            } else if (alertIface.text.indexOf("external,") == 0) {
+                Qt.openUrlExternally(alertIface.text.split(',')[1]);
+                alertIface.handled()
+            } else if (alertIface.text.indexOf("puzzle-page,") == 0) {
+                puzzle.answers = alertIface.text.split(',')[1];
                 puzzle.visible = true;
-            } else if (alertPopup.text.indexOf("book,") == 0) {
+            } else if (alertIface.text.indexOf("book,") == 0) {
                 haptics.play();
-                you.book = alertPopup.text.split(',')[2];
+                you.book = alertIface.text.split(',')[2];
                 pageView.pageId = "";
                 goToBookTab();
             } else {
                 haptics.play();
-                pageView.pageId = alertPopup.text;
+                pageView.pageId = alertIface.text;
                 console.debug("Turned to page:", text)
-                alertPopup.handled()
+                alertIface.handled()
             }
         }
 
@@ -348,7 +348,7 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: { alertPopup.handled() }
+            onClose: { alertIface.handled() }
         }
 
         Puzzle {
@@ -356,10 +356,10 @@ WebViewPage {
             anchors.fill: parent
             visible: false
             you: root.you
-            onClose: { alertPopup.handled() }
+            onClose: { alertIface.handled() }
             onGoTo: {
                 pageView.pageId = page;
-                alertPopup.handled()
+                alertIface.handled()
             }
         }
 
@@ -399,7 +399,7 @@ WebViewPage {
             MouseArea {
                 anchors.fill: parent
                 enabled: random.numberRevealed
-                onClicked: { random.visible = false; alertPopup.handled() }
+                onClicked: { random.visible = false; alertIface.handled() }
             }
         }
     }}
