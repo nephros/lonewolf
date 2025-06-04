@@ -334,8 +334,8 @@ WebViewPage {
             opacity: Theme.opacityOverlay
             visible: false
             property bool numberRevealed: false
-            Component.onCompleted: timer.start()
-            Timer { id: timer; interval: 1000; onTriggered: numberRevealed = true }
+            Timer { id: timer; running: visible; interval: 1000; onTriggered: random.numberRevealed = true }
+            onVisibleChanged: numberRevealed = !visible
             Column {
                 spacing: Theme.paddingLarge
                 anchors.left: parent.left
