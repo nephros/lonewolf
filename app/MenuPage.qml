@@ -12,6 +12,16 @@ Page {
         gameState.pageId = pageId;
         goToBookTab();
     }
+    function nuke() {
+        gameState.book = "";
+        gameState.pageId = "";
+        gameState.clear()
+    }
+    function restart() {
+        const book = gameState.book
+        gameState.clear()
+        startBook(book, "")
+    }
 
     SilicaFlickable {
         id: flicker
@@ -21,7 +31,15 @@ Page {
         anchors.bottom: parent.bottom
         contentHeight: column.height + column.anchors.margins * 2
         //contentWidth: width
-
+        PullDownMenu {
+            MenuItem { text: "About"; onClicked: pageStack.push("AboutPage.qml") }
+            MenuItem { text: "Restart Book"; enabled: ((gameState.book != "") && (gameState.pageId != ""))
+                onClicked: Remorse.popupAction(root, "Restarting Book", function() { root.restart() }, 3000)
+            }
+            MenuItem { text: "Reset Book and Progress"; enabled: ((gameState.book != "") && (gameState.pageId != ""))
+                onClicked: Remorse.popupAction(root, "Progress and Book cleared", function() { root.nuke() }, 3000)
+            }
+        }
         Column {
             id: column
             spacing: Theme.paddingSmall
