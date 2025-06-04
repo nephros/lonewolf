@@ -50,8 +50,16 @@ WebViewPage {
     }
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
-    SilicaFlickable {
+    SilicaFlickable { id: flickable
         anchors.fill: parent
+        //interactive: false
+        //pressDelay: 0
+        property bool wvHadFocus: pageView.focus
+        property bool wvCanFocus: (!moving && !dragging && !dragging)
+        onWvCanFocusChanged: {
+            if (wvCanFocus) { wvHadFocus = pageView.focus; pageView.focus = false }
+            else { if (wvHadFocus) pageView.focus = true }
+        }
         PullDownMenu {
             visible: book.progress == 100
             MenuItem {
