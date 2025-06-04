@@ -100,11 +100,13 @@ WebViewPage {
                 onClicked: pageView.pageId = "map"
             }
         }
+        /*
         PushUpMenu {
             visible: pageView.loaded
             MenuItem { text: "Increase Text size"; onClicked: WebEngineSettings.pixelRatio+=1 }
             MenuItem { text: "Decrease Text size"; onClicked: WebEngineSettings.pixelRatio-=1 }
         }
+        */
 
     PageHeader { id: header
         title: book.pageTitle
@@ -247,7 +249,7 @@ WebViewPage {
                 //height: parent.height - Theme.paddingSmall
                 //width: height
                 icon.source: "image://theme/icon-m-previous"
-                visible: book.prevPageId != ""
+                enabled: book.prevPageId != ""
                 onClicked: pageView.pageId = book.prevPageId;
             }
             IconButton {
@@ -258,8 +260,27 @@ WebViewPage {
                 //height: parent.height - Theme.paddingSmall
                 //width: height
                 icon.source: "image://theme/icon-m-next"
-                visible: book.nextPageId != ""
+                enabled: book.nextPageId != ""
                 onClicked: pageView.pageId = book.nextPageId
+            }
+
+            Row {
+                visible: !licenseButton.visible
+                anchors.centerIn: parent
+                spacing: Theme.paddingLarge
+                IconButton {
+                    icon.source: "image://theme/icon-splus-remove"
+                    onClicked: WebEngineSettings.pixelRatio-=0.5
+                }
+                Icon {
+                    height: textplus.height
+                    width: textplus.width
+                    source: "image://theme/icon-m-font-size"
+                }
+                IconButton { id: textplus
+                    icon.source: "image://theme/icon-splus-add"
+                    onClicked: WebEngineSettings.pixelRatio+=0.5
+                }
             }
 
             SecondaryButton {
