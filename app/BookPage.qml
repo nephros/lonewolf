@@ -112,13 +112,13 @@ WebViewPage {
         title: book.pageTitle
         description: gameState.bookTitle
     }
-    Item {
+    Rectangle {
         id: endurancebar
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: header.bottom
         height: Theme.itemSizeLarge
-        //color: Theme.highlightDimmerColor
+        color: Theme.highlightBackgroundFromColor(book.bgColor, Theme.colorScheme)
 
         IconButton {
             id: minus
