@@ -12,26 +12,9 @@ WebViewPage {
     property var you
     property bool canDoBackAction: false
     //readonly property product: bookProduct()
-    //
+
     backgroundColor: Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
 
-    Component {
-        id: saveDialog
-        Dialog {
-            id: dialog
-            DialogHeader { id: header; title: "Quick Save"; cancelText: "OK"; acceptText: "Got it" }
-            Label {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: header.bottom
-                anchors.leftMargin: Theme.paddingSmall
-                anchors.rightMargin: Theme.paddingSmall
-                anchors.topMargin: Theme.itemSizeLarge
-                text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
-                wrapMode: Text.Wrap
-            }
-        }
-    }
 
     onStatusChanged: {
         if ((root.status == PageStatus.Active) && (pageStack.nextPage() == null)) {
@@ -542,6 +525,24 @@ WebViewPage {
                 anchors.topMargin: Theme.paddingSmall
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: pageStack.pop()
+            }
+        }
+    }
+
+    Component {
+        id: saveDialog
+        Dialog {
+            id: dialog
+            DialogHeader { id: header; title: "Quick Save"; cancelText: "OK"; acceptText: "Got it" }
+            Label {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: header.bottom
+                anchors.leftMargin: Theme.paddingSmall
+                anchors.rightMargin: Theme.paddingSmall
+                anchors.topMargin: Theme.itemSizeLarge
+                text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
+                wrapMode: Text.Wrap
             }
         }
     }
