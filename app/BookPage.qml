@@ -33,6 +33,11 @@ WebViewPage {
         }
     }
 
+    onStatusChanged: {
+        if ((root.status == PageStatus.Active) && (pageStack.nextPage() == null)) {
+            var cp = pageStack.pushAttached(chartPage)
+        }
+    }
     signal showChartPage
     onShowChartPage: {
         if (pageStack.nextPage() == null) {
