@@ -20,6 +20,7 @@ URL:        https://github.com/timsueberkrueb/lonewolf
 Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
+Source3:    rpm/AG_Souvenir_Regular.ttf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
@@ -108,6 +109,9 @@ rm -rf %{buildroot}
 %cmake_install
 
 # >> install post
+install -d %{buildroot}/%{_datadir}/fonts/%{name}/
+install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
+
 ln -s Main.qml %{buildroot}/%{_datadir}/%{name}/qml/%{name}.qml
 install -pm644 %{S:1} %{buildroot}/%{_datadir}/%{name}/qml/
 #install -Dpm644 app/graphics/%%{name}.png %%{buildroot}/%%{_datadir}/icons/hicolor/256x256/apps/%%{name}.png
@@ -142,6 +146,7 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/*/*/apps/%{name}.png
 %{_datadir}/icons/*/*/apps/%{name}.svg
 %{_datadir}/%{name}
+%{_datadir}/fonts/%{name}/*.ttf
 # >> files
 # << files
 

@@ -10,6 +10,7 @@ Sources:
     - '%{name}-%{version}.tar.gz'
     - lonewolf-bighead.png
     - lonewolf-app-icon.svg
+    - rpm/AG_Souvenir_Regular.ttf
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'orgname;%{name}'
@@ -81,6 +82,7 @@ Files:
   - '%{_datadir}/icons/*/*/apps/%{name}.png'
   - '%{_datadir}/icons/*/*/apps/%{name}.svg'
   - '%{_datadir}/%{name}'
+  - '%{_datadir}/fonts/%{name}/*.ttf'
 
 
 SubPackages:
