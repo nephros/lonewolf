@@ -26,6 +26,7 @@ Item {
                 text: root.title
                 font.pixelSize: Theme.fontSizeLarge
                 font.bold: true
+                color: Theme.highlightColor
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right //buyButton.left
@@ -45,12 +46,15 @@ Item {
             text: root.description
             width: parent.width
             wrapMode: Text.Wrap
+            color: Theme.secondaryHighlightColor
         }
-        Flow {
+        Grid {
             id: buttonFlow
+            columns: 7
+            horizontalItemAlignment: Grid.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - marginWidth * 2
-            spacing: Theme.paddingMedium
+            spacing: Theme.paddingLarge
             property real buttonWidth: Theme.buttonWidthTiny
             property real marginWidth: (parent.width - buttonWidth) % (buttonWidth + spacing) / 2
             Repeater {

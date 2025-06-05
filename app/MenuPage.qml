@@ -60,7 +60,8 @@ Page {
                 text: "<p>Lone Wolf is a role-playing book series from the 80s.</p><br>" +
                       "<p>This app lets you play the old adventures, but the text is not updated.  It may refer to things like pencils that assume you are playing with an actual book.  And it relies on the honor system a bit.  Just roll with it.</p><br>" +
                       "<p>If you have any rules questions or encounter an ambiguity, try the <a href='http://www.projectaon.org/en/ReadersHandbook/Home'>Reader's Handbook</a>.</p>"
-                linkColor: Theme.secondaryHighlightColor
+                color: Theme.highlightColor
+                linkColor: Theme.primaryColor
                 onLinkActivated: Qt.openUrlExternally(link)
                 wrapMode: Text.Wrap
                 width: parent.width
@@ -127,20 +128,13 @@ Page {
                 ListElement { book: "28thos" ; title: "The Hunger of Sejanoz" }
             }
 
-            Item {
-                height: 1
-                width: 1
-            }
+            SectionHeader { text: "Available Books" }
             BookList {
                 model: kaiModel
                 title: "Kai Series"
                 description: "Save your country from a looming threat.\nStart here if you've never played before."
                 onStartBook: root.startBook(book, "")
                 width: parent.width
-            }
-            Item {
-                height: 1
-                width: 1
             }
             BookList {
                 model: magnakaiModel
@@ -150,10 +144,6 @@ Page {
                 width: parent.width
                 //product: magnakaiProduct
             }
-            Item {
-                height: 1
-                width: 1
-            }
             BookList {
                 model: grandmasterModel
                 title: "Grandmaster Series"
@@ -161,10 +151,6 @@ Page {
                 onStartBook: root.startBook(book, "")
                 width: parent.width
                 //product: grandmasterProduct
-            }
-            Item {
-                height: 1
-                width: 1
             }
             BookList {
                 model: neworderModel
@@ -174,12 +160,7 @@ Page {
                 width: parent.width
                 //product: neworderProduct
             }
-            Item {
-                height: 1
-                width: 1
-            }
         }
-        VerticalScrollDecorator { }
     }
 }
 
