@@ -34,8 +34,8 @@ Page {
         //contentWidth: width
         PullDownMenu {
             MenuItem { text: "About"; onClicked: pageStack.push("AboutPage.qml") }
-            MenuItem { text: "Delete Quicksave"; enabled: (quickSaveState.pageId != "")
-                onClicked: Remorse.popupAction(root, "Deleting Quicksave", function() { root.nukesave() }, 3000)
+            MenuItem { text: "Delete Quick Save"; enabled: (quickSaveState.pageId != "")
+                onClicked: Remorse.popupAction(root, "Deleting Quick Save", function() { root.nukesave() }, 3000)
             }
             MenuItem { text: "Restart Book"; enabled: (gameState.pageId != "")
                 onClicked: Remorse.popupAction(root, "Restarting Book", function() { root.restart() }, 3000)
@@ -80,7 +80,7 @@ Page {
             }
             TextSwitch {
                 text: "Auto-Save on Quit"
-                description: "Automatically perform a Quicksave when the app is closed"
+                description: "Automatically perform a Quick Save when the app is closed"
                 checked: uisettings.saveOnQuit
                 onCheckedChanged: uisettings.saveOnQuit = checked
             }
