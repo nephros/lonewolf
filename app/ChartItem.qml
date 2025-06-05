@@ -9,5 +9,6 @@ TextField {
         property: prop
         value: text
     }
+	EnterKey.onClicked: focus = false
 }
 
