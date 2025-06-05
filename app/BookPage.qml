@@ -124,8 +124,8 @@ WebViewPage {
         }
 
     PageHeader { id: header
-        title: book.pageTitle
-        description: gameState.bookTitle
+        description: book.pageTitle
+        title: mainView.bookTitle
     }
     Rectangle {
         id: endurancebar

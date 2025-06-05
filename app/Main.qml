@@ -54,6 +54,7 @@ ApplicationWindow {
     cover: coverPage
 
     function goToBookTab() {
+      mainView.bookTitle = menuPage.getTitle()
       pageStack.replace(bookComponent)
     }
     function popBookTab() {
@@ -96,7 +97,7 @@ ApplicationWindow {
       }
     }
 
-    readonly property string bookTitle: gameState.bookTitle ? gameState.bookTitle : "Lone Wolf"
+    property string bookTitle: "Lone Wolf"
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance
     readonly property int combatskill: inneworder ? gameState.neworder_combatskill : gameState.combatskill

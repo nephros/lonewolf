@@ -26,6 +26,25 @@ Page {
         gameState.clear()
         startBook(book, "")
     }
+    function getTitle() {
+        for (var i=0; i<kaiModel.count; ++i) {
+            const b = kaiModel.get(i)
+            if (b.book == gameState.book) { return b.title }
+        }
+        for (var i=0; i<magnakaiModel.count; ++i) {
+            const b = magnakaiModel.get(i)
+            if (b.book == gameState.book) { return b.title }
+        }
+        for (var i=0; i<grandmasterModel.count; ++i) {
+            const b = grandmasterModel.get(i)
+            if (b.book == gameState.book) { return b.title }
+        }
+        for (var i=0; i<neworderModel.count; ++i) {
+            const b = neworderModel.get(i)
+            if (b.book == gameState.book) { return b.title }
+        }
+        return "Lone Wolf"
+    }
 
     SilicaFlickable {
         id: flicker

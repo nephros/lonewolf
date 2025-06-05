@@ -7,7 +7,6 @@ import Nemo.Configuration 1.0
 ConfigurationGroup {
     scope: settings
     property string book
-    property string bookTitle
     property string pageId
 
     property int endurance
