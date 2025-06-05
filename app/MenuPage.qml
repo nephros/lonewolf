@@ -78,13 +78,19 @@ Page {
                     onClicked: loadQuickSave()
                 }
             }
-            IconTextSwitch {
-                icon.source: "image://theme/icon-m-downloads"
+            TextSwitch {
                 text: "Auto-Save on Quit"
                 description: "Automatically perform a Quicksave when the app is closed"
                 checked: uisettings.saveOnQuit
                 onCheckedChanged: uisettings.saveOnQuit = checked
             }
+            TextSwitch {
+                text: "Apply text styling"
+                description: "Add styling to the book pages for a more authentic look"
+                checked: uisettings.styleHtml
+                onCheckedChanged: uisettings.sstyleHtmlaveOnQuit = checked
+            }
+
 
             ListModel {
                 id: kaiModel

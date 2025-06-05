@@ -23,6 +23,7 @@ ApplicationWindow {
         path: "ui"
         property int font: 2
         property bool saveOnQuit: false
+        property bool styleHtml: true
     }
 
     GameState {

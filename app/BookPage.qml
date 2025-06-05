@@ -133,14 +133,14 @@ WebViewPage {
         anchors.right: parent.right
         anchors.top: header.bottom
         height: Theme.itemSizeMedium
-        color: Theme.highlightBackgroundFromColor(book.bgColor, Theme.colorScheme)
+        color: Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
 
         IconButton {
             id: plus
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: Theme.paddingSmall
-            icon.source: "image://theme/icon-splus-add"
+            icon.source: "image://theme/icon-m-add"
             //height: parent.height - Theme.paddingSmall
             //width: height
             enabled: mainView.endurance < mainView.maxendurance
@@ -165,7 +165,7 @@ WebViewPage {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             anchors.margins: Theme.paddingSmall
-            icon.source: "image://theme/icon-splus-remove"
+            icon.source: "image://theme/icon-m-remove"
             enabled: mainView.endurance > 0
             onClicked: {
                 haptics.play();
@@ -198,8 +198,31 @@ WebViewPage {
             } else if (!inBackMatter) {
                 you.pageId = pageId; // save place
             }
-            //console.log("DEBUG page:", content);
-            pageView.loadHtml(content, Qt.resolvedUrl(book.cacheDir) + "/");
+            var newstyle
+            if (uisettings.styleHtml) {
+                newstyle=[
+                    '<style>* { font-family: Souvenir, "Sunset Serial Light", "Linux Biolinum", Garamond, Georgia, "Times New Roman", Times, serif;}</style>',
+                    '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
+                    '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
+                    '<style> .attribute { font-variant-caps: small-caps; }</style>',
+                    '<style> .footnote { font-style: italic; }</style>',
+                    '<style> .dedication { font-style: italic; font-weight: bold; text-align: center; margin-left: auto; margin-right: auto; }</style>',
+                    '<style> .sound { font-style: italic; }</style>',
+                    '<style> dt { font-weight: bold; }</style>',
+                    '<style> figure { margin-left: auto; margin-right: auto; }</style>',
+                    '<style> figcaption { font-style: italic; }</style>',
+                    '<style> quote:before { content: \'“\'; }</style>',
+                    '<style> quote:after { content: \'”\'; }</style>',
+                    ].join('\n')
+            } else {
+                newstyle=[
+                    '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
+                    '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
+                    ].join('\n')
+            }
+            const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
+            pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
+            //console.log("DEBUG page:", newcontent);
         }
     }
 
@@ -270,9 +293,6 @@ WebViewPage {
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
             WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
-            WebEngineSettings.setPreference("font.default.serif",      "serif", WebEngineSettings.StringPref)
-            WebEngineSettings.setPreference("font.default.sans-serif", "serif", WebEngineSettings.StringPref)
-            WebEngineSettings.setPreference("font.name-list.serif",    'Souvenir, "Sunset Serial Light", "Linux Biolinum", Georgia, "Times New Roman", serif, sans-serif', WebEngineSettings.StringPref)
             //WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
             //WebEngineSettings.setPreference("security.disable_cors_checks", false, WebEngineSettings.BoolPref)
         }
