@@ -97,6 +97,7 @@ ApplicationWindow {
       }
     }
 
+    property bool nightModeEnabled: false
     property string bookTitle: "Lone Wolf"
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance

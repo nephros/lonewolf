@@ -13,7 +13,9 @@ WebViewPage {
     property bool canDoBackAction: false
     //readonly property product: bookProduct()
 
-    backgroundColor: Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
+    backgroundColor: mainView.nightModeEnabled
+         ? "black"
+         : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
 
 
     onStatusChanged: {
@@ -109,6 +111,7 @@ WebViewPage {
     PageHeader { id: header
         description: book.pageTitle
         title: mainView.bookTitle
+        opacity: mainView.nightModeEnabled ? 0.8 : 1.0
     }
 
     Rectangle {
@@ -117,7 +120,7 @@ WebViewPage {
         anchors.right: parent.right
         anchors.top: header.bottom
         height: Math.max(goldrow.height, endurancerow.height) + Theme.paddingSmall
-        color: Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
+        color:  mainView.nightModeEnabled ? "black" : Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
 
         Row { id: goldrow
             anchors.left: parent.left
@@ -138,6 +141,7 @@ WebViewPage {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.capitalization: Font.SmallCaps
+                color: (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
             }
             IconButton {
                 anchors.margins: Theme.paddingSmall
@@ -170,6 +174,7 @@ WebViewPage {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.capitalization: Font.SmallCaps
+                color: (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
             }
             IconButton {
                 anchors.margins: Theme.paddingSmall
@@ -190,10 +195,9 @@ WebViewPage {
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
-        bgColor: "bisque"
-        //textColor: "#212121"
-        textColor: "#333300"
-        linkColor:  Theme.highlightFromColor("bisque", Theme.DarkOnLight)
+        bgColor:   mainView.nightModeEnabled ? "black" : "bisque"
+        textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
+        linkColor:  Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.DarkOnLight: Theme.lightOnDark))
 
         onDirChanged: console.debug("Book dir:", dir, "Cache dir:", cacheDir)
 
@@ -237,7 +241,7 @@ WebViewPage {
     }
 
     Rectangle { id: viewBorder
-        border.color: "bisque"
+        border.color: book.bgColor
         border.width: Theme.horizontalPageMargin
         color: "transparent"
         anchors.centerIn: pageView
@@ -343,7 +347,7 @@ WebViewPage {
                 onClicked: pageView.pageId = book.nextPageId
             }
 
-            Row {
+            Row { id: plusminus
                 visible: !licenseButton.visible
                 anchors.centerIn: parent
                 spacing: Theme.paddingLarge
@@ -354,12 +358,22 @@ WebViewPage {
                 Icon {
                     height: textplus.height
                     width: textplus.width
-                    source: "image://theme/icon-m-font-size"
+                    source: "image://theme/icon-m-font-size?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                 }
                 IconButton { id: textplus
                     icon.source: "image://theme/icon-splus-add"
                     onClicked: WebEngineSettings.pixelRatio+=0.5
                 }
+            }
+
+            IconButton { id: nightmode
+                icon.source: "image://theme/icon-m-night?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                onClicked: mainView.nightModeEnabled = !mainView.nightModeEnabled
+                visible: !licenseButton.visible
+                anchors.right: next.left
+                anchors.left: plusminus.right
+                anchors.verticalCenter: next.verticalCenter
+                anchors.margins: Theme.paddingLarge
             }
 
             SecondaryButton {
