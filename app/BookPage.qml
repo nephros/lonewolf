@@ -29,6 +29,15 @@ WebViewPage {
         }
     }
 
+    signal showChartPage
+    onShowChartPage: {
+        if (pageStack.nextPage() == null) {
+            var cp = pageStack.pushAttached(chartPage)
+            cp.completed.connect(pageStack.navigateForward())
+        } else {
+            pageStack.navigateForward()
+        }
+    }
     ChartPage {
         id: chartPage
         objectName: "chart"
@@ -79,7 +88,7 @@ WebViewPage {
                 id: actionChart
                 //icon.source: "note"
                 text: "Action Chart"
-                onClicked: pageStack.push(chartPage)
+                onClicked: showChartPage()
             }
             MenuItem {
                 id: quickSave
@@ -202,6 +211,41 @@ WebViewPage {
         canShowSelectionMarkers: false
         chromeGestureEnabled: false
         //onTitleChanged: console.debug("Webview title:", title)
+        onRecvAsyncMessage: function(message, data) {
+            //console.log("Async Message: ", message, JSON.stringify(data));
+            if (message == "embed:alert") {
+                handleUserClick(data.text)
+            }
+        }
+        function handleUserClick(text) {
+            if (text == "random") {
+                random.visible = true
+            } else if (text == "action") {
+                haptics.play()
+                root.showChartPage()
+            } else if (text.indexOf("combat,") == 0) {
+                haptics.play(ThemeEffect.PressStrong);
+                //combat.props = text;
+                //combat.visible = true;
+                var result = pageStack.push(combatPage, { props: text, you: root.you })
+            } else if (text.indexOf("external,") == 0) {
+                Qt.openUrlExternally(text.split(',')[1]);
+            } else if (text.indexOf("puzzle-page,") == 0) {
+                puzzle.answers = text.split(',')[1];
+                puzzle.visible = true;
+            } else if (text.indexOf("book,") == 0) {
+                haptics.play();
+                you.book = text.split(',')[2];
+                pageView.pageId = "";
+                goToBookTab();
+            } else {
+                haptics.play();
+                pageView.pageId = text;
+                console.debug("Turned to page:", text)
+            }
+            console.debug("Executed alert action:", text)
+        }
+
         Connections {
             target: WebEngineSettings
             onPixelRatioChanged: uisettings.font = WebEngineSettings.pixelRatio
@@ -209,7 +253,6 @@ WebViewPage {
         Component.onCompleted: {
             WebEngineSettings.pixelRatio = Math.ceil(uisettings.font)
             WebEngineSettings.autoLoadImages = true
-            WebEngineSettings.popupEnabled = true
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
             WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
@@ -221,8 +264,7 @@ WebViewPage {
         }
 
         popupProvider: PopupProvider {
-            //alertPopup: customAlertPopup
-            alertPopup: { "type": "item", "component": customAlertPopup }
+            alertPopup: { "type": "item", "component": dummyAlertPopup }
         }
     }
 
@@ -293,48 +335,34 @@ WebViewPage {
         }
     }
 
-    Component { id: customAlertPopup; AlertPopupInterface {
-        id: alertIface
-        anchors.fill: parent
-        signal handled
-        onHandled: {
-            console.debug("Alert handled")
-            preventDialogsValue = false
-            accepted()
-            //visible = false
-        }
-
-        //Component.onCompleted: {
-        onTextChanged: {
-            console.debug("Executing alert action:", text)
-            if (alertIface.text == "random") {
-                random.visible = true
-            } else if (alertIface.text == "action") {
-                haptics.play()
-                pageStack.push(chartPage)
-                alertIface.handled()
-            } else if (alertIface.text.indexOf("combat,") == 0) {
-                haptics.play(ThemeEffect.PressStrong);
-                combat.props = alertIface.text;
-                combat.visible = true;
-            } else if (alertIface.text.indexOf("external,") == 0) {
-                Qt.openUrlExternally(alertIface.text.split(',')[1]);
-                alertIface.handled()
-            } else if (alertIface.text.indexOf("puzzle-page,") == 0) {
-                puzzle.answers = alertIface.text.split(',')[1];
-                puzzle.visible = true;
-            } else if (alertIface.text.indexOf("book,") == 0) {
-                haptics.play();
-                you.book = alertIface.text.split(',')[2];
-                pageView.pageId = "";
-                goToBookTab();
-            } else {
-                haptics.play();
-                pageView.pageId = alertIface.text;
-                console.debug("Turned to page:", text)
-                alertIface.handled()
+    /* Our dummy popup thing never gets deleted. See https://github.com/sailfishos/sailfish-components-webview/issues/179
+     *  So collect them and destroy from time to time:
+    */
+    property int popupCount: popupRegistry.length
+    property var popupRegistry: []
+    onPopupCountChanged: {
+        //console.debug("popups:", popupCount)
+        if (popupRegistry.length > 50) {
+            console.debug("Cleaning up popups")
+            var tmp = popupRegistry
+            for (var i = 0; i < popupRegistry.length-1; ++i) {
+                tmp[i].destroy()
             }
+            popupRegistry = tmp
         }
+    }
+
+    Component { id: dummyAlertPopup; AlertPopupInterface { id: dummyAlertItem
+        opacity: visible ? 1.0 : 0.0
+        Timer { id: timer; interval: 300; onTriggered: { parent.accepted(); } } // visible = false } }
+        //Component.onDestruction: console.debug("dummy dead")
+        Component.onCompleted: { //console.debug("dummy ready")
+            var reg = root.popupRegistry
+            reg.push(dummyAlertItem)
+            root.popupRegistry = reg
+            timer.start()
+        }
+    }}
 
     Component { id: combatPage
     Dialog {
@@ -360,58 +388,67 @@ WebViewPage {
     }
     }
 
-        Puzzle {
-            id: puzzle
-            anchors.fill: parent
-            visible: false
-            you: root.you
-            onClose: { alertIface.handled() }
-            onGoTo: {
-                pageView.pageId = page;
-                alertIface.handled()
-            }
+    Puzzle {
+        id: puzzle
+        anchors.fill: parent
+        visible: false
+        you: root.you
+        //onClose: { alertIface.handled() }
+        onGoTo: {
+            pageView.pageId = page;
+            //alertIface.handled()
         }
+    }
 
-        Rectangle {
-            id: random
-            anchors.fill: parent
-            color: Theme.overlayBackgroundColor
-            opacity: Theme.opacityOverlay
-            visible: false
-            property bool numberRevealed: false
-            Timer { id: timer; running: visible; interval: 1000; onTriggered: random.numberRevealed = true }
-            onVisibleChanged: numberRevealed = !visible
-            Column {
-                spacing: Theme.paddingLarge
-                width: parent.width
-                anchors.centerIn: parent
-                Label { id: islabel
-                    width: parent.width
-                    font.pixelSize: Theme.fontSizeLarge
-                    text: "Your random number is:"
-                    color: Theme.highlightColor
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.Wrap
-                    Behavior on y { PropertyAnimation { } }
-                }
-                Label { id: number
-                    width: parent.width
-                    font.pixelSize: Theme.fontSizeHuge
-                    text: Util.getRandom()
-                    color: Theme.highlightColor
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.Wrap
-                    opacity: random.numberRevealed ? 1.0 : 0.0
-                    Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                enabled: random.numberRevealed
-                onClicked: { random.visible = false; alertIface.handled() }
+    Rectangle {
+        id: random
+        anchors.fill: parent
+        color: Theme.overlayBackgroundColor
+        opacity: Theme.opacityOverlay
+        visible: false
+
+        property string randomNumber
+        property bool numberRevealed: false
+
+        onVisibleChanged: { 
+            numberRevealed = false
+            if (visible) {
+                randomNumber = Util.getRandom()
+                timer.start()
             }
         }
-    }}
+        Timer { id: timer; interval: 1000; onTriggered: random.numberRevealed = true }
+        Column {
+            spacing: Theme.paddingLarge
+            width: parent.width
+            anchors.centerIn: parent
+            Label { id: islabel
+                width: parent.width
+                font.pixelSize: Theme.fontSizeLarge
+                text: "Your random number is:"
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                Behavior on y { PropertyAnimation { } }
+            }
+            Label { id: number
+                width: parent.width
+                font.pixelSize: Theme.fontSizeHuge
+                text: random.randomNumber
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                opacity: random.numberRevealed ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
+                color: opacity == 1 ? Theme.primaryColor : Theme.highlightColor
+                Behavior on color { FadeAnimation { } }
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            enabled: random.numberRevealed
+            onClicked: { random.visible = false; }
+        }
+    }
 
 
     Rectangle {
