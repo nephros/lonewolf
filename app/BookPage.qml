@@ -132,21 +132,21 @@ WebViewPage {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: header.bottom
-        height: Theme.itemSizeLarge
+        height: Theme.itemSizeMedium
         color: Theme.highlightBackgroundFromColor(book.bgColor, Theme.colorScheme)
 
         IconButton {
-            id: minus
+            id: plus
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: Theme.paddingSmall
+            icon.source: "image://theme/icon-splus-add"
             //height: parent.height - Theme.paddingSmall
             //width: height
-            icon.source: "image://theme/icon-splus-remove"
-            enabled: mainView.endurance > 0
+            enabled: mainView.endurance < mainView.maxendurance
             onClicked: {
                 haptics.play();
-                adjustEndurance(-1)
+                adjustEndurance(1)
             }
         }
         Label {
@@ -161,15 +161,15 @@ WebViewPage {
             width: parent.width - minus.width*2
         }
         IconButton {
-            id: plus
+            id: minus
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             anchors.margins: Theme.paddingSmall
-            icon.source: "image://theme/icon-splus-add"
-            enabled: mainView.endurance < mainView.maxendurance
+            icon.source: "image://theme/icon-splus-remove"
+            enabled: mainView.endurance > 0
             onClicked: {
                 haptics.play();
-                adjustEndurance(1)
+                adjustEndurance(-1)
             }
         }
     }
