@@ -227,12 +227,14 @@ WebViewPage {
                 haptics.play(ThemeEffect.PressStrong);
                 //combat.props = text;
                 //combat.visible = true;
-                var result = pageStack.push(combatPage, { props: text, you: root.you })
+                pageStack.push(combatPage, { props: text, you: root.you })
             } else if (text.indexOf("external,") == 0) {
                 Qt.openUrlExternally(text.split(',')[1]);
             } else if (text.indexOf("puzzle-page,") == 0) {
-                puzzle.answers = text.split(',')[1];
-                puzzle.visible = true;
+                //puzzle.answers = text.split(',')[1];
+                //puzzle.visible = true;
+                var dlg = pageStack.push(puzzlePage, { answers: text.split(',')[1], you: root.you })
+                dlg.done.connect(function() { if (dlg.newpage != "not set") pageView.pageId = dlg.newpage })
             } else if (text.indexOf("book,") == 0) {
                 haptics.play();
                 you.book = text.split(',')[2];
@@ -372,7 +374,6 @@ WebViewPage {
         property alias props: combat.props
         property alias you: combat.you
         backgroundColor: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
-        //opacity: Theme.opacityOverlay
 
         DialogHeader { id: header
             acceptText: ""
@@ -388,22 +389,35 @@ WebViewPage {
     }
     }
 
-    Puzzle {
-        id: puzzle
-        anchors.fill: parent
-        visible: false
-        you: root.you
-        //onClose: { alertIface.handled() }
-        onGoTo: {
-            pageView.pageId = page;
-            //alertIface.handled()
+    Component { id: puzzlePage
+    Dialog { id: dialog
+        //backNavigation: puzzle.done
+        //showNavigationIndicator: puzzle.done
+        canAccept: false
+        property alias answers: puzzle.answers
+        property alias you: puzzle.you
+        property string newpage: "not set"
+        backgroundColor: Theme.highlightDimmerFromColor("darkblue", Theme.colorScheme)
+
+        DialogHeader { id: header
+            acceptText: ""
+            cancelText: "Back to Page"
         }
+        Puzzle {
+            id: puzzle
+            anchors.top: header.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            onGoTo: { dialog.newpage = page; dialog.close() }
+        }
+    }
     }
 
     Rectangle {
         id: random
         anchors.fill: parent
-        color: Theme.overlayBackgroundColor
+        color: Theme.highlightDimmerFromColor("darkgreen", Theme.colorScheme)
         opacity: Theme.opacityOverlay
         visible: false
 
