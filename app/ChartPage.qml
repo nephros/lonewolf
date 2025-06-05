@@ -45,6 +45,7 @@ Page {
 
                 Label {
                     text: "Combat Skill"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     id: combatSkillBox
@@ -78,6 +79,7 @@ Page {
 
                 Label {
                     text: "Endurance"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -110,6 +112,7 @@ Page {
 
                 Label {
                     text: "Max Endurance"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -131,6 +134,7 @@ Page {
 
                 Label {
                     text: "Belt Pouch"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -164,6 +168,7 @@ Page {
                 }
                 Label {
                     text: "Quiver"
+                    color: Theme.highlightColor
                     visible: d.magnakai || d.grandmaster || d.neworder
                 }
                 ChartItem {
@@ -200,6 +205,7 @@ Page {
 
                 Label {
                     text: "Meals"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -438,6 +444,7 @@ Page {
             }
             Label {
                 text: "Kai Weapon"
+                color: Theme.highlightColor
                 visible: d.neworder
             }
             ChartItem {
@@ -718,6 +725,7 @@ Page {
 
                 Label {
                     text: "Weaponskill Weapon:"
+                    color: Theme.highlightColor
                 }
                 ChartItem {
                     text: you.weaponskill_weapon
@@ -732,7 +740,7 @@ Page {
                 height: 1
                 visible: d.magnakai
             }
-            Label {
+            SectionHeader {
                 text: "Magnakai Disciplines"
                 visible: d.magnakai
             }
@@ -820,8 +828,9 @@ Page {
                 height: 1
                 visible: d.magnakai
             }
-            Label {
+            SectionHeader {
                 text: "Weaponmastery Checklist"
+                color: Theme.highlightColor
                 visible: d.magnakai
             }
             Grid {
@@ -908,7 +917,7 @@ Page {
                 height: 1
                 visible: d.grandmaster
             }
-            Label {
+            SectionHeader {
                 text: "Grand Master Disciplines"
                 visible: d.grandmaster
             }
@@ -1010,8 +1019,9 @@ Page {
                 height: 1
                 visible: d.grandmaster
             }
-            Label {
+            SectionHeader {
                 text: "Grand Weaponmastery Checklist"
+                color: Theme.highlightColor
                 visible: d.grandmaster
             }
             Grid {
@@ -1098,7 +1108,7 @@ Page {
                 height: 1
                 visible: d.neworder
             }
-            Label {
+            SectionHeader {
                 text: "Grand Master Disciplines"
                 visible: d.neworder
             }
@@ -1228,7 +1238,7 @@ Page {
                 height: 1
                 visible: d.neworder
             }
-            Label {
+            SectionHeader {
                 text: "Grand Weaponmastery Checklist"
                 visible: d.neworder
             }
@@ -1317,11 +1327,12 @@ Page {
             }
             Label {
                 text: "Notes"
+                color: Theme.highlightColor
             }
             TextArea {
                 id: notes
                 width: parent.width
-                height: Theme.itemSizeLarge
+                //height: Theme.itemSizeLarge
                 text: you.notes
                 visible: !d.neworder
                 Binding {
@@ -1332,7 +1343,7 @@ Page {
             }
             TextArea {
                 id: neworder_notes
-                height: Theme.itemSizeLarge
+                //height: Theme.itemSizeLarge
                 width: parent.width
                 text: you.neworder_notes
                 visible: d.neworder
