@@ -43,21 +43,6 @@ ApplicationWindow {
     function popBookTab() {
       pageStack.replaceAbove(null, menuPage)
     }
-/*
-    function goToBookTab()
-    {
-        pageLayout.primaryPage.enabled = false;
-        pageLayout.removePages(pageLayout.primaryPage);
-        pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, bookComponent);
-    }
-
-    function popBookTab()
-    {
-        pageLayout.primaryPage.enabled = true;
-        pageLayout.removePages(pageLayout.primaryPage);
-    }
-    */
-
     function loadQuickSave()
     {
         quickSaveState.copyTo(gameState);

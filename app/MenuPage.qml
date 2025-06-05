@@ -46,7 +46,7 @@ Page {
             anchors.margins: Theme.horizontalPageMargin
             //width: (flicker.contentWidth > units.gu(60) ? units.gu(60) : flicker.contentWidth) - anchors.margins * 2
             //anchors.horizontalCenter: parent.horizontalCenter
-			PageHeader { id: header; title: "Lone Wolf" }
+            PageHeader { id: header; title: "Lone Wolf" }
 
             Label {
                 text: "<p>Lone Wolf is a role-playing book series from the 80s.</p><br>" +

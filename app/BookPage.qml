@@ -243,7 +243,6 @@ WebViewPage {
             } else {
                 haptics.play();
                 pageView.pageId = text;
-                console.debug("Turned to page:", text)
             }
             console.debug("Executed alert action:", text)
         }
