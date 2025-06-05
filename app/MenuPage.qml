@@ -88,7 +88,7 @@ Page {
                 text: "Apply text styling"
                 description: "Add styling to the book pages for a more authentic look"
                 checked: uisettings.styleHtml
-                onCheckedChanged: uisettings.sstyleHtmlaveOnQuit = checked
+                onCheckedChanged: uisettings.styleHtmlaveOnQuit = checked
             }
 
 
