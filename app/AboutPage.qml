@@ -25,7 +25,7 @@ Page { id: about
         width: parent.width - Theme.horizontalPageMargin
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: Theme.paddingLarge
-        PageHeader { title: qsTr("About") }
+        PageHeader { title: "About" }
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             source: "image://theme/lonewolf"
@@ -38,21 +38,7 @@ Page { id: about
             width: parent.width
             wrapMode: Text.Wrap
         }
-        //DetailItem { label: qsTr("Version:");      value: Qt.application.version }
-        //DetailItem { label: qsTr("Copyright:");    value: copyright;                            BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(email) } }
-        DetailItem { label: qsTr("License:");      value: license }
-        DetailItem { label: qsTr("Source Code:");  value: source;                BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(source) } }
-        DetailItem { label: qsTr("Based on Port by:");  value: "Tim Süberkrüb";  BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(portsource) } }
-        DetailItem { label: qsTr("Original by:");  value: "Michael Terry";       BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(origsource) } }
-        //SectionHeader { text: qsTr("Third Party Components:") }
-        //DetailItem { label: "PyOtherSide"; value: qsTr("QML Plugin for Qt 5")
-        //    BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally("https://github.com/thp/pyotherside") }
-        //}
-        //SectionHeader { text: qsTr("Credits") }
-        //DetailItem { label: qsTr("Contributions and Help: "); value: "thigg,\nflypig" }
-        //DetailItem { label: qsTr("Translation: %1",  "%1 is the native language name").arg(Qt.locale("de").nativeLanguageName); value: "nephros" }
-        //DetailItem { label: qsTr("Translation: %1",  "%1 is the native language name").arg(Qt.locale("sv").nativeLanguageName); value: "eson" }
-    }
+        //DetailItem { label: }
   }
 }
 
