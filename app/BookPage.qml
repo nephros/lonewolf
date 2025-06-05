@@ -21,8 +21,12 @@ WebViewPage {
             id: dialog
             DialogHeader { id: header; title: "Quick Save"; cancelText: "OK"; acceptText: "Got it" }
             Label {
-                anchors.fill: parent
-                anchors.topMargin: Screen.hasCutouts ? Screen.topCutout.height : 0
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: header.bottom
+                anchors.leftMargin: Theme.paddingSmall
+                anchors.rightMargin: Theme.paddingSmall
+                anchors.topMargin: Theme.itemSizeLarge
                 text: "This will save your current game state in case you want to load it later.  You can only load from the most recent time you saved."
                 wrapMode: Text.Wrap
             }
@@ -97,9 +101,13 @@ WebViewPage {
                 enabled: !book.inBackMatter && mainView.endurance > 0
                 onClicked: {
                     if (quickSaveState.pageId == "") {
-                        pageStack.push(saveDialog);
+                        var dlg = pageStack.push(saveDialog);
+                        dlg.done.connect(function() {
+                          Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
+                        })
+                    } else {
+                        Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
                     }
-                    Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
                 }
             }
             MenuItem {
