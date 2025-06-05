@@ -22,6 +22,7 @@ ApplicationWindow {
         scope: settings
         path: "ui"
         property int font: 2
+        property bool saveOnQuit: false
     }
 
     GameState {
@@ -33,6 +34,20 @@ ApplicationWindow {
         path: "current"
         id: gameState
     }
+
+    /* detect closing of app*/
+    signal willQuit()
+    Connections { target: __quickWindow; onClosing: willQuit() }
+    // AND/OR
+    Connections { target: Qt.application; onAboutToQuit: willQuit() }
+    onWillQuit: {
+        if (_willquitHandled) return
+        if (uisettings.saveOnQuit) {
+             gameState.copyTo(quickSaveState);
+        }
+        _willquitHandled=true
+    }
+    property bool _willquitHandled: false
 
     initialPage: menuPage
     cover: coverPage

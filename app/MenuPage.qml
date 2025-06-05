@@ -77,6 +77,13 @@ Page {
                     onClicked: loadQuickSave()
                 }
             }
+            IconTextSwitch {
+                icon.source: "image://theme/icon-m-downloads"
+                text: "Auto-Save on Quit"
+                description: "Automatically perform a Quicksave when the app is closed"
+                checked: uisettings.saveOnQuit
+                onCheckedChanged: uisettings.saveOnQuit = checked
+            }
 
             ListModel {
                 id: kaiModel
