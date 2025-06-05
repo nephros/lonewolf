@@ -65,8 +65,22 @@ ApplicationWindow {
           anchors.fill: parent
           fillMode: Image.PreserveAspectFit
       }
+      SectionHeader { text: mainView.bookTitle
+          horizontalAlignment: Text.AlignHCenter
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.top: parent.top; anchors.topMargin: Theme.paddingLarge
+          font.pixelSize: Theme.fontSizeLarge
+          wrapMode: Text.Wrap
+      }
+      SectionHeader { text: mainView.endurance + "/" + mainView.maxendurance + "EP"
+          horizontalAlignment: Text.AlignHCenter
+          visible: mainView.endurance > 0
+          anchors.bottom: parent.bottom; anchors.bottomMargin: Theme.paddingLarge
+          color: Theme.secondaryColor
+      }
     }
 
+    readonly property string bookTitle: gameState.bookTitle ? gameState.bookTitle : "Lone Wolf"
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance
     readonly property int combatskill: inneworder ? gameState.neworder_combatskill : gameState.combatskill
