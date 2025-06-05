@@ -132,7 +132,7 @@ WebViewPage {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: header.bottom
-        height: Theme.itemSizeMedium
+        height: Math.max(youenduranceLabel.height, plus.height) + Theme.paddingSmall
         color: Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
 
         IconButton {
