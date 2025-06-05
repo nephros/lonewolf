@@ -336,13 +336,29 @@ WebViewPage {
             }
         }
 
+    Component { id: combatPage
+    Dialog {
+        backNavigation: combat.done
+        showNavigationIndicator: combat.done
+        canAccept: false //combat.done
+        property alias props: combat.props
+        property alias you: combat.you
+        backgroundColor: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
+        //opacity: Theme.opacityOverlay
+
+        DialogHeader { id: header
+            acceptText: ""
+            cancelText: "Back to Page"
+        }
         Combat {
             id: combat
-            anchors.fill: parent
-            visible: false
-            you: root.you
-            onClose: { alertIface.handled() }
+            anchors.top: header.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
+    }
+    }
 
         Puzzle {
             id: puzzle

@@ -2,16 +2,12 @@ import QtQuick 2.4
 import Sailfish.Silica 1.0
 import Lonewolf 1.0
 
-Rectangle {
+Item {
     id: root
-    color: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
-    opacity: Theme.opacityOverlay
-
-    anchors.topMargin: Screen.hasCutouts ? Screen.topCutout.height : 0
 
     property string props
     property var you
-    signal close()
+    property bool done: d.round == 1 || d.done
 
     QtObject {
         id: d
@@ -63,277 +59,238 @@ Rectangle {
         when: d.enduranceIsYours
     }
 
-    Label {
+    ButtonLayout { id: buttons
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: Theme.dp(1)
-        horizontalAlignment: Text.AlignHCenter
-        text: "Round " + d.round
-        color: Theme.primaryColor
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.itemSizeMedium
+        z: flick.z + 1
+        SecondaryButton {
+            id: fleeButton
+            text: "Evade"
+            //color: Theme.highlightFromColor(Theme.errorColor, Theme.colorScheme)
+            enabled: !d.done
+            onClicked: {
+                var rand = Util.getRandom();
+                var delta = d.youcombatskill - d.combatskill;
+
+                var damageToYou = Util.getDamageToYou(delta, rand);
+                if (damageToYou < 0) {
+                    d.youendurance = 0;
+                } else {
+                    if (youDoubleDamage.checked)
+                        damageToYou = damageToYou * 2;
+                    d.youendurance = Math.max(d.youendurance - damageToYou, 0);
+                }
+
+                d.done = true;
+            }
+        }
+        Button {
+            text: "Fight"
+            //color: Theme.highlightFromColor(Theme.errorColor, Theme.colorScheme)
+            enabled: !d.done
+            onClicked: {
+                var rand = Util.getRandom();
+                var delta = d.youcombatskill - d.combatskill;
+
+                var damageToYou = Util.getDamageToYou(delta, rand);
+                if (damageToYou < 0) {
+                    d.youendurance = 0;
+                } else {
+                    if (youDoubleDamage.checked)
+                        damageToYou = damageToYou * 2
+                    d.youendurance = Math.max(d.youendurance - damageToYou, 0);
+                }
+
+                var damageToEnemy = Util.getDamageToEnemy(delta, rand);
+                if (damageToEnemy < 0) {
+                    d.endurance = 0;
+                } else {
+                    if (doubleDamage.checked)
+                        damageToEnemy = damageToEnemy * 2;
+                    d.endurance = Math.max(d.endurance - damageToEnemy, 0);
+                }
+
+                if (!d.done)
+                    d.round++;
+            }
+        }
     }
 
-    Item {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: fleeButton.top
-        anchors.topMargin: Theme.dp(6)
-        Column {
-            anchors.right: parent.horizontalCenter
+    SilicaFlickable { id: flick
+        anchors.fill: parent
+        contentHeight: content.height
+
+        Column { id: content
             anchors.left: parent.left
-            Label {
-                text: "You"
-                color: Theme.primaryColor
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Label {
-                id: youenduranceLabel
-                text: d.youendurance > 0 || youenduranceTitle.text != "ENDURANCE"  ? d.youendurance : "DEAD"
-                color: d.youendurance > 0 ? Theme.primaryColor : Theme.errorColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-                font.capitalization: Font.SmallCaps
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                Button {
-                    anchors.left: youenduranceLabel.right
-                    anchors.leftMargin: Theme.dp(1)
-                    anchors.verticalCenter: youenduranceLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "+"
-                    onClicked: d.youendurance += 1
-                    //color: "transparent"
-                }
-                Button {
-                    anchors.right: youenduranceLabel.left
-                    anchors.rightMargin: Theme.dp(1)
-                    anchors.verticalCenter: youenduranceLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "-"
-                    onClicked: d.youendurance -= 1
-                    //color: "transparent"
-                }
-            }
-            Label {
-                id: youenduranceTitle
-                text: "ENDURANCE"
-                font.capitalization: Font.SmallCaps
-                color: Theme.primaryColor
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Label {
-                id: youcombatskillLabel
-                text: d.youcombatskill
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                Button {
-                    anchors.left: youcombatskillLabel.right
-                    anchors.leftMargin: Theme.dp(1)
-                    anchors.verticalCenter: youcombatskillLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "+"
-                    enabled: !d.done
-                    onClicked: d.youcombatskill += 1
-                }
-                Button {
-                    anchors.right: youcombatskillLabel.left
-                    anchors.rightMargin: Theme.dp(1)
-                    anchors.verticalCenter: youcombatskillLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "-"
-                    enabled: !d.done
-                    onClicked: d.youcombatskill -= 1
-                }
-            }
-            Label {
-                text: "COMBAT SKILL"
-                color: Theme.primaryColor
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Row {
-                Switch {
-                    id: youDoubleDamage
-                }
-                Label {
-                    text: "weak (×2 damage)"
-                    color: Theme.primaryColor
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Label {
-                text: "(only enable if instructed)"
-                color: Theme.primaryColor
-                font.italic: true
-                font.pixelSize: Theme.fontSizeSmall
-                width: root.width / 2
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        }
-        Column {
-            anchors.left: parent.horizontalCenter
             anchors.right: parent.right
-            Label {
-                text: d.enemy
-                color: Theme.primaryColor
+            spacing: Theme.paddingLarge
+
+            Label { id: label
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.topMargin: Theme.itemSizeLarge
+                anchors.bottomMargin: Theme.itemSizeLarge
                 horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Round " + d.round
+                font.pixelSize: Theme.fontSizeLarge
+                color: Theme.highlightColor
             }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Label {
-                id: enduranceLabel
-                text: d.endurance > 0 || enduranceTitle.text != "ENDURANCE" ? d.endurance : "DEAD"
-                color: d.endurance > 0 ? Theme.primaryColor : Theme.errorColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                Button {
-                    anchors.left: enduranceLabel.right
-                    anchors.leftMargin: Theme.dp(1)
-                    anchors.verticalCenter: enduranceLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "+"
-                    onClicked: d.endurance += 1
+
+            Item { id: columns
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: Math.max(youcol.height, themcol.height)
+                Column { id: youcol
+                    anchors.right: parent.horizontalCenter
+                    anchors.left: parent.left
+                    spacing: Theme.paddingMedium
+                    Label {
+                        text: "You"
+                        //color: Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeLarge
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Label {
+                        id: youenduranceLabel
+                        text: d.youendurance > 0 || youenduranceTitle.text != "Endurance"  ? d.youendurance : "DEAD"
+                        color: d.youendurance > 0 ? Theme.primaryColor : Theme.errorColor
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        font.capitalization: Font.SmallCaps
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Button {
+                            anchors.left: youenduranceLabel.right
+                            anchors.leftMargin: Theme.paddingSmall
+                            anchors.verticalCenter: youenduranceLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "+"
+                            onClicked: d.youendurance += 1
+                            //color: "transparent"
+                        }
+                        Button {
+                            anchors.right: youenduranceLabel.left
+                            anchors.rightMargin: Theme.paddingSmall
+                            anchors.verticalCenter: youenduranceLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "-"
+                            onClicked: d.youendurance -= 1
+                            //color: "transparent"
+                        }
+                    }
+                    Label {
+                        id: youenduranceTitle
+                        text: "Endurance"
+                        font.capitalization: Font.SmallCaps
+                        color: Theme.highlightColor
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Label {
+                        id: youcombatskillLabel
+                        text: d.youcombatskill
+                        color: Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Button {
+                            anchors.left: youcombatskillLabel.right
+                            anchors.leftMargin: Theme.paddingSmall
+                            anchors.verticalCenter: youcombatskillLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "+"
+                            enabled: !d.done
+                            onClicked: d.youcombatskill += 1
+                        }
+                        Button {
+                            anchors.right: youcombatskillLabel.left
+                            anchors.rightMargin: Theme.paddingSmall
+                            anchors.verticalCenter: youcombatskillLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "-"
+                            enabled: !d.done
+                            onClicked: d.youcombatskill -= 1
+                        }
+                    }
+                    Label {
+                        text: "Combat Skill"
+                        color: Theme.highlightColor
+                        font.capitalization: Font.SmallCaps
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    TextSwitch { id: youDoubleDamage
+                        text: "weak (×2 damage)"
+                        description: "(only enable if instructed)"
+                    }
                 }
-                Button {
-                    anchors.right: enduranceLabel.left
-                    anchors.rightMargin: Theme.dp(1)
-                    anchors.verticalCenter: enduranceLabel.verticalCenter
-                    width: Theme.dp(3)
-                    text: "-"
-                    onClicked: d.endurance -= 1
+                Column { id: themcol
+                    anchors.left: parent.horizontalCenter
+                    anchors.right: parent.right
+                    spacing: Theme.paddingMedium
+                    Label {
+                        text: d.enemy
+                        //color: Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeLarge
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Label {
+                        id: enduranceLabel
+                        text: d.endurance > 0 || enduranceTitle.text != "Endurance" ? d.endurance : "DEAD"
+                        color: d.endurance > 0 ? Theme.primaryColor : Theme.errorColor
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Button {
+                            anchors.left: enduranceLabel.right
+                            anchors.leftMargin: Theme.paddingSmall
+                            anchors.verticalCenter: enduranceLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "+"
+                            onClicked: d.endurance += 1
+                        }
+                        Button {
+                            anchors.right: enduranceLabel.left
+                            anchors.rightMargin: Theme.paddingSmall
+                            anchors.verticalCenter: enduranceLabel.verticalCenter
+                            width: Theme.buttonWidthTiny
+                            text: "-"
+                            onClicked: d.endurance -= 1
+                        }
+                    }
+                    Label {
+                        id: enduranceTitle
+                        text: "Endurance"
+                        color: Theme.highlightColor
+                        font.capitalization: Font.SmallCaps
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Label {
+                        id: combatskillLabel
+                        text: d.combatskill
+                        color: Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Label {
+                        text: "Combat Skill"
+                        color: Theme.highlightColor
+                        font.capitalization: Font.SmallCaps
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    TextSwitch { id: doubleDamage
+                        text: "weak (×2 damage)"
+                        description: "(only enable if instructed)"
+                    }
                 }
             }
-            Label {
-                id: enduranceTitle
-                text: "ENDURANCE"
-                color: Theme.primaryColor
-                font.capitalization: Font.SmallCaps
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Label {
-                id: combatskillLabel
-                text: d.combatskill
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Label {
-                text: "COMBAT SKILL"
-                color: Theme.primaryColor
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Item { height: Theme.dp(3); width: Theme.dp(1); }
-            Row {
-                Switch {
-                    id: doubleDamage
-                }
-                Label {
-                    text: "weak (×2 damage)"
-                    color: Theme.primaryColor
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            Label {
-                text: "(only enable if instructed)"
-                color: Theme.primaryColor
-                font.italic: true
-                font.pixelSize: Theme.fontSizeSmall
-                width: root.width / 2
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        }
-    }
 
-    SecondaryButton {
-        id: cancelButton
-        text: "Back to Page"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: fleeButton.top
-        anchors.bottomMargin: Theme.dp(1)
-        visible: d.round == 1 || d.done
-        onClicked: {
-            root.close();
-        }
-    }
-    SecondaryButton {
-        id: fleeButton
-        text: "Evade"
-        color: Theme.errorColor
-        anchors.left: parent.left
-        anchors.right: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.topMargin: Theme.dp(1)
-        anchors.bottomMargin: Theme.dp(1)
-        anchors.leftMargin: Theme.dp(1)
-        anchors.rightMargin: Theme.dp(0.5)
-        enabled: !d.done
-        onClicked: {
-            var rand = Util.getRandom();
-            var delta = d.youcombatskill - d.combatskill;
-
-            var damageToYou = Util.getDamageToYou(delta, rand);
-            if (damageToYou < 0) {
-                d.youendurance = 0;
-            } else {
-                if (youDoubleDamage.checked)
-                    damageToYou = damageToYou * 2;
-                d.youendurance = Math.max(d.youendurance - damageToYou, 0);
-            }
-
-            d.done = true;
-        }
-    }
-    Button {
-        text: "Fight"
-        //color: theme.palette.normal.positive
-        anchors.right: parent.right
-        anchors.left: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.topMargin: Theme.dp(1)
-        anchors.bottomMargin: Theme.dp(1)
-        anchors.rightMargin: Theme.dp(1)
-        anchors.leftMargin: Theme.dp(0.5)
-        enabled: !d.done
-        onClicked: {
-            var rand = Util.getRandom();
-            var delta = d.youcombatskill - d.combatskill;
-
-            var damageToYou = Util.getDamageToYou(delta, rand);
-            if (damageToYou < 0) {
-                d.youendurance = 0;
-            } else {
-                if (youDoubleDamage.checked)
-                    damageToYou = damageToYou * 2
-                d.youendurance = Math.max(d.youendurance - damageToYou, 0);
-            }
-
-            var damageToEnemy = Util.getDamageToEnemy(delta, rand);
-            if (damageToEnemy < 0) {
-                d.endurance = 0;
-            } else {
-                if (doubleDamage.checked)
-                    damageToEnemy = damageToEnemy * 2;
-                d.endurance = Math.max(d.endurance - damageToEnemy, 0);
-            }
-
-            if (!d.done)
-                d.round++;
         }
     }
 }
