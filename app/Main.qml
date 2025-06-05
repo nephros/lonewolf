@@ -101,12 +101,21 @@ ApplicationWindow {
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance
     readonly property int combatskill: inneworder ? gameState.neworder_combatskill : gameState.combatskill
+    readonly property int gold: inneworder ? gameState.neworder_gold : gameState.gold
 
     function adjustEndurance(amount) {
         if (inneworder) {
             gameState.neworder_endurance += amount;
         } else {
             gameState.endurance += amount;
+        }
+    }
+
+    function adjustGold(amount) {
+        if (inneworder) {
+            gameState.neworder_gold += amount;
+        } else {
+            gameState.gold += amount;
         }
     }
 

@@ -110,49 +110,76 @@ WebViewPage {
         description: book.pageTitle
         title: mainView.bookTitle
     }
+
     Rectangle {
         id: endurancebar
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: header.bottom
-        height: Math.max(youenduranceLabel.height, plus.height) + Theme.paddingSmall
+        height: Math.max(goldrow.height, endurancerow.height) + Theme.paddingSmall
         color: Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
 
-        IconButton {
-            id: plus
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.margins: Theme.paddingSmall
-            icon.source: "image://theme/icon-m-add"
-            //height: parent.height - Theme.paddingSmall
-            //width: height
-            enabled: mainView.endurance < mainView.maxendurance
-            onClicked: {
-                haptics.play();
-                adjustEndurance(1)
+        Row { id: goldrow
+            anchors.left: parent.left
+            anchors.leftMargin: Theme.paddingLarge
+            IconButton {
+                anchors.margins: Theme.paddingSmall
+                anchors.verticalCenter: parent.verticalCenter
+                icon.source: "image://theme/icon-splus-add"
+                enabled: mainView.gold < 50
+                onClicked: {
+                    haptics.play();
+                    adjustGold(1)
+                }
+            }
+            Label {
+                text: mainView.gold + " Gd. Crowns"
+                anchors.verticalCenter: parent.verticalCenter
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.capitalization: Font.SmallCaps
+            }
+            IconButton {
+                anchors.margins: Theme.paddingSmall
+                anchors.verticalCenter: parent.verticalCenter
+                icon.source: "image://theme/icon-splus-remove"
+                enabled: mainView.gold > 0
+                onClicked: {
+                    haptics.play();
+                    adjustGold(-1)
+                }
             }
         }
-        Label {
-            id: youenduranceLabel
-            text: mainView.endurance + "EP"
-            anchors.centerIn: parent
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.capitalization: Font.SmallCaps
-            //font.family: "serif"
-            //font.pixelSize: 
-            width: parent.width - minus.width*2
-        }
-        IconButton {
-            id: minus
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.margins: Theme.paddingSmall
-            icon.source: "image://theme/icon-m-remove"
-            enabled: mainView.endurance > 0
-            onClicked: {
-                haptics.play();
-                adjustEndurance(-1)
+
+        Row { id: endurancerow
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.paddingLarge
+            IconButton {
+                anchors.margins: Theme.paddingSmall
+                anchors.verticalCenter: parent.verticalCenter
+                icon.source: "image://theme/icon-splus-add"
+                enabled: mainView.endurance < mainView.maxendurance
+                onClicked: {
+                    haptics.play();
+                    adjustEndurance(1)
+                }
+            }
+            Label {
+                text: mainView.endurance + " Endurance"
+                anchors.verticalCenter: parent.verticalCenter
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.capitalization: Font.SmallCaps
+            }
+            IconButton {
+                anchors.margins: Theme.paddingSmall
+                anchors.verticalCenter: parent.verticalCenter
+                icon.source: "image://theme/icon-splus-remove"
+                enabled: mainView.endurance > 0
+                onClicked: {
+                    haptics.play();
+                    adjustEndurance(-1)
+                }
             }
         }
     }
