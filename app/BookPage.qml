@@ -100,13 +100,6 @@ WebViewPage {
                 onClicked: pageView.pageId = "map"
             }
         }
-        /*
-        PushUpMenu {
-            visible: pageView.loaded
-            MenuItem { text: "Increase Text size"; onClicked: WebEngineSettings.pixelRatio+=1 }
-            MenuItem { text: "Decrease Text size"; onClicked: WebEngineSettings.pixelRatio-=1 }
-        }
-        */
 
     PageHeader { id: header
         title: book.pageTitle
