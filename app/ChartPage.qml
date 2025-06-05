@@ -63,7 +63,18 @@ Page {
                     width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
-                Item {height: 1; width: 1}
+                Row {
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "-"
+                        onClicked: d.neworder ? you.neworder_combatskill -=1 : you.combatskill -=1
+                    }
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "+"
+                        onClicked: d.neworder ? you.neworder_combatskill +=1 : you.combatskill +=1
+                    }
+                }
 
                 Label {
                     text: "Endurance"
@@ -84,7 +95,18 @@ Page {
                     width: combatSkillBox.width
                     visible: d.neworder
                 }
-                Item {height: 1; width: 1}
+                Row {
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "-"
+                        onClicked: d.neworder ? you.neworder_endurance -=1 : you.endurance -=1
+                    }
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "+"
+                        onClicked: d.neworder ? you.neworder_endurance +=1 : you.endurance +=1
+                    }
+                }
 
                 Label {
                     text: "Max Endurance"
@@ -128,14 +150,18 @@ Page {
                     visible: d.neworder
                     description: "Max 50"
                 }
-                Label {
-                    text: ""
-                    font.italic: true
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    wrapMode: Text.Wrap
-                    width: Theme.buttonWidthSmall
+                Row {
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "-"
+                        onClicked: d.neworder ? you.neworder_gold -=1 : you.gold -=1
+                    }
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "+"
+                        onClicked: d.neworder ? you.neworder_gold +=1 : you.gold +=1
+                    }
                 }
-
                 Label {
                     text: "Quiver"
                     visible: d.magnakai || d.grandmaster || d.neworder
@@ -158,12 +184,18 @@ Page {
                     visible: d.neworder
                     description: "Max 6"
                 }
-                Label {
-                    text: ""
-                    font.italic: true
-                    wrapMode: Text.Wrap
-                    width: Theme.buttonWidthSmall
+                Row {
                     visible: d.magnakai || d.grandmaster || d.neworder
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "-"
+                        onClicked: d.neworder ? you.neworder_quiver -=1 : you.quiver -=1
+                    }
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "+"
+                        onClicked: d.neworder ? you.neworder_quiver +=1 : you.quiver +=1
+                    }
                 }
 
                 Label {
@@ -187,12 +219,17 @@ Page {
                     visible: d.neworder
                     description: "Each fills a backpack slot"
                 }
-                Label {
-                    text: ""
-                    font.italic: true
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    wrapMode: Text.Wrap
-                    width: Theme.buttonWidthSmall
+                Row {
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "-"
+                        onClicked: d.neworder ? you.neworder_meals -=1 : you.meals -=1
+                    }
+                    Button {
+                        width: Theme.buttonWidthTiny
+                        text: "+"
+                        onClicked: d.neworder ? you.neworder_meals +=1 : you.meals +=1
+                    }
                 }
             }
 
