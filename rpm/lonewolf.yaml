@@ -16,6 +16,7 @@ Macros:
   - 'orgname;%{name}'
   - 'appname;%{name}'
   - 'pkgname;%{name}'
+  - '__provides_exclude;^font..lang=.*$'
 Description: |
     %{summary}.
 
