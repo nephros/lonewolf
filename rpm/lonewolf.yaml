@@ -92,3 +92,10 @@ SubPackages:
       Group: Libraries
       Files:
         - '%{_libdir}/qt5/qml/Lonewolf/'
+
+    - Name:  tts
+      Summary: TTS support for %{name}
+      Group: Games
+      AutoDepend: false
+      Requires:
+        - harbour-dsnote

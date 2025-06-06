@@ -80,6 +80,14 @@ Group:      Libraries
 %description -n qt5-qtdeclarative-import-Lonewolf
 %{summary}.
 
+%package tts
+Summary:    TTS support for %{name}
+Group:      Games
+Requires:   harbour-dsnote
+
+%description tts
+%{summary}.
+
 %prep
 %setup -q -n %{name}-%{version}
 
@@ -122,7 +130,7 @@ desktop-file-edit  \
 --set-value=silica-qt5 \
 --remove-key=X-Ubuntu-Touch \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
-printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPermissions=WebView;Internet\n' \
+printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPermissions=Audio;WebView;Internet\n' \
 >> %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # generate some icons
@@ -154,3 +162,8 @@ desktop-file-install --delete-original       \
 %{_libdir}/qt5/qml/Lonewolf/
 # >> files qt5-qtdeclarative-import-Lonewolf
 # << files qt5-qtdeclarative-import-Lonewolf
+
+%files tts
+%defattr(-,root,root,-)
+# >> files tts
+# << files tts

@@ -237,6 +237,7 @@ WebViewPage {
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
+		    function getText(return newcontent)
         }
     }
 
@@ -365,6 +366,17 @@ WebViewPage {
                     onClicked: WebEngineSettings.pixelRatio+=0.5
                 }
             }
+
+            IconButton { id: readbtn
+                icon.source: "image://theme/icon-m-file-video?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                onClicked: mainView.readText(book.getText())
+                visible: mainView.ttsAvailable && !licenseButton.visible
+                anchors.left: previous.right
+                anchors.right: plusminus.left
+                anchors.verticalCenter: previous.verticalCenter
+                anchors.margins: Theme.paddingLarge
+            }
+
 
             IconButton { id: nightmode
                 icon.source: "image://theme/icon-m-night?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)

@@ -75,6 +75,13 @@ ApplicationWindow {
         you: gameState
     }
 
+	property alias tts: ttsplugin.item
+	property bool ttsAvailable: ttsplugin.status == Loader.Ready
+	function readText(text) { if (!ttsAvailable) return; tts.play(text) }
+    Loader { id: ttsplugin
+        source: Qt.resolvedUrl("TTS.qml")
+    }
+
     CoverBackground { id: coverPage
       Image {
           source: "./lonewolf-bighead.png"
