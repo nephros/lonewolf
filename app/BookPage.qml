@@ -249,10 +249,6 @@ WebViewPage {
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
-            if (mainView.ttsAvailable) {
-                if (mainView.ttsSpeaking) mainView.ttsStop()
-                if (uisettings.autoTts && !book.inBackMatter) { pageView.readText() }
-            }
         }
     }
 
@@ -281,6 +277,15 @@ WebViewPage {
             //console.log("Async Message: ", message, JSON.stringify(data));
             if (message == "embed:alert") {
                 handleUserClick(data.text)
+            }
+        }
+        onLoadedChanged: { // text-to-speech
+            if (loaded) {
+                if (mainView.ttsAvailable) {
+                    if (visible) {
+                        if (uisettings.autoTts && (book.nextPageId != "") && !book.inBackMatter) { pageView.readText() }
+                    }
+                }
             }
         }
         function handleUserClick(text) {

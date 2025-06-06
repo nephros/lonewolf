@@ -111,7 +111,7 @@ Page {
             }
             TextSwitch {
                 text: "TTS: Read automatically"
-                description: "Start reading each page immediately after it's loaded"
+                description: "Start reading each page immediately after it's loaded.\nIf disabled, you can still use the TTS button to hear the page"
                 checked: uisettings.autoTts
                 onCheckedChanged: uisettings.autoTts = checked
                 visible: mainView.ttsAvailable
