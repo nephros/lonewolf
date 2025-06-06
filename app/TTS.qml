@@ -31,11 +31,13 @@ Item { id: root
     function play(text) {
         const toSpeak = cleanText(text)
         if (speaking) {
-            console.debug("TTS: Stopping job before submitting new one!:")
-            dbus.call("TtsStopSpeech", [ speakId ],
-                function(r) { reallyPlay(toSpeak);  },
-                undefined
-            )
+            //console.debug("TTS: Stopping job before submitting new one!")
+            //dbus.call("TtsStopSpeech", [ speakId ],
+            //    function(r) { reallyPlay(toSpeak);  },
+            //    undefined
+            //)
+            console.warn("TTS: We may not be idle before submitting new job!")
+            reallyPlay(toSpeak);
         } else {
             reallyPlay(toSpeak)
         }
@@ -100,7 +102,9 @@ Item { id: root
         function taskStatePropertyChanged(code) {
             root.taskState = code
             console.debug("TTS: Task now:", taskStateTable[code])
-            if ((code > 1) && (code < 5)) {root.speaking = true}
+            //if ((code > 1) && (code < 5)) {root.speaking = true}
+            if ((code == 3) || (code == 4)) {root.speaking = true}
+            //if (code == 4) {root.speaking = true}
         }
         propertiesEnabled: false
         //property int state
