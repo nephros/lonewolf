@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtFeedback 5.0
 import Sailfish.Silica 1.0
+import Sailfish.Gallery 1.0 as Gallery
 import Sailfish.WebView 1.0
 import Sailfish.WebEngine 1.0
 import Sailfish.WebView.Popups 1.0
@@ -104,7 +105,8 @@ WebViewPage {
                 id: mapAction
                 //icon.source: "location"
                 text: "Map"
-                onClicked: pageView.pageId = "map"
+                //onClicked: pageView.pageId = "map"
+                onClicked: imgViewer.visible = true
             }
         }
 
@@ -209,6 +211,8 @@ WebViewPage {
             var content = pageContent;
             if (pageId != "title" && (pageType == "backmatter" || pageType == "deadend")) {
                 inBackMatter = true;
+            } else if (pageId == "map") {
+                  imgViewer.visible = true
             } else if (!inBackMatter) {
                 you.pageId = pageId; // save place
             }
@@ -520,6 +524,15 @@ WebViewPage {
         }
     }
 
+    Gallery.ImageViewer { id: imgViewer
+        source: Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
+        anchors.fill: parent
+        anchors.centerIn: parent
+        visible: false
+        onClicked: visible = false
+        opacity: visible ? 1.0 : 0
+        Behavior on opacity { FadeAnimation{} }
+    }
 
     Rectangle {
         id: downloadCover
