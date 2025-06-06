@@ -46,6 +46,7 @@ WebViewPage {
             downloadCover.visible = false;
         }
         canDoBackAction = true;
+        if (mainView.ttsAvailable && uisettings.autoTts) { mainView.ttsPlay(mainView.bookTitle) }
         // Debug some engine events:
         //WebEngine.onRecvObserve.connect(function(message, data) {
         //    console.log("Engine event contents: ", message, JSON.stringify(data));
@@ -237,7 +238,10 @@ WebViewPage {
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
-            if (uisettings.autoTts) { pageView.readText() }
+            if (mainView.ttsAvailable) {
+                if (mainView.ttsSpeaking) mainView.ttsStop()
+                if (uisettings.autoTts && !book.inBackMatter) { pageView.readText() }
+            }
         }
     }
 
