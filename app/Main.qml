@@ -87,11 +87,18 @@ ApplicationWindow {
         onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
     }
     Loader { id: ttsplugin
+        // start this late, so startup performance is better
+        active: false
         source: Qt.resolvedUrl("TTS.qml")
         onLoaded: {
-            parent.ttsAvailable = true
+            mainView.ttsAvailable = true
             console.info("Text-to-speech plugin found.")
         }
+    }
+
+    Component.onCompleted: {
+        // start this late, so startup performance is better
+        ttsplugin.active = true
     }
 
     CoverBackground { id: coverPage
