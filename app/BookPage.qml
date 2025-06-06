@@ -358,13 +358,14 @@ WebViewPage {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: (previous.visible || next.visible || licenseButton.visible) ? Theme.itemSizeLarge : 0
+        height: (previous.visible || next.visible || licenseButton.visible)
+                  ? Math.max (previous.height, plusminus.height) + Theme.paddingMedium : 0
         //color: Theme.highlightDimmerColor
 
         IconButton {
             id: previous
                 anchors.left: parent.left
-                anchors.bottom: parent.bottom
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingSmall
                 //height: parent.height - Theme.paddingSmall
                 //width: height
@@ -375,7 +376,7 @@ WebViewPage {
             IconButton {
                 id: next
                 anchors.right: parent.right
-                anchors.bottom: parent.bottom
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingSmall
                 //height: parent.height - Theme.paddingSmall
                 //width: height
@@ -387,15 +388,14 @@ WebViewPage {
             Row { id: plusminus
                 visible: !licenseButton.visible
                 anchors.centerIn: parent
-                spacing: Theme.paddingLarge
+                spacing: Theme.paddingMedium
                 IconButton {
                     icon.source: "image://theme/icon-splus-remove"
                     onClicked: WebEngineSettings.pixelRatio-=0.5
                 }
-                Icon {
-                    height: textplus.height
-                    width: textplus.width
-                    source: "image://theme/icon-m-font-size?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                IconButton {
+                    icon.source: "image://theme/icon-m-font-size?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                    onClicked: WebEngineSettings.pixelRatio = Theme.dp(1)
                 }
                 IconButton { id: textplus
                     icon.source: "image://theme/icon-splus-add"
@@ -412,7 +412,7 @@ WebViewPage {
                 visible: mainView.ttsAvailable && !licenseButton.visible
                 anchors.left: previous.right
                 anchors.right: plusminus.left
-                anchors.verticalCenter: previous.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingLarge
             }
 
@@ -423,7 +423,7 @@ WebViewPage {
                 visible: !licenseButton.visible
                 anchors.right: next.left
                 anchors.left: plusminus.right
-                anchors.verticalCenter: next.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingLarge
             }
 
