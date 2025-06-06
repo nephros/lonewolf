@@ -101,7 +101,7 @@ Title: TTS plugin for Lonewolf
 Type: desktop-application
 Categories:
  - Games
-PackageIcon: https://www.projectaon.org/en/images/logotop.gif
+PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %endif
 
 
