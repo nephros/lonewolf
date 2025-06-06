@@ -5,18 +5,15 @@ Row {
     property var you
     property string prop
     property alias checked: box.checked
-    property alias text: label.text
+    property alias text: box.text
+    property alias note: box.description
     Binding {
         target: you
         property: prop
         value: box.checked
     }
-    Switch {
+    TextSwitch {
         id: box
-        anchors.verticalCenter: parent.verticalCenter
-    }
-    Label {
-        id: label
         anchors.verticalCenter: parent.verticalCenter
     }
 }
