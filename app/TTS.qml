@@ -29,6 +29,14 @@ Item { id: root
         if (speaking) return
         const toSpeak = cleanText(text)
         dbus.call("TtsPlaySpeech", [ toSpeak, "en" ],
+        // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
+        //dbus.typedcall("TtsPlaySpeech2", [
+        //        { "type" : 's', "value": toSpeak },
+        //        { "type" : 's', "value": "en"} ,
+        //        { "type" : 'a{sv}',
+        //          "value": { "split_into_sentences": false, "use_engine_speed_control": true, "normalize_audio": false, "speech_speed": 12 }
+        //        },
+        //    ],
             function(tid) {
                 if (tid < 0) { 
                     console.warn("TTS: Speech job ID < 0 indicates an error!")
