@@ -148,7 +148,7 @@ install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 desktop-file-edit  \
 --set-key=Exec \
---set-value="/usr/bin/invoker --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
+--set-value="/usr/bin/invoker --single-instance --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
 --set-key=X-Nemo-Application-Type \
 --set-value=silica-qt5 \
 --remove-key=X-Ubuntu-Touch \
