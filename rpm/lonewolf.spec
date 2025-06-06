@@ -88,12 +88,13 @@ Group:      Libraries
 Summary:    Text-to-Speech support for %{name}
 Group:      Games
 Requires:   %{name} = %{version}-%{release}
-Requires:   harbour-dsnote
+Requires:   harbour-dsnote >= 4.7.0
 
 %description tts-plugin
 Adds text-to-speech support to the Lonewolf player.
 
-Requires DSNote (harbour-dsnote) by mkiol
+Requires the excellent Speech Note (harbour-dsnote) by mkiol, and
+will use its engine and settings configured for English.
 
 %if "0%{?_chum}"
 Title: TTS plugin for Lonewolf
