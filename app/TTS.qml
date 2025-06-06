@@ -41,7 +41,7 @@ Item { id: root
         )
     }
     function stop() {
-        if (!speaking) return
+        if (speakId < 0) return
         dbus.call("TtsStopSpeech", [ speakId ],
             function(r)   { console.debug("TTS: Stop job submitted:", r) },
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
@@ -53,12 +53,12 @@ Item { id: root
         path: "/"
         signalsEnabled: true
         // Signals from "org.mkiol.Speech"
-        function ttsPlaySpeechFinished(tid) {
-            console.debug("TTS: Speech job finished:", tid)
-            if (tid == root.speakId) root.speaking = false
+        function ttsPlaySpeechFinished(task) {
+            console.debug("TTS: Speech job finished:", task)
+            if (task == root.speakId) root.speaking = false
         }
         function errorOccured(code) {
-            console.warn("TTS: Speech error:", code)
+            console.warn("TTS: Speech error:", code, ",", errorCodeTable[code])
             root.speaking = false
         }
         /*
@@ -75,10 +75,30 @@ Item { id: root
             if (code == 3) {root.speaking = false}
             if ((code == 2) || (code == 8)) {root.speaking = true}
         }
+        function taskStatePropertyChanged(code) {
+            console.debug("TTS: Task State now:", code, ",", taskStateTable[code])
+            if ((code == 2) || (code == 4)) {root.speaking = true}
+        }
         propertiesEnabled: false
         //property int state
         //onStateChanged: console.debug("TTS: State property change:", state, ",", stateTable[state])
     }
+    readonly property var errorCodeTable: [
+        "Generic",
+        "Microphone error",
+        "File source error",
+        "STT engine",
+        "TTS engine",
+    ]
+    readonly property var taskStateTable: [
+        "Idle",
+        "Speech Detected",
+        "Processing",
+        "Initializing",
+        "Playing Speech",
+        "Speech Paused",
+        "Cancelling",
+    ]
     readonly property var stateTable: [
         "Unknown",
         "Not Configured",
