@@ -293,7 +293,9 @@ Page {
                 height: 1
             }
             SectionHeader {
-                text: "Backpack Items"
+                text: "Backpack Items (%1 meals: %2 free)".arg(meals).arg(slots)
+                property int meals: d.neworder ? you.neworder_meals : you.meals
+                property int slots: 8 - meals
             }
             Grid {
                 id: backpack
@@ -656,6 +658,7 @@ Page {
                     text: "Hunting"
                     checked: you.kai_hunting
                     prop: "kai_hunting"
+                    note: "Skip a meal in certain areas"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -678,12 +681,14 @@ Page {
                     checked: you.kai_healing
                     prop: "kai_healing"
                     width: disciplines.itemWidth
+                    note: "+1 EP for each section without combat"
                 }
                 ChartCheck {
                     you: root.you
                     text: "Weaponskill"
                     checked: you.kai_weaponskill
                     prop: "kai_weaponskill"
+                    note: "+2 CS for with one weapon type"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -698,6 +703,7 @@ Page {
                     text: "Mindblast"
                     checked: you.kai_mindblast
                     prop: "kai_mindblast"
+                    note: "+2 CS against most enemies"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
