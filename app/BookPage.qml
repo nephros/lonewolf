@@ -381,8 +381,8 @@ WebViewPage {
 
             IconButton { id: readbtn
                 icon.source: mainView.ttsSpeaking
-                    ? "image://theme/icon-m-stop?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
-                    : "image://theme/icon-m-file-video?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                    ? "image://theme/icon-m-speaker-on?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                    : "image://theme/icon-m-speaker?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                 highlighted: down || mainView.ttsSpeaking
                 onClicked: mainView.ttsSpeaking ?  mainView.ttsStop() : pageView.readText()
                 visible: mainView.ttsAvailable && !licenseButton.visible
@@ -394,7 +394,7 @@ WebViewPage {
 
 
             IconButton { id: nightmode
-                icon.source: "image://theme/icon-m-night?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                icon.source: "image://theme/icon-m-light-contrast?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                 onClicked: mainView.nightModeEnabled = !mainView.nightModeEnabled
                 visible: !licenseButton.visible
                 anchors.right: next.left
