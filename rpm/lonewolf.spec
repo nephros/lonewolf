@@ -16,7 +16,7 @@ Version:    0.1.1
 Release:    0
 Group:      Applications
 License:    GPLv3
-URL:        https://github.com/timsueberkrueb/lonewolf
+URL:        https://github.com/nephros/lonewolf
 Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
@@ -65,11 +65,9 @@ PackagedBy: nephros
 Categories:
  - Games
 Custom:
-  Repo: %{url}
-  PackagingRepo: https://github.com/nephros/lonewolf
-PackageIcon: https://www.projectaon.org/en/images/logotop.gif
+  Repo: https://github.com/nephros/lonewolf
+PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 Links:
-  Homepage: https://www.projectaon.org/
   Help: https://www.projectaon.org/en/ReadersHandbook/Home
 %endif
 

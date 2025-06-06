@@ -13,7 +13,7 @@ You are the sole survivor of a devastating attack on the monastery where you wer
 ## Credits
 
 [Tim Süberkrüb](https://github.com/timsueberkrueb) for the port for Ubuntu Touch.
-[Michael Terry](https://github.com/mikix) for creating this gem.
+[Michael Terry](https://github.com/mikix) for creating the original version.
 
 [Project Aon](https://www.projectaon.org/) for curating the original game material.
 
