@@ -44,6 +44,9 @@ Description: |
     Custom:
       Repo: https://github.com/nephros/lonewolf
     PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
+    Screenshots:
+      - %{url}/raw/sfos/Screenshot_001.jpg
+      - %{url}/raw/sfos/Screenshot_002.jpg
     Links:
       Help: https://www.projectaon.org/en/ReadersHandbook/Home
     %endif
