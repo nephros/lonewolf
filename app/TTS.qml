@@ -61,7 +61,38 @@ Item { id: root
             console.warn("TTS: Speech error:", code)
             root.speaking = false
         }
+        /*
+            State of the service.
+            Valid states: 0 = Unknown, 1 = Not Configured, 2 = Busy,
+                          3 = Idle, 4 = Listening Manual, 5 = Listening Auto,
+                          6 = Transcribing File, 7 = Listening One-sentence,
+                          8 = Playing speech, 9 = Writing speech synthesis to file,
+                          10 = Translating, 11 = Repairing text
+            Unrecognized states should be considered equal to Unknown.
+        */
+        function statePropertyChanged(code) {
+            console.debug("TTS: State now:", code, ",", stateTable[code])
+            if (code == 3) {root.speaking = false}
+            if ((code == 2) || (code == 8)) {root.speaking = true}
+        }
+        propertiesEnabled: false
+        //property int state
+        //onStateChanged: console.debug("TTS: State property change:", state, ",", stateTable[state])
     }
+    readonly property var stateTable: [
+        "Unknown",
+        "Not Configured",
+        "Busy",
+        "Idle",
+        "Listening Manual",
+        "Listening Auto",
+        "Transcribing File",
+        "Listening One-sentence",
+        "Playing speech",
+        "Writing speech synthesis to file",
+        "Translating",
+        "Repairing text"
+    ]
 }
 
 // vim: filetype=javascript syntax=qml expandtab tabstop=4 shiftwidth=4
