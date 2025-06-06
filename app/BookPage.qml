@@ -80,7 +80,7 @@ WebViewPage {
             visible: book.progress == 100
             MenuItem {
                 id: backAction
-                text: "Back"
+                text: book.inBackMatter ? "Back" : "Back to Menu"
                 enabled: canDoBackAction
                 onClicked: {
                     if (book.inBackMatter) {
@@ -91,12 +91,14 @@ WebViewPage {
                     }
                 }
             }
+            /*
             MenuItem {
                 id: actionChart
                 //icon.source: "note"
                 text: "Action Chart"
                 onClicked: showChartPage()
             }
+            */
             MenuItem {
                 id: quickSave
                 //icon.source: "save"
@@ -113,22 +115,37 @@ WebViewPage {
                     }
                 }
             }
+            /*
             MenuItem {
                 id: mapAction
                 //icon.source: "location"
                 text: "Map"
                 //onClicked: pageView.pageId = "map"
-                onClicked: {
-                    imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
-                    imgViewer.visible = true
-                }
+                onClicked: showMap()
             }
+            */
         }
 
     PageHeader { id: header
         description: book.pageTitle
         title: mainView.bookTitle
         opacity: mainView.nightModeEnabled ? 0.8 : 1.0
+        IconButton {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.extraContent.left
+            anchors.leftMargin: Theme.paddingLarge
+            //width: Theme.buttonSizeLarge
+            //height: Theme.buttonSizeLarge
+            //icon.source: mainView.nightModeEnabled
+            //    ? "image://theme/icon-l-weather-d000-dark"
+            //    : "image://theme/icon-l-weather-d000-light"
+            //icon.source:"image://theme/icon-m-location"
+            icon.source:"image://theme/icon-m-browser-location"
+            //icon.source:"image://theme/icon-m-image"
+            //icon.source:"image://theme/icon-lock-social"
+            onClicked: root.showMap()
+            visible: !book.inBackMatter && (mainView.endurance > 0)
+        }
     }
 
     Rectangle {
@@ -227,8 +244,7 @@ WebViewPage {
             if (pageId != "title" && (pageType == "backmatter" || pageType == "deadend")) {
                 inBackMatter = true;
             } else if (pageId == "map") {
-                  imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
-                  imgViewer.visible = true
+                showMap()
             } else if (!inBackMatter) {
                 you.pageId = pageId; // save place
             }
@@ -303,8 +319,7 @@ WebViewPage {
                 haptics.play()
                 root.showChartPage()
             } else if (text == "map") {
-                imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
-                imgViewer.visible = true
+                showMap()
             } else if (text.indexOf("combat,") == 0) {
                 haptics.play(ThemeEffect.PressStrong);
                 //combat.props = text;
@@ -578,6 +593,10 @@ WebViewPage {
         }
     }
 
+    function showMap() {
+        imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
+        imgViewer.visible = true
+    }
     Gallery.ImageViewer { id: imgViewer
         anchors.fill: parent
         anchors.centerIn: parent
