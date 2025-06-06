@@ -21,7 +21,8 @@ URL:        https://github.com/nephros/lonewolf
 Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
-Source3:    rpm/AG_Souvenir_Regular.ttf
+Source3:    lonewolf.profile
+Source4:    rpm/AG_Souvenir_Regular.ttf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
@@ -58,7 +59,7 @@ You are now Lone Wolf.
 This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
 the original Lone Wolf app for Ubuntu Phone by Michael Terry.
 
-%if "%{?vendor}" == "chum"
+%if "0%{?_chum}"
 Title: Lonewolf
 Type: desktop-application
 DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
@@ -74,19 +75,31 @@ Links:
 
 
 %package -n qt5-qtdeclarative-import-Lonewolf
-Summary:    Lonewolf player for QML
+Summary:    Lonewolf player QML plugin
 Group:      Libraries
 
 %description -n qt5-qtdeclarative-import-Lonewolf
 %{summary}.
 
-%package tts
-Summary:    TTS support for %{name}
+%package tts-plugin
+Summary:    Text-to-Speech support for %{name}
 Group:      Games
+Requires:   %{name} = %{version}-%{release}
 Requires:   harbour-dsnote
 
-%description tts
-%{summary}.
+%description tts-plugin
+Adds text-to-speech support to the Lonewolf player.
+
+Requires DSNote (harbour-dsnote) by mkiol
+
+%if "0%{?_chum}"
+Title: TTS plugin for Lonewolf
+Type: desktop-application
+Categories:
+ - Games
+PackageIcon: https://www.projectaon.org/en/images/logotop.gif
+%endif
+
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -116,12 +129,19 @@ rm -rf %{buildroot}
 %cmake_install
 
 # >> install post
-install -d %{buildroot}/%{_datadir}/fonts/%{name}/
-install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
-
+# S:1: cover background image
 ln -s Main.qml %{buildroot}/%{_datadir}/%{name}/qml/%{name}.qml
 install -pm644 %{S:1} %{buildroot}/%{_datadir}/%{name}/qml/
-#install -Dpm644 app/graphics/%%{name}.png %%{buildroot}/%%{_datadir}/icons/hicolor/256x256/apps/%%{name}.png
+
+# S:2: SVG file for conversion
+install -Dpm644 %{S:2} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+
+# S:3: TTS Sailjail profile
+install -Dpm644 %{S:3} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
+
+# S:4: Font file
+install -d %{buildroot}/%{_datadir}/fonts/%{name}/
+install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 desktop-file-edit  \
 --set-key=Exec \
@@ -134,13 +154,10 @@ printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPer
 >> %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # generate some icons
-install -Dpm644 %{S:2} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 for size in 86 108 128 172 256 512; do
 install -d %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/
 sailfish_svg2png -z 1.0 -f rgba -s 1 1 1 1 1 1 ${size} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/ %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/
 done
-
-
 # << install post
 
 desktop-file-install --delete-original       \
@@ -153,6 +170,7 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/*/*/apps/%{name}.png
 %{_datadir}/icons/*/*/apps/%{name}.svg
 %{_datadir}/%{name}
+%exclude %{_datadir}/%{name}/qml/TTS.qml
 %{_datadir}/fonts/%{name}/*.ttf
 # >> files
 # << files
@@ -163,7 +181,9 @@ desktop-file-install --delete-original       \
 # >> files qt5-qtdeclarative-import-Lonewolf
 # << files qt5-qtdeclarative-import-Lonewolf
 
-%files tts
+%files tts-plugin
 %defattr(-,root,root,-)
-# >> files tts
-# << files tts
+%{_datadir}/%{name}/qml/TTS.qml
+%{_sysconfdir}/sailjail/permissions/%{name}.profile
+# >> files tts-plugin
+# << files tts-plugin

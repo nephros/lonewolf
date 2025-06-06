@@ -237,7 +237,6 @@ WebViewPage {
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
-		    function getText(return newcontent)
         }
     }
 
@@ -296,6 +295,18 @@ WebViewPage {
                 pageView.pageId = text;
             }
             console.debug("Executed alert action:", text)
+        }
+
+        function readText() { 
+            runJavaScript("
+                var pageText = document.body.textContent;
+                if (pageText) { return pageText } else { return null};
+            ",
+            function(result) {
+                   //console.log("Document text is", result)
+                   if (result != "empty") mainView.ttsPlay(result)
+            }
+            );
         }
 
         Connections {
@@ -368,8 +379,11 @@ WebViewPage {
             }
 
             IconButton { id: readbtn
-                icon.source: "image://theme/icon-m-file-video?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
-                onClicked: mainView.readText(book.getText())
+                icon.source: mainView.ttsSpeaking
+                    ? "image://theme/icon-m-stop?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                    : "image://theme/icon-m-file-video?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                highlighted: down || mainView.ttsSpeaking
+                onClicked: mainView.ttsSpeaking ?  mainView.ttsStop() : pageView.readText()
                 visible: mainView.ttsAvailable && !licenseButton.visible
                 anchors.left: previous.right
                 anchors.right: plusminus.left

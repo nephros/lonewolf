@@ -10,6 +10,7 @@ Sources:
     - '%{name}-%{version}.tar.gz'
     - lonewolf-bighead.png
     - lonewolf-app-icon.svg
+    - lonewolf.profile
     - rpm/AG_Souvenir_Regular.ttf
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
@@ -34,7 +35,7 @@ Description: |
     This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
     the original Lone Wolf app for Ubuntu Phone by Michael Terry.
 
-    %if "%{?vendor}" == "chum"
+    %if "0%{?_chum}"
     Title: Lonewolf
     Type: desktop-application
     DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
@@ -81,6 +82,7 @@ Files:
   - '%{_datadir}/icons/*/*/apps/%{name}.png'
   - '%{_datadir}/icons/*/*/apps/%{name}.svg'
   - '%{_datadir}/%{name}'
+  - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
   - '%{_datadir}/fonts/%{name}/*.ttf'
 
 
@@ -88,14 +90,30 @@ SubPackages:
     - Name:  qt5-qtdeclarative-import-Lonewolf
       AsWholeName: true
       AutoDepend: false
-      Summary: Lonewolf player for QML
+      Summary: Lonewolf player QML plugin
       Group: Libraries
       Files:
         - '%{_libdir}/qt5/qml/Lonewolf/'
 
-    - Name:  tts
-      Summary: TTS support for %{name}
+    - Name:  tts-plugin
+      Summary: Text-to-Speech support for %{name}
       Group: Games
-      AutoDepend: false
       Requires:
         - harbour-dsnote
+      Description: |
+          Adds text-to-speech support to the Lonewolf player.
+
+          Requires DSNote (harbour-dsnote) by mkiol
+
+          %if "0%{?_chum}"
+          Title: TTS plugin for Lonewolf
+          Type: desktop-application
+          Categories:
+           - Games
+          PackageIcon: https://www.projectaon.org/en/images/logotop.gif
+          %endif
+      Files:
+        - '%{_datadir}/%{name}/qml/TTS.qml'
+        - '%{_sysconfdir}/sailjail/permissions/%{name}.profile'
+
+

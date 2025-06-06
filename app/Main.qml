@@ -75,9 +75,17 @@ ApplicationWindow {
         you: gameState
     }
 
-	property alias tts: ttsplugin.item
-	property bool ttsAvailable: ttsplugin.status == Loader.Ready
-	function readText(text) { if (!ttsAvailable) return; tts.play(text) }
+    property alias tts: ttsplugin.item
+    property bool ttsSpeaking
+    property bool ttsAvailable: ttsplugin.status == Loader.Ready
+    onTtsAvailableChanged: { console.info("Text-to-speech plugin found and initialized.") }
+    onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
+    function ttsPlay(text) { if (!ttsAvailable) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
+    function ttsStop() { if (!ttsAvailable) return; tts.stop(); console.debug("TTS: Requested to stop")}
+    Connections {
+        target: ttsplugin.item
+        onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
+    }
     Loader { id: ttsplugin
         source: Qt.resolvedUrl("TTS.qml")
     }
