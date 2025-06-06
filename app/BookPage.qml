@@ -118,7 +118,10 @@ WebViewPage {
                 //icon.source: "location"
                 text: "Map"
                 //onClicked: pageView.pageId = "map"
-                onClicked: imgViewer.visible = true
+                onClicked: {
+                    imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
+                    imgViewer.visible = true
+                }
             }
         }
 
@@ -224,6 +227,7 @@ WebViewPage {
             if (pageId != "title" && (pageType == "backmatter" || pageType == "deadend")) {
                 inBackMatter = true;
             } else if (pageId == "map") {
+                  imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
                   imgViewer.visible = true
             } else if (!inBackMatter) {
                 you.pageId = pageId; // save place
@@ -572,7 +576,6 @@ WebViewPage {
     }
 
     Gallery.ImageViewer { id: imgViewer
-        source: Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
         anchors.fill: parent
         anchors.centerIn: parent
         visible: false
