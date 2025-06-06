@@ -281,6 +281,9 @@ WebViewPage {
             } else if (text == "action") {
                 haptics.play()
                 root.showChartPage()
+            } else if (text == "map") {
+                imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
+                imgViewer.visible = true
             } else if (text.indexOf("combat,") == 0) {
                 haptics.play(ThemeEffect.PressStrong);
                 //combat.props = text;
