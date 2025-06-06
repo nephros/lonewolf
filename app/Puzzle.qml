@@ -41,24 +41,19 @@ Item {
                 color: Theme.highlightColor
             }
 
-
-            Row {
-                spacing: Theme.paddingSmall
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                TextField {
-                    id: entry
-                    width: parent.width - (tryButton.width + parent.spacing)
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    horizontalAlignment: TextInput.AlignHCenter
-                    font.pixelSize: Theme.fontSizeExtraLarge
-                    onTextChanged: {
-                        d.wrong = false;
-                    }
+            TextField {
+                id: entry
+                width: parent.width
+                inputMethodHints: Qt.ImhDigitsOnly
+                horizontalAlignment: TextInput.AlignHCenter
+                font.pixelSize: Theme.fontSizeExtraLarge
+                onTextChanged: {
+                    d.wrong = false;
                 }
+            }
 
+            ButtonLayout {
                 Button { id: tryButton
-                    anchors.verticalCenter: parent.verticalCenter
                     text: "Try"
                     onClicked:{
                         var haystack = root.answers + " ";
