@@ -8,9 +8,12 @@ import Nemo.DBus 2.0
 Item { id: root
     property bool speaking: false
     property int speakId
+    property int serviceState
+    property int taskState
+
     onSpeakingChanged: {
         if (!speaking) speakId = -1
-        console.info("TTS:" + (speaking ? " began " : " stopped " ) + "speaking.")
+        //console.info("TTS:" + (speaking ? " began " : " stopped " ) + "speaking.")
     }
     // https://github.com/mkiol/dsnote/blob/main/dbus/org.mkiol.Speech.xml
     /*
@@ -26,12 +29,22 @@ Item { id: root
         return newText
     }
     function play(text) {
-        if (speaking) return
         const toSpeak = cleanText(text)
-        dbus.call("TtsPlaySpeech", [ toSpeak, "en" ],
+        if (speaking) {
+            console.debug("TTS: Stopping job before submitting new one!:")
+            dbus.call("TtsStopSpeech", [ speakId ],
+                function(r) { reallyPlay(toSpeak);  },
+                undefined
+            )
+        } else {
+            reallyPlay(toSpeak)
+        }
+    }
+    function reallyPlay(text) {
+        dbus.call("TtsPlaySpeech", [ text, "en" ],
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
         //dbus.typedcall("TtsPlaySpeech2", [
-        //        { "type" : 's', "value": toSpeak },
+        //        { "type" : 's', "value": text },
         //        { "type" : 's', "value": "en"} ,
         //        { "type" : 'a{sv}',
         //          "value": { "split_into_sentences": false, "use_engine_speed_control": true, "normalize_audio": false, "speech_speed": 12 }
@@ -49,7 +62,7 @@ Item { id: root
         )
     }
     function stop() {
-        if (speakId < 0) return
+        if (speakId < 0) { console.debug("TTS: No valid job stored in our tracker. Doing nothing"); return }
         dbus.call("TtsStopSpeech", [ speakId ],
             function(r)   { console.debug("TTS: Stop job submitted:", r) },
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
@@ -79,13 +92,15 @@ Item { id: root
             Unrecognized states should be considered equal to Unknown.
         */
         function statePropertyChanged(code) {
-            console.debug("TTS: State now:", code, ",", stateTable[code])
+            console.debug("TTS: State now:", stateTable[code])
+            root.serviceState = code
             if (code == 3) {root.speaking = false}
-            if ((code == 2) || (code == 8)) {root.speaking = true}
+            if (code == 8) {root.speaking = true}
         }
         function taskStatePropertyChanged(code) {
-            console.debug("TTS: Task State now:", code, ",", taskStateTable[code])
-            if ((code == 2) || (code == 4)) {root.speaking = true}
+            root.taskState = code
+            console.debug("TTS: Task now:", taskStateTable[code])
+            if ((code > 1) && (code < 5)) {root.speaking = true}
         }
         propertiesEnabled: false
         //property int state
