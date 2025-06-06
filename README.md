@@ -15,6 +15,12 @@ You are the sole survivor of a devastating attack on the monastery where you wer
  - Ported to Silica while trying to retain most of the logic and UI flow of the original where applicable.
  - Dropped two-column layout (see #3)
  - New feature: Text-to-Speech support (see #4) via [dsnote](https://github.com/mkiol/dsnote) by @mkiol
+   - packaged separately as a "Plugin", so it can be installed as an additional option
+ - New feature: Font configuration: 
+   - if you use fontconfig to define an alias called `lone-wolf`, that will be the preferred font used.
+   - if you happen to have the original (non-free) Souvenir, or ITC Souvenitr fonts installed, they will be used
+   - otherwise, the shipped "AG Souvenir Regular" font will be used
+   - styling can be turned off in the menu
 
 See the issues section for planned and implemented features, and currently-known bugs.
 
