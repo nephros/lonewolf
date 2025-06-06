@@ -237,6 +237,7 @@ WebViewPage {
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
+            if (uisettings.autoTts) { pageView.readText() }
         }
     }
 

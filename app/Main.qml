@@ -24,6 +24,7 @@ ApplicationWindow {
         property int font: 2
         property bool saveOnQuit: false
         property bool styleHtml: true
+        property bool autoTts: false
     }
 
     GameState {

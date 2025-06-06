@@ -109,6 +109,13 @@ Page {
                 checked: uisettings.styleHtml
                 onCheckedChanged: uisettings.styleHtml = checked
             }
+            TextSwitch {
+                text: "TTS: Read automatically"
+                description: "Start reading each page immediately after it's loaded"
+                checked: uisettings.autoTts
+                onCheckedChanged: uisettings.autoTts = checked
+                visible: mainView.ttsAvailable
+            }
 
 
             ListModel {
