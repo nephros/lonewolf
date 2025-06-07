@@ -105,6 +105,12 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %endif
 
 
+%define please_ignore this macro
+%if 0%{?sailfishos_version} < 40600
+%define cmake_build %__cmake --build "." -j8 --verbose
+%define cmake_install DESTDIR=%buildroot %__cmake --install .
+%endif
+
 %prep
 %setup -q -n %{name}-%{version}
 
