@@ -39,6 +39,7 @@ Page { id: about
             wrapMode: Text.Wrap
         }
         //DetailItem { label: }
+    }
   }
 }
 

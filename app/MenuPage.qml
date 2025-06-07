@@ -110,7 +110,7 @@ Page {
                 onCheckedChanged: uisettings.styleHtml = checked
             }
             TextSwitch {
-                text: "TTS: Read automatically"
+                text: "Text-To-Speech: Read automatically"
                 description: "Start reading each page immediately after it's loaded.\nIf disabled, you can still use the TTS button to hear the page"
                 checked: uisettings.autoTts
                 onCheckedChanged: uisettings.autoTts = checked
