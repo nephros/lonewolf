@@ -170,12 +170,13 @@ WebViewPage {
                 }
             }
             Label {
-                text: mainView.gold + " Gd. Crowns"
+                text: "%1 Crowns".arg(mainView.gold)
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.capitalization: Font.SmallCaps
                 color: (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                truncationMode: TruncationMode.Fade
             }
             IconButton {
                 anchors.margins: Theme.paddingSmall
@@ -203,12 +204,13 @@ WebViewPage {
                 }
             }
             Label {
-                text: mainView.endurance + " Endurance"
+                text: "%1 Endurance".arg(mainView.endurance)
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.capitalization: Font.SmallCaps
                 color: (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
+                truncationMode: TruncationMode.Fade
             }
             IconButton {
                 anchors.margins: Theme.paddingSmall
