@@ -688,7 +688,7 @@ Page {
                     text: "Weaponskill"
                     checked: you.kai_weaponskill
                     prop: "kai_weaponskill"
-                    note: "+2 CS for with one weapon type"
+                    note: "+2 CS for with chosen weapon type"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -762,6 +762,7 @@ Page {
                     text: "Weaponmastery"
                     checked: you.magnakai_weaponmastery
                     prop: "magnakai_weaponmastery"
+                    note: "+3 CS for with chosen weapon type"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -776,6 +777,7 @@ Page {
                     text: "Curing"
                     checked: you.magnakai_curing
                     prop: "magnakai_curing"
+                    note: "+1 EP for each section without combat"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -790,6 +792,7 @@ Page {
                     text: "Huntmastery"
                     checked: you.magnakai_huntmastery
                     prop: "magnakai_huntmastery"
+                    note: "Skip a meal requirement"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -804,6 +807,7 @@ Page {
                     text: "Psi-surge"
                     checked: you.magnakai_psisurge
                     prop: "magnakai_psisurge"
+                    note: "+4CS/-2 EP, or +2CS per round of combat"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
