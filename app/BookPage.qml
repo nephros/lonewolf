@@ -612,11 +612,11 @@ WebViewPage {
         id: downloadCover
         color: Theme.highlightDimmerColor
         anchors.fill: parent
-        opacity: book.progress == 100 ? 0 : 1
+        opacity: book.progress == 100 ? 0 : Theme.opacityOverlay
         Behavior on opacity { FadeAnimation {} }
         MouseArea {
             anchors.fill: parent
-            enabled: parent.opacity == 1
+            enabled: visible
         }
         Item {
             id: downloadPage
