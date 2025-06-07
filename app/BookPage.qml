@@ -79,6 +79,22 @@ WebViewPage {
         PullDownMenu {
             visible: book.progress == 100
             MenuItem {
+                id: quickSave
+                //icon.source: "save"
+                text: "Quick Save"
+                enabled: !book.inBackMatter && mainView.endurance > 0
+                onClicked: {
+                    if (quickSaveState.pageId == "") {
+                        var dlg = pageStack.push(saveDialog);
+                        dlg.done.connect(function() {
+                          Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
+                        })
+                    } else {
+                        Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
+                    }
+                }
+            }
+            MenuItem {
                 id: backAction
                 text: book.inBackMatter ? "Back" : "Back to Menu"
                 enabled: canDoBackAction
@@ -99,22 +115,6 @@ WebViewPage {
                 onClicked: showChartPage()
             }
             */
-            MenuItem {
-                id: quickSave
-                //icon.source: "save"
-                text: "Quick Save"
-                enabled: !book.inBackMatter && mainView.endurance > 0
-                onClicked: {
-                    if (quickSaveState.pageId == "") {
-                        var dlg = pageStack.push(saveDialog);
-                        dlg.done.connect(function() {
-                          Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
-                        })
-                    } else {
-                        Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
-                    }
-                }
-            }
             /*
             MenuItem {
                 id: mapAction
