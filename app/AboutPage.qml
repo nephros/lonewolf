@@ -33,12 +33,22 @@ Page { id: about
             width: height
         }
         Label {
-            text: "Lone Wolf is a role-playing book series from the 80s.\nThis is a fork of Lonewolf by Tim Süberkrüb, which is a fork of Michael Terry's Lone Wolf app for Ubuntu Phone.\nPorted to Sailfish OS by nephros."
-            anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
-            wrapMode: Text.Wrap
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.secondaryColor
+            font.pixelSize: Theme.fontSizeSmall
+            horizontalAlignment: Text.AlignJustify
+            wrapMode: Text.WordWrap
+            text: "Lone Wolf is a role-playing book series from the 80s.\nThis is a fork of Lonewolf by Tim Süberkrüb, which is a fork of Michael Terry's Kai Chronicals app for Ubuntu Phone.\n\nPorted to Sailfish OS by nephros."
         }
-        //DetailItem { label: }
+        //FeatureList { anchors.left: parent.left; anchors.right: parent.right; fontSize: Theme.fontSizeSmall }
+        //DetailItem { label: qsTr("Version:");      value: Qt.application.version }
+        //DetailItem { label: qsTr("Copyright:");    value: copyright;                            BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(email) } }
+        DetailItem { label: qsTr("License:");      value: license }
+        DetailItem { label: qsTr("Source Code:");  value: source;                               BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(source) } }
+        DetailItem { label: qsTr("Tim's Code:");  value: origsource;                               BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(origsource) } }
+        DetailItem { label: qsTr("Michael's  Code:");  value: portsource;                               BackgroundItem { anchors.fill: parent; onClicked: Qt.openUrlExternally(portsource) } }
+         //DetailItem { label: }
     }
   }
 }
