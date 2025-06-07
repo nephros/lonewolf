@@ -69,13 +69,14 @@ Item {
             }
 
             Label {
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 visible: d.wrong
                 text: "Wrong"
                 color: Theme.highlightFromColor(Theme.errorColor, Theme.colorScheme)
                 font.pixelSize: Theme.fontSizeExtraLarge
+                opacity: visible ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimation { duration: 2000 } }
             }
         }
     }
