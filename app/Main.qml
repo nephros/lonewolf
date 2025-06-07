@@ -56,7 +56,7 @@ ApplicationWindow {
 
     function goToBookTab() {
       mainView.bookTitle = menuPage.getTitle()
-      pageStack.replace(bookComponent)
+      pageStack.replaceAbove(null, bookComponent)
     }
     function popBookTab() {
       pageStack.replaceAbove(null, menuPage)
