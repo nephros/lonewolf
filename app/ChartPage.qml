@@ -65,14 +65,14 @@ Page {
                     visible: d.neworder
                 }
                 Row {
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "-"
+                        icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_combatskill -=1 : you.combatskill -=1
                     }
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "+"
+                        icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_combatskill +=1 : you.combatskill +=1
                     }
                 }
@@ -98,14 +98,14 @@ Page {
                     visible: d.neworder
                 }
                 Row {
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "-"
+                        icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_endurance -=1 : you.endurance -=1
                     }
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "+"
+                        icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_endurance +=1 : you.endurance +=1
                     }
                 }
@@ -155,14 +155,14 @@ Page {
                     description: "Max 50"
                 }
                 Row {
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "-"
+                        icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_gold -=1 : you.gold -=1
                     }
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "+"
+                        icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_gold +=1 : you.gold +=1
                     }
                 }
@@ -191,14 +191,14 @@ Page {
                 }
                 Row {
                     visible: d.magnakai || d.grandmaster || d.neworder
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "-"
+                        icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_quiver -=1 : you.quiver -=1
                     }
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "+"
+                        icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_quiver +=1 : you.quiver +=1
                     }
                 }
@@ -226,14 +226,14 @@ Page {
                     description: "Each fills a backpack slot"
                 }
                 Row {
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "-"
+                        icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_meals -=1 : you.meals -=1
                     }
-                    Button {
+                    IconButton {
                         width: Theme.buttonWidthTiny
-                        text: "+"
+                        icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_meals +=1 : you.meals +=1
                     }
                 }
