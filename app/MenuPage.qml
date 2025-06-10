@@ -103,20 +103,26 @@ Page {
                 checked: uisettings.saveOnQuit
                 onCheckedChanged: uisettings.saveOnQuit = checked
             }
-            TextSwitch {
+            TextSwitch { id: styleswitch
                 text: "Apply text styling"
                 description: "Add styling to the book pages for a more authentic look"
                 checked: uisettings.styleHtml
                 onCheckedChanged: uisettings.styleHtml = checked
             }
-            TextSwitch {
+            TextSwitch { id: ttsswitch
                 text: "Text-To-Speech: Read automatically"
                 description: "Start reading each page immediately after it's loaded.\nIf disabled, you can still use the TTS button to hear the page"
                 checked: uisettings.autoTts
                 onCheckedChanged: uisettings.autoTts = checked
-                visible: mainView.ttsAvailable
+                //visible: mainView.ttsAvailable
+                enabled: mainView.ttsAvailable
             }
-
+            Label {
+                visible: !ttsswitch.enabled
+                text: "Text-to-Speech plugin is not installed."
+                wrapMode: Text.Wrap
+                x: ttsswitch.x + Theme.paddingMedium *3
+            }
 
             ListModel {
                 id: kaiModel
