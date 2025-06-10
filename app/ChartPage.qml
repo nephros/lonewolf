@@ -10,6 +10,10 @@ Page {
 
     property var you
 
+    backgroundColor: mainView.nightModeEnabled
+        ? "black"
+        : "#7f7f4c"
+
     QtObject {
         id: d
         // deprecated aliases, didn't want to bother searching and replacing
@@ -17,6 +21,17 @@ Page {
         readonly property int magnakai: mainView.inmagnakai
         readonly property int grandmaster: mainView.ingrandmaster
         readonly property int neworder: mainView.inneworder
+    }
+
+    Image {
+        source: d.magnakai ? "./ac-02.png" : "./ac-01.png"
+        fillMode: Image.PreserveAspectFit
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        width: parent.width*4/5
+        height: parent.height/3
+        opacity: 0.8
+        cache: true; smooth: false
     }
 
     SilicaFlickable {
