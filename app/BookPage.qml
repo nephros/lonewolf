@@ -131,21 +131,20 @@ WebViewPage {
         description: book.pageTitle
         title: mainView.bookTitle
         opacity: mainView.nightModeEnabled ? 0.8 : 1.0
-        IconButton {
+        BackgroundItem {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.extraContent.left
             anchors.leftMargin: Theme.paddingLarge
-            //width: Theme.buttonSizeLarge
-            //height: Theme.buttonSizeLarge
-            //icon.source: mainView.nightModeEnabled
-            //    ? "image://theme/icon-l-weather-d000-dark"
-            //    : "image://theme/icon-l-weather-d000-light"
-            //icon.source:"image://theme/icon-m-location"
-            icon.source:"image://theme/icon-m-browser-location"
-            //icon.source:"image://theme/icon-m-image"
-            //icon.source:"image://theme/icon-lock-social"
-            onClicked: root.showMap()
+            width: Theme.iconSizeMedium
+            height: Theme.iconSizeMedium
+            Image {
+                anchors.centerIn: parent
+                anchors.fill: parent
+                source:"./icon-m-windrose.svg"
+                cache: true
+            }
             visible: !book.inBackMatter && (mainView.endurance > 0)
+            onClicked: root.showMap()
         }
     }
 

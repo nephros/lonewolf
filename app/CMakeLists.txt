@@ -1,4 +1,4 @@
-file(GLOB QML_JS_FILES *.qml *.js *.xsl *.css)
+file(GLOB QML_JS_FILES *.qml *.js *.xsl *.css *.png *.svg)
 
 # Make the files visible on qtcreator
 add_custom_target(lonewolf_QMlFiles ALL SOURCES ${QML_JS_FILES})
