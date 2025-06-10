@@ -12,7 +12,8 @@ Page {
 
     backgroundColor: mainView.nightModeEnabled
         ? "black"
-        : "#7f7f4c"
+        //: "#7f7f4c"
+        : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
 
     QtObject {
         id: d
