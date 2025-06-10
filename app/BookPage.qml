@@ -610,10 +610,12 @@ WebViewPage {
 
     Rectangle {
         id: downloadCover
-        color: Theme.highlightDimmerColor
+        //onVisibleChanged: console.debug("showing")
+        visible: false
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : Theme.opacityOverlay
         Behavior on opacity { FadeAnimation {} }
+        color: Theme.highlightDimmerColor
         MouseArea {
             anchors.fill: parent
             enabled: visible
