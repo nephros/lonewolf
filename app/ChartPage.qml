@@ -651,6 +651,7 @@ Page {
                     text: "Camouflage"
                     checked: you.kai_camouflage
                     prop: "kai_camouflage"
+                    note: "Blend in with your surroundings"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -666,6 +667,7 @@ Page {
                     text: "Sixth Sense"
                     checked: you.kai_sixthsense
                     prop: "kai_sixthsense"
+                    note: "Warns about imminent danger"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -673,6 +675,7 @@ Page {
                     text: "Tracking"
                     checked: you.kai_tracking
                     prop: "kai_tracking"
+                    note: "Find the right path"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -680,15 +683,15 @@ Page {
                     text: "Healing"
                     checked: you.kai_healing
                     prop: "kai_healing"
-                    width: disciplines.itemWidth
                     note: "+1 EP for each section without combat"
+                    width: disciplines.itemWidth
                 }
                 ChartCheck {
                     you: root.you
                     text: "Weaponskill"
                     checked: you.kai_weaponskill
                     prop: "kai_weaponskill"
-                    note: "+2 CS for with chosen weapon type"
+                    note: "+2 CS for with chosen weapon"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -696,6 +699,7 @@ Page {
                     text: "Mindshield"
                     checked: you.kai_mindshield
                     prop: "kai_mindshield"
+                    note: "Immune to Mindblast attack"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -711,6 +715,7 @@ Page {
                     text: "Animal Kinship"
                     checked: you.kai_animalkinship
                     prop: "kai_animalkinship"
+                    note: "Communiate with some animals"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
@@ -718,34 +723,19 @@ Page {
                     text: "Mind Over Matter"
                     checked: you.kai_mindovermatter
                     prop: "kai_mindovermatter"
+                    note: "Move small objects with your mind"
                     width: disciplines.itemWidth
                 }
             }
 
-            Grid {
-                columns: 2
-                rows: 1
-                visible: d.kai
-                spacing: 1
-                verticalItemAlignment: Grid.AlignVCenter
-
-                Label {
-                    text: "Weaponskill Weapon:"
-                    color: Theme.highlightColor
-                }
-                ChartItem {
-                    text: you.weaponskill_weapon
-                    you: root.you
-                    prop: "weaponskill_weapon"
-                    width: Theme.buttonWidthSmall
-                }
+            ChartItem {
+                text: you.weaponskill_weapon
+                you: root.you
+                prop: "weaponskill_weapon"
+                width: parent.width
+                description: "Weaponskill Weapon"
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.magnakai
-            }
             SectionHeader {
                 text: "Magnakai Disciplines"
                 visible: d.magnakai
@@ -762,7 +752,7 @@ Page {
                     text: "Weaponmastery"
                     checked: you.magnakai_weaponmastery
                     prop: "magnakai_weaponmastery"
-                    note: "+3 CS for with chosen weapon type"
+                    note: "+3 CS for with chosen weapon"
                     width: disciplines.itemWidth
                 }
                 ChartCheck {
