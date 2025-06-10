@@ -253,7 +253,7 @@ WebViewPage {
             var newstyle
             if (uisettings.styleHtml) {
                 newstyle=[
-                    '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, "Linux Biolinum", Garamond, Georgia, "Times New Roman", Times, serif;}</style>',
+                    '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
                     '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
                     '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
                     '<style> .attribute { font-variant-caps: small-caps; }</style>',

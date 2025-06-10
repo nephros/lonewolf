@@ -16,12 +16,14 @@ Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.1
 Release:    0
 Group:      Applications
-License:    GPLv3
+License:    GPLv3 and OFL
 URL:        https://github.com/nephros/lonewolf
 Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
 Source3:    lonewolf.profile
+Source4:    Alegreya-Medium.otf
+Source5:    Alegreya-Regular.otf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
@@ -138,8 +140,9 @@ rm -rf %{buildroot}
 %cmake_install
 
 # >> install post
-# S:1: cover background image
 ln -s Main.qml %{buildroot}/%{_datadir}/%{name}/qml/%{name}.qml
+
+# S:1: cover background image
 install -pm644 %{S:1} %{buildroot}/%{_datadir}/%{name}/qml/
 
 # S:2: SVG file for conversion
@@ -147,6 +150,12 @@ install -Dpm644 %{S:2} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{nam
 
 # S:3: TTS Sailjail profile
 install -Dpm644 %{S:3} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
+
+
+# S:4/5: Font files
+install -d %{buildroot}/%{_datadir}/fonts/%{name}/
+install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
+install -pm644 %{S:5} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 desktop-file-edit  \
 --set-key=Exec \
@@ -175,6 +184,8 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/*/*/apps/%{name}.png
 %{_datadir}/icons/*/*/apps/%{name}.svg
 %{_datadir}/%{name}
+%dir %{_datadir}/fonts/%{name}
+%{_datadir}/fonts/%{name}/*
 %exclude %{_datadir}/%{name}/qml/TTS.qml
 # >> files
 # << files

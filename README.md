@@ -12,17 +12,39 @@ You are the sole survivor of a devastating attack on the monastery where you wer
 
 ## Differences to upstream
 
- - Ported to Silica while trying to retain most of the logic and UI flow of the original where applicable.
+ - Ported to Silica while trying to retain most of the logic and UI flow of the original.
  - Dropped two-column layout (see #3)
  - New feature: Text-to-Speech support (see #4) via [dsnote](https://github.com/mkiol/dsnote) by @mkiol
    - packaged separately as a "Plugin", so it can be installed as an additional option
- - New feature: Font configuration: 
-   - if you use fontconfig to define an alias called `lone-wolf`, that will be the preferred font used.
-   - if you happen to have the original (non-free) Souvenir, or ITC Souvenitr fonts installed, they will be used
-   - otherwise, the shipped "AG Souvenir Regular" font will be used
-   - styling can be turned off in the menu
+ - New feature: Font configuration:
+   - The original books were printed using the "Souvenir" typeface. Since no freely distributable version of this font could be found (hints welcome!), we do not ship this. Instead we use the free font Alegreya.
+   - Hovever, if you use fontconfig to define an alias called `lone-wolf`, that will be the preferred font used.
+   - If you happen to have the original (non-free) Souvenir, ITC Souvenir, or AG Souvenir fonts installed, they will be used
+   - Styling (overriding system fonts, and other things,) can be turned off in the menu
 
 See the issues section for planned and implemented features, and currently-known bugs.
+
+Example fontconfig file for setting up a font for the game:
+
+This should be installed as e.g. `~/config/fontconfig/lone-wolf.conf`, and font files be placed in `~/.local/share/fonts`.
+```
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+<description>Custom family alias for the Lone Wolf books.</description>
+
+<alias binding="strong">
+    <family>lone-wolf</family>
+    <prefer>
+        <family>Philosopher</family>
+        <family>Alegreya ht</family>
+        <family>Rosario</family>
+        <family>Linux Biolinum</family>
+    </prefer>
+</alias>
+</fontconfig>
+```
 
 ## Credits
 

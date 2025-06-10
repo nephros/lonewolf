@@ -3,7 +3,7 @@ Summary: A role-playing choose-your-own-adventure game
 Version: 0.1.1
 Release: 0
 Group: Applications
-License: GPLv3
+License: GPLv3 and OFL
 URL: https://github.com/nephros/lonewolf
 SCM: https://github.com/nephros/lonewolf
 Sources:
@@ -11,6 +11,8 @@ Sources:
     - lonewolf-bighead.png
     - lonewolf-app-icon.svg
     - lonewolf.profile
+    - Alegreya-Medium.otf
+    - Alegreya-Regular.otf
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'orgname;%{name}'
@@ -91,6 +93,8 @@ Files:
   - '%{_datadir}/icons/*/*/apps/%{name}.png'
   - '%{_datadir}/icons/*/*/apps/%{name}.svg'
   - '%{_datadir}/%{name}'
+  - '%dir %{_datadir}/fonts/%{name}'
+  - '%{_datadir}/fonts/%{name}/*'
   - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
 
 SubPackages:
