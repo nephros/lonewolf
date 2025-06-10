@@ -22,7 +22,6 @@ Source0:    %{name}-%{version}.tar.gz
 Source1:    lonewolf-bighead.png
 Source2:    lonewolf-app-icon.svg
 Source3:    lonewolf.profile
-Source4:    rpm/AG_Souvenir_Regular.ttf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
@@ -149,10 +148,6 @@ install -Dpm644 %{S:2} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{nam
 # S:3: TTS Sailjail profile
 install -Dpm644 %{S:3} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
 
-# S:4: Font file
-install -d %{buildroot}/%{_datadir}/fonts/%{name}/
-install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
-
 desktop-file-edit  \
 --set-key=Exec \
 --set-value="/usr/bin/invoker --single-instance --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
@@ -181,7 +176,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/*/*/apps/%{name}.svg
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/qml/TTS.qml
-%{_datadir}/fonts/%{name}/*.ttf
 # >> files
 # << files
 

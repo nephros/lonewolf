@@ -11,7 +11,6 @@ Sources:
     - lonewolf-bighead.png
     - lonewolf-app-icon.svg
     - lonewolf.profile
-    - rpm/AG_Souvenir_Regular.ttf
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'orgname;%{name}'
@@ -93,8 +92,6 @@ Files:
   - '%{_datadir}/icons/*/*/apps/%{name}.svg'
   - '%{_datadir}/%{name}'
   - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
-  - '%{_datadir}/fonts/%{name}/*.ttf'
-
 
 SubPackages:
     - Name:  qt5-qtdeclarative-import-Lonewolf
