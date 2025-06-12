@@ -19,6 +19,7 @@ WebViewPage {
          ? "black"
          : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
 
+    canNavigateForward: imgViewer.visible ? false : forwardNavigation
 
     onStatusChanged: {
         if ((root.status == PageStatus.Active) && (pageStack.nextPage() == null)) {
