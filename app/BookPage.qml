@@ -67,6 +67,8 @@ WebViewPage {
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
     SilicaFlickable { id: flickable
+        opacity: imgViewer.visible ? Theme.opacityFaint : 1.0
+        Behavior on opacity { FadeAnimator { } }
         anchors.fill: parent
         //contentHeight: header.height + endurancebar.height + viewBorder.height + navigation.height
         //interactive: false
@@ -131,7 +133,7 @@ WebViewPage {
         description: book.pageTitle
         title: mainView.bookTitle
         opacity: mainView.nightModeEnabled ? 0.8 : 1.0
-        BackgroundItem {
+        BackgroundItem { id: mapButton
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.extraContent.left
             anchors.leftMargin: Theme.paddingLarge
@@ -145,6 +147,21 @@ WebViewPage {
             }
             visible: !book.inBackMatter && (mainView.endurance > 0)
             onClicked: root.showMap()
+        }
+        BackgroundItem {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: mapButton.right
+            anchors.leftMargin: Theme.paddingLarge
+            width: Theme.iconSizeMedium
+            height: Theme.iconSizeMedium
+            Image {
+                anchors.centerIn: parent
+                anchors.fill: parent
+                source: "image://theme/icon-m-image"
+                cache: true
+            }
+            enabled: book.images.length > 0
+            onClicked: root.showIllustration()
         }
     }
 
@@ -231,6 +248,8 @@ WebViewPage {
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
+        property var images: []
+
         bgColor:   mainView.nightModeEnabled ? "black" : "bisque"
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
         linkColor:  Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.DarkOnLight: Theme.lightOnDark))
@@ -272,6 +291,14 @@ WebViewPage {
                     '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
                     ].join('\n')
             }
+            // as we can't get webview to load images, lets extract them:
+            var imgurls = []
+            var match
+            const imgre = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
+            while ( match = imgre.exec( content ) ) { imgurls.push( "file://" + book.cacheDir + "/" + match[1] ); }
+            book.images = imgurls
+            console.debug("images:", book.images.join("\n"))
+
             const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
@@ -595,10 +622,16 @@ WebViewPage {
         }
     }
 
+    function showIllustration() {
+        imgViewer.source = book.images[0]
+        imgViewer.visible = true
+    }
+
     function showMap() {
         imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
         imgViewer.visible = true
     }
+
     Gallery.ImageViewer { id: imgViewer
         anchors.fill: parent
         anchors.centerIn: parent
