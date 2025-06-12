@@ -162,6 +162,8 @@ WebViewPage {
             }
             enabled: book.images.length > 0
             onClicked: root.showIllustration()
+            opacity: enabled ? 1.0 : Theme.opacityFaint
+            Behavior on opacity { FadeAnimator { } }
         }
     }
 
