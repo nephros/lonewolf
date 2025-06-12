@@ -610,9 +610,9 @@ WebViewPage {
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 opacity: random.numberRevealed ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 3000; easing.type: Easing.InBounce } }
+                Behavior on opacity { FadeAnimator { duration: 3000; easing.type: Easing.InBounce } }
                 color: opacity == 1 ? Theme.primaryColor : Theme.highlightColor
-                Behavior on color { FadeAnimation { } }
+                Behavior on opacity { FadeAnimator { } }
             }
         }
         MouseArea {
@@ -638,7 +638,7 @@ WebViewPage {
         visible: false
         onClicked: visible = false
         opacity: visible ? 1.0 : 0
-        Behavior on opacity { FadeAnimation{} }
+        Behavior on opacity { FadeAnimator{} }
     }
 
     Rectangle {
@@ -647,7 +647,7 @@ WebViewPage {
         visible: false
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : Theme.opacityOverlay
-        Behavior on opacity { FadeAnimation {} }
+        Behavior on opacity { FadeAnimator { } }
         color: Theme.highlightDimmerColor
         MouseArea {
             anchors.fill: parent
