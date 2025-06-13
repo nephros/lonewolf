@@ -648,6 +648,7 @@ WebViewPage {
         anchors.fill: parent
         anchors.centerIn: parent
         visible: false
+        active: visible
         onClicked: visible = false
         opacity: visible ? 1.0 : 0
         Behavior on opacity { FadeAnimator{} }
