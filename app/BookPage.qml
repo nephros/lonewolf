@@ -146,8 +146,10 @@ WebViewPage {
                 source:"./icon-m-windrose.svg"
                 cache: true
             }
-            visible: !book.inBackMatter && (mainView.endurance > 0)
+            enabled: !book.inBackMatter && (mainView.endurance > 0)
             onClicked: root.showMap()
+            opacity: enabled ? 1.0 : Theme.opacityFaint
+            Behavior on opacity { FadeAnimator { } }
         }
         BackgroundItem {
             anchors.verticalCenter: parent.verticalCenter
@@ -155,10 +157,12 @@ WebViewPage {
             anchors.leftMargin: Theme.paddingLarge
             width: Theme.iconSizeMedium
             height: Theme.iconSizeMedium
-            Image {
+            Icon {
+                property color iconColor: parent.enabled ? Theme.highlightColor : Theme.secondaryColor
+                Behavior on iconColor { ColorAnimation { easing.type: Easing.InBounce } }
                 anchors.centerIn: parent
                 anchors.fill: parent
-                source: "image://theme/icon-m-image"
+                source: "image://theme/icon-m-image?" + iconColor
                 cache: true
             }
             enabled: book.images.length > 0
