@@ -157,13 +157,18 @@ WebViewPage {
             anchors.leftMargin: Theme.paddingLarge
             width: Theme.iconSizeMedium
             height: Theme.iconSizeMedium
-            Icon {
+            Icon { id: imgIcon
                 property color iconColor: parent.enabled ? Theme.highlightColor : Theme.secondaryColor
                 Behavior on iconColor { ColorAnimation { easing.type: Easing.InBounce } }
                 anchors.centerIn: parent
                 anchors.fill: parent
                 source: "image://theme/icon-m-image?" + iconColor
                 cache: true
+            }
+            Label {
+                anchors.centerIn: imgIcon
+                text: book.images.length > 0 ? book.images.length : ""
+                color: Theme.darkPrimaryColor
             }
             enabled: book.images.length > 0
             onClicked: root.showIllustration()
