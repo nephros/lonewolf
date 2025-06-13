@@ -404,11 +404,16 @@ WebViewPage {
         Component.onCompleted: {
             WebEngineSettings.pixelRatio = Math.ceil(uisettings.font)
             WebEngineSettings.autoLoadImages = true
+            WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
             WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
-            //WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
-            //WebEngineSettings.setPreference("security.disable_cors_checks", false, WebEngineSettings.BoolPref)
+            WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.disable_cors_checks", true, WebEngineSettings.BoolPref)
+            WebEngineSettings.setPreference("security.mixed_content.block_active_content", false, WebEngineSettings.BoolPref)
+            WebEngineSettings.setPreference("security.mixed_content.block_display_content", false, WebEngineSettings.BoolPref)
+            WebEngineSettings.setPreference("security.mixed_content.upgrade_display_content.image", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("privacy.file_unique_origin", false, WebEngineSettings.BoolPref)
         }
 
         popupProvider: PopupProvider {
