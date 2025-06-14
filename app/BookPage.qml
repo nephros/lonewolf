@@ -281,6 +281,14 @@ WebViewPage {
             } else if (!inBackMatter) {
                 you.pageId = pageId; // save place
             }
+
+            var newcontent = content.replace(
+                /<head>/,
+                '<head>
+                <base href="file://' + book.cacheDir + "/" + '" />
+                <meta http-equiv="Content-Security-Policy" content="img-src \'self\' file: *;" />
+                '
+            )
             var newstyle
             if (uisettings.styleHtml) {
                 newstyle=[
@@ -311,10 +319,13 @@ WebViewPage {
             const imgre = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
             while ( match = imgre.exec( content ) ) { imgurls.push( "file://" + book.cacheDir + "/" + match[1] ); }
             book.images = imgurls
-            console.debug("images:", book.images.join("\n"))
+            if (images.length) console.debug("images:", book.images.join("\n"))
 
-            const newcontent = content.replace('</head>', newstyle + '\n' + '</head>')
-            pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
+            newcontent = newcontent.replace('</head>', newstyle + '\n' + '</head>')
+            newcontent = newcontent.replace(/onerror=[^ ]+/g, '')
+            newcontent = newcontent.replace(/src="/g, 'src="file://' + book.cacheDir + "/" );
+            //pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
+            pageView.loadHtml(newcontent);
             //console.log("DEBUG page:", newcontent);
         }
     }
