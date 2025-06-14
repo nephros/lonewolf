@@ -415,7 +415,7 @@ WebViewPage {
             onPixelRatioChanged: uisettings.font = WebEngineSettings.pixelRatio
         }
         Component.onCompleted: {
-            WebEngineSettings.pixelRatio = Math.ceil(uisettings.font)
+            WebEngineSettings.pixelRatio = uisettings.font
             WebEngineSettings.autoLoadImages = true
             WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
@@ -469,7 +469,6 @@ WebViewPage {
             Row { id: plusminus
                 visible: !licenseButton.visible
                 anchors.centerIn: parent
-                spacing: Theme.paddingMedium
                 IconButton {
                     icon.source: "image://theme/icon-splus-remove"
                     onClicked: WebEngineSettings.pixelRatio-=0.5
@@ -478,7 +477,7 @@ WebViewPage {
                     icon.source: "image://theme/icon-m-font-size?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                     onClicked: WebEngineSettings.pixelRatio = Theme.dp(1)
                 }
-                IconButton { id: textplus
+                IconButton {
                     icon.source: "image://theme/icon-splus-add"
                     onClicked: WebEngineSettings.pixelRatio+=0.5
                 }
