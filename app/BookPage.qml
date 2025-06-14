@@ -334,7 +334,7 @@ WebViewPage {
 
             newcontent = newcontent.replace(/onerror=[^ ]+/g, '')
             // url from backend. Since we can't load local resources, go online.
-            newcontent = newcontent.replace(/src="/g, 'src="https://www.projectaon.org/en/xhtml/lw/' + filename + '/');
+            newcontent = newcontent.replace(/src="/g, 'onclick="alert(\'image,\' + this.src +\'\')" src="https://www.projectaon.org/en/xhtml/lw/' + filename +  '/');
             pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
         }
@@ -389,6 +389,9 @@ WebViewPage {
                 //combat.props = text;
                 //combat.visible = true;
                 pageStack.push(combatPage, { props: text, you: root.you })
+            } else if (text.indexOf("image,") == 0) {
+                const parts = text.split(',')[1].split("/")
+                showIllustration(Qt.resolvedUrl(book.cacheDir + "/" + parts[parts.length-1]))
             } else if (text.indexOf("external,") == 0) {
                 Qt.openUrlExternally(text.split(',')[1]);
             } else if (text.indexOf("puzzle-page,") == 0) {
@@ -662,12 +665,10 @@ WebViewPage {
         }
     }
 
-    /*
-    function showIllustration() {
-        imgViewer.source = book.images[0]
+    function showIllustration(source) {
+        imgViewer.source = source
         imgViewer.visible = true
     }
-    */
 
     function showMap() {
         imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
