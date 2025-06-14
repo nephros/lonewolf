@@ -19,11 +19,10 @@ Group:      Applications
 License:    GPLv3 and OFL
 URL:        https://github.com/nephros/lonewolf
 Source0:    %{name}-%{version}.tar.gz
-Source1:    lonewolf-bighead.png
-Source2:    lonewolf-app-icon.svg
-Source3:    lonewolf.profile
-Source4:    Alegreya-Medium.otf
-Source5:    Alegreya-Regular.otf
+Source1:    lonewolf-app-icon.svg
+Source2:    lonewolf.profile
+Source3:    Alegreya-Medium.otf
+Source4:    Alegreya-Regular.otf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
 Requires:   qt5-qtdeclarative-import-Lonewolf
@@ -142,20 +141,17 @@ rm -rf %{buildroot}
 # >> install post
 ln -s Main.qml %{buildroot}/%{_datadir}/%{name}/qml/%{name}.qml
 
-# S:1: cover background image
-install -pm644 %{S:1} %{buildroot}/%{_datadir}/%{name}/qml/
+# S:1: SVG file for conversion
+install -Dpm644 %{S:1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
-# S:2: SVG file for conversion
-install -Dpm644 %{S:2} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-
-# S:3: TTS Sailjail profile
-install -Dpm644 %{S:3} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
+# S:2: TTS Sailjail profile
+install -Dpm644 %{S:2} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
 
 
-# S:4/5: Font files
+# S:3/4: Font files
 install -d %{buildroot}/%{_datadir}/fonts/%{name}/
+install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
 install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
-install -pm644 %{S:5} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 desktop-file-edit  \
 --set-key=Exec \
