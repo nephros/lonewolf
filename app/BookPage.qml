@@ -266,7 +266,8 @@ WebViewPage {
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
         linkColor:  Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.DarkOnLight: Theme.lightOnDark))
 
-        onDirChanged: console.debug("Book dir:", dir, "Cache dir:", cacheDir)
+        onDirChanged: console.debug("Book dir:", dir)
+        onCacheDirChanged: console.debug("Cache dir:", cacheDir)
 
         property bool inBackMatter: false
 
@@ -282,18 +283,17 @@ WebViewPage {
                 you.pageId = pageId; // save place
             }
 
+            // base and CSP should be first.
             var newcontent = content.replace(
                 /<head>/,
                 '<head>
-                <base href="file://' + book.cacheDir + "/" + '" />
-                <meta http-equiv="Content-Security-Policy" content="img-src \'self\' file: *;" />
+                <meta http-equiv="Content-Security-Policy" content="img-src \'self\' https://www.projectaon.org/" />
                 '
             )
             var newstyle
             if (uisettings.styleHtml) {
                 newstyle=[
                     '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
-                    //'<style> body { user-select: none; }</style>',
                     '<style> p { text-align: justify; }</style>',
                     '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
                     '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
@@ -303,9 +303,14 @@ WebViewPage {
                     '<style> .sound { font-style: italic; }</style>',
                     '<style> dt { font-weight: bold; }</style>',
                     '<style> figure { margin-left: auto; margin-right: auto; }</style>',
-                    '<style> figcaption { font-style: italic; }</style>',
+                    //'<style> img { border: 1px solid #000000; width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
+                    '<style> img { width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
+                    '<style> figcaption { font-style: italic; text-align: center;}</style>',
                     '<style> quote:before { content: \'“\'; }</style>',
                     '<style> quote:after { content: \'”\'; }</style>',
+                    //'<style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>',
+                    //'<style> :-moz-broken { border: 2px dashed #00ff00; }</style>',
+                    //'<style> :-moz-user-disabled { border: 2px dashed #000000; }</style>',
                     ].join('\n')
             } else {
                 newstyle=[
@@ -313,6 +318,8 @@ WebViewPage {
                     '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
                     ].join('\n')
             }
+            newcontent = newcontent.replace('</head>', newstyle + '\n' + '</head>')
+
             // as we can't get webview to load images, lets extract them:
             var imgurls = []
             var match
@@ -321,11 +328,10 @@ WebViewPage {
             book.images = imgurls
             if (images.length) console.debug("images:", book.images.join("\n"))
 
-            newcontent = newcontent.replace('</head>', newstyle + '\n' + '</head>')
             newcontent = newcontent.replace(/onerror=[^ ]+/g, '')
-            newcontent = newcontent.replace(/src="/g, 'src="file://' + book.cacheDir + "/" );
-            //pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
-            pageView.loadHtml(newcontent);
+            // url from backend. Since we can't load local resources, go online.
+            newcontent = newcontent.replace(/src="/g, 'src="https://www.projectaon.org/en/xhtml/lw/' + filename + '/');
+            pageView.loadHtml(newcontent, Qt.resolvedUrl(book.cacheDir) + "/");
             //console.log("DEBUG page:", newcontent);
         }
     }
@@ -417,15 +423,16 @@ WebViewPage {
         Component.onCompleted: {
             WebEngineSettings.pixelRatio = uisettings.font
             WebEngineSettings.autoLoadImages = true
-            WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
+            //WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
             WebEngineSettings.setPreference("javascript.enabled", true, WebEngineSettings.BoolPref)
 
-            WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.fileuri.strict_origin_policy", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.csp.enable", false, WebEngineSettings.BoolPref)
             //WebEngineSettings.setPreference("security.disable_cors_checks", true, WebEngineSettings.BoolPref)
-            WebEngineSettings.setPreference("security.mixed_content.block_active_content", false, WebEngineSettings.BoolPref)
-            WebEngineSettings.setPreference("security.mixed_content.block_display_content", false, WebEngineSettings.BoolPref)
-            WebEngineSettings.setPreference("security.mixed_content.upgrade_display_content.image", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.mixed_content.block_active_content", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.mixed_content.block_display_content", false, WebEngineSettings.BoolPref)
+            //WebEngineSettings.setPreference("security.mixed_content.upgrade_display_content.image", false, WebEngineSettings.BoolPref)
             //WebEngineSettings.setPreference("privacy.file_unique_origin", false, WebEngineSettings.BoolPref)
         }
 
