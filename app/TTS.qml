@@ -57,7 +57,7 @@ Item { id: root
                     console.warn("TTS: Speech job ID < 0 indicates an error!")
                     root.speaking = false
                 } else {
-                    console.debug("TTS: Speech job submitted:", tid ); root.speaking = true; root.speakId = tid
+                    //console.debug("TTS: Speech job submitted:", tid ); root.speaking = true; root.speakId = tid
                 }
             },
             function(e,m) { console.warn("TTS: Speech job Error:", e, m) }
@@ -77,7 +77,7 @@ Item { id: root
         signalsEnabled: true
         // Signals from "org.mkiol.Speech"
         function ttsPlaySpeechFinished(task) {
-            console.debug("TTS: Speech job finished:", task)
+            //console.debug("TTS: Speech job finished:", task)
             if (task == root.speakId) root.speaking = false
         }
         function errorOccured(code) {
@@ -94,14 +94,14 @@ Item { id: root
             Unrecognized states should be considered equal to Unknown.
         */
         function statePropertyChanged(code) {
-            console.debug("TTS: State now:", stateTable[code])
+            //console.debug("TTS: State now:", stateTable[code])
             root.serviceState = code
             if (code == 3) {root.speaking = false}
             if (code == 8) {root.speaking = true}
         }
         function taskStatePropertyChanged(code) {
             root.taskState = code
-            console.debug("TTS: Task now:", taskStateTable[code])
+            //console.debug("TTS: Task now:", taskStateTable[code])
             //if ((code > 1) && (code < 5)) {root.speaking = true}
             if ((code == 3) || (code == 4)) {root.speaking = true}
             //if (code == 4) {root.speaking = true}
