@@ -151,6 +151,7 @@ WebViewPage {
             opacity: enabled ? 1.0 : Theme.opacityFaint
             Behavior on opacity { FadeAnimator { } }
         }
+        /*
         BackgroundItem {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: mapButton.right
@@ -175,6 +176,7 @@ WebViewPage {
             opacity: enabled ? 1.0 : Theme.opacityFaint
             Behavior on opacity { FadeAnimator { } }
         }
+        */
     }
 
     Rectangle {
@@ -260,7 +262,7 @@ WebViewPage {
         filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
-        property var images: []
+        //property var images: []
 
         bgColor:   mainView.nightModeEnabled ? "black" : "bisque"
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
@@ -320,6 +322,7 @@ WebViewPage {
             }
             newcontent = newcontent.replace('</head>', newstyle + '\n' + '</head>')
 
+            /*
             // as we can't get webview to load images, lets extract them:
             var imgurls = []
             var match
@@ -327,6 +330,7 @@ WebViewPage {
             while ( match = imgre.exec( content ) ) { imgurls.push( "file://" + book.cacheDir + "/" + match[1] ); }
             book.images = imgurls
             if (images.length) console.debug("images:", book.images.join("\n"))
+            */
 
             newcontent = newcontent.replace(/onerror=[^ ]+/g, '')
             // url from backend. Since we can't load local resources, go online.
@@ -658,10 +662,12 @@ WebViewPage {
         }
     }
 
+    /*
     function showIllustration() {
         imgViewer.source = book.images[0]
         imgViewer.visible = true
     }
+    */
 
     function showMap() {
         imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
