@@ -306,7 +306,7 @@ WebViewPage {
                     '<style> dt { font-weight: bold; }</style>',
                     '<style> figure { margin-left: auto; margin-right: auto; }</style>',
                     //'<style> img { border: 1px solid #000000; width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
-                    '<style> img { width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
+                    '<style> img { filter: sepia(120%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
                     '<style> figcaption { font-style: italic; text-align: center;}</style>',
                     '<style> quote:before { content: \'“\'; }</style>',
                     '<style> quote:after { content: \'”\'; }</style>',
