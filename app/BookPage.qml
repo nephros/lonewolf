@@ -285,6 +285,8 @@ WebViewPage {
             if (uisettings.styleHtml) {
                 newstyle=[
                     '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
+                    //'<style> body { user-select: none; }</style>',
+                    '<style> p { text-align: justify; }</style>',
                     '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
                     '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
                     '<style> .attribute { font-variant-caps: small-caps; }</style>',
