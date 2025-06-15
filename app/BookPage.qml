@@ -358,9 +358,17 @@ WebViewPage {
         anchors.bottom: navigation.top
         anchors.margins: Theme.horizontalPageMargin
 
+        onTextSelectionActiveChanged: { clearSelection() }
         canShowSelectionMarkers: false
         chromeGestureEnabled: false
-        //onTitleChanged: console.debug("Webview title:", title)
+        // Hack/FIXME: how do I disable text selection properly? (CSS works but leads to JS error in textSelectionHandler.js of mozembed)
+        /*
+        textSelectionController: Item {
+                function selectionRangeUpdated(data) { return true }
+                property Item contentItem
+        }
+        */
+
         onRecvAsyncMessage: function(message, data) {
             //console.log("Async Message: ", message, JSON.stringify(data));
             if (message == "embed:alert") {
