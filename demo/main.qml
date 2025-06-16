@@ -7,20 +7,17 @@ import Sailfish.WebEngine 1.0
 ApplicationWindow {
 initialPage: WebViewPage {
     id: root
-    readonly property string resourceDir: [ 
+    readonly property string resourceDir: [
         StandardPaths.cache,
-        Qt.application.oranization,
-        Qt.application.name,
         "imagetest",
     ].join("/")
     readonly property string pageContent: '
         <html>
         <head>
         <!-- Things to try: -->
-        <!--
-        <meta http-equiv="Content-Security-Policy" content="img-src \'self\' *;" />
-        <base href="INSERT resourceDir path here" />
-        -->
+        <!-- meta http-equiv="Content-Security-Policy" content="img-src \'self\' *;" / -->
+        <!-- If you set this to file:// + resourceDir, you will see CORS errors in Mozilla console -->
+        <!-- base href="INSERT resourceDir path here" / -->
         <style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>
         <style> :-moz-broken { border: 2px dashed #00ff00; }</style>
         <style> :-moz-user-disabled { border: 2px dashed #0000ff; }</style>
@@ -35,9 +32,17 @@ initialPage: WebViewPage {
     '
     SilicaFlickable { id: flickable
         anchors.fill: parent
+        contentHeight: testView.height
 
         PullDownMenu {
-            MenuItem { text: "Load"; onClicked: testView.loadHtml(root.pageContent, Qt.resolvedUrl(root.resourceDir) + "/") }
+            busy: true
+            MenuItem {
+                text: "Load"
+                onClicked: {
+                    console.log("Loading page, setting base to:", Qt.resolvedUrl(root.resourceDir) + "/")
+                    testView.loadHtml(root.pageContent, Qt.resolvedUrl(root.resourceDir) + "/")
+                }
+            }
         }
         WebView {
             id: testView
@@ -51,6 +56,7 @@ initialPage: WebViewPage {
                 WebEngine.onRecvObserve.connect(function(message, data) {
                     console.log("Engine event: ", message, JSON.stringify(data));
                 })
+                WebEngineSettings.pixelRatio = 3
                 WebEngineSettings.autoLoadImages = true
                 //WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
                 //WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:
