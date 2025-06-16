@@ -1,4 +1,5 @@
 install -Dpm0644 jolla_logo.png ~/.cache/QtProject/QtQmlViewer/imagetest/test.png
+install -Dpm0644 jolla_logo_108.png ~/.cache/QtProject/QtQmlViewer/imagetest/test2.png
 rm -f $PWD/mozlog.moz_log
 rm -f $PWD/mozlog.console
 #MOZ_LOG="all:2,nsComponentManager:0,imgRequest:5,ImageUtils:5,nsSSService:5,CSMLog:5,nsHtml:5,nsURILoader:5,URILoader:5" \
