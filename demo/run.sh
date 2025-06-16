@@ -2,9 +2,15 @@ install -Dpm0644 jolla_logo.png ~/.cache/QtProject/QtQmlViewer/imagetest/test.pn
 install -Dpm0644 jolla_logo_108.png ~/.cache/QtProject/QtQmlViewer/imagetest/test2.png
 rm -f $PWD/mozlog.moz_log
 rm -f $PWD/mozlog.console
+
+# may want to do this too:
+# rm -r ~/.cache/QtProject/QtQmlViewer/.mozilla/
+# rm ~/.local/share/QtProject/QtQmlViewer/__PREFS_WRITTEN__
+
 #MOZ_LOG="all:2,nsComponentManager:0,imgRequest:5,ImageUtils:5,nsSSService:5,CSMLog:5,nsHtml:5,nsURILoader:5,URILoader:5" \
 #MOZ_LOG="CSMLog:5,imgRequest:4,nsURILoader:5,URILoader:5" \
 #MOZ_LOG="imgRequest:4,nsURILAoader:5,URILoader:5,nsCORSListenerProxy:5,nsCORSListener:5,CORSListener:5" \
+
 env \
 EMBED_CONSOLE=1 \
 MOZ_LOG_FILE=$PWD/mozlog \
