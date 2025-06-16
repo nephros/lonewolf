@@ -306,6 +306,10 @@ WebViewPage {
                     '<style> figcaption { font-style: italic; }</style>',
                     '<style> quote:before { content: \'“\'; }</style>',
                     '<style> quote:after { content: \'”\'; }</style>',
+                    '<style> img { border: 1px solid #000000; }</style>',
+                    '<style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>',
+                    '<style> :-moz-broken { border: 2px dashed #00ff00; }</style>',
+                    '<style> :-moz-user-disabled { border: 2px dashed #000000; }</style>',
                     ].join('\n')
             } else {
                 newstyle=[
