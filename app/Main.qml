@@ -129,6 +129,8 @@ ApplicationWindow {
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance
     readonly property int combatskill: inneworder ? gameState.neworder_combatskill : gameState.combatskill
     readonly property int gold: inneworder ? gameState.neworder_gold : gameState.gold
+    readonly property int meals: inneworder ? gameState.neworder_meals : gameState.meals
+    readonly property int quiver: inneworder ? gameState.neworder_quiver : gameState.quiver
 
     function adjustEndurance(amount) {
         if (inneworder) {
@@ -143,6 +145,14 @@ ApplicationWindow {
             gameState.neworder_gold += amount;
         } else {
             gameState.gold += amount;
+        }
+    }
+
+    function adjustProperty(prop, amount) {
+        if (inneworder) {
+            gameState["neworder_" + prop] += amount;
+        } else {
+            gameState[prop] += amount;
         }
     }
 
