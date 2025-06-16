@@ -15,6 +15,7 @@ WebViewPage {
     property bool firstView: true
     //readonly property product: bookProduct()
 
+    Behavior on backgroundColor { ColorAnimation {} }
     backgroundColor: mainView.nightModeEnabled
          ? "black"
          : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
@@ -134,6 +135,7 @@ WebViewPage {
         description: book.pageTitle
         title: mainView.bookTitle
         opacity: mainView.nightModeEnabled ? 0.8 : 1.0
+        Behavior on opacity { FadeAnimator { } }
         BackgroundItem { id: mapButton
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.extraContent.left

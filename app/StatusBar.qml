@@ -13,6 +13,7 @@ Rectangle {
     anchors.top: header.bottom
     height: Math.max(varrow.height, endurancerow.height) + Theme.paddingSmall
     color:  mainView.nightModeEnabled ? "black" : Theme.highlightDimmerFromColor(book.bgColor, Theme.colorScheme)
+    Behavior on color { ColorAnimation {} }
 
 
     Row { id: varrow
