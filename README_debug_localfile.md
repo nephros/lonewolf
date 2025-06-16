@@ -1,9 +1,10 @@
 ## Showing the problem with local file loading:
 
-1. Start the app normally
-2. Start a book, (Book 1 is OK)
-3. Use the next buttons until you reach the "Equipment" page. This page contains several images of the weapons and things.
-4. Close the app
+1. Start the app "normally" (`qmlscene app/Main.qml`)
+1. Start a book, (Book 1 is OK)
+1. Accept the license, wait for the book data having been downloaded
+1. Use the next buttons in the book intro part until you reach the "Equipment" page. This page contains several images of the weapons and things.
+1. Close the app
 
 Now, add any of your experimental changes.
 
