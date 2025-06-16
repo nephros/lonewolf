@@ -750,6 +750,7 @@ Page {
                 prop: "weaponskill_weapon"
                 width: parent.width
                 description: "Weaponskill Weapon"
+                visible: d.kai
             }
 
             SectionHeader {
