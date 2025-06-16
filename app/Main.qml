@@ -47,6 +47,7 @@ ApplicationWindow {
         if (uisettings.saveOnQuit) {
              gameState.copyTo(quickSaveState);
         }
+        ttsStop()
         _willquitHandled=true
     }
     property bool _willquitHandled: false
