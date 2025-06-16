@@ -43,15 +43,20 @@ Item { id: root
         }
     }
     function reallyPlay(text) {
-        dbus.call("TtsPlaySpeech", [ text, "en" ],
+        //dbus.call("TtsPlaySpeech", [ text, "en" ],
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
-        //dbus.typedcall("TtsPlaySpeech2", [
-        //        { "type" : 's', "value": text },
-        //        { "type" : 's', "value": "en"} ,
-        //        { "type" : 'a{sv}',
-        //          "value": { "split_into_sentences": false, "use_engine_speed_control": true, "normalize_audio": false, "speech_speed": 12 }
-        //        },
-        //    ],
+        dbus.typedCall("TtsPlaySpeech2", [
+                { "type" : 's', "value": text },
+                { "type" : 's', "value": "en"} ,
+                { "type" : 'a{sv}',
+                  "value": [ { "split_into_sentences": false,
+                               "use_engine_speed_control": true,
+                               "normalize_audio": false,
+                               "speech_speed": 15 // 1- 20???
+                             }
+                  ],
+                },
+            ],
             function(tid) {
                 if (tid < 0) { 
                     console.warn("TTS: Speech job ID < 0 indicates an error!")
