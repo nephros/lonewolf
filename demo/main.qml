@@ -11,35 +11,33 @@ initialPage: WebViewPage {
         StandardPaths.cache,
         "imagetest",
     ].join("/")
-    readonly property string pageContent: '
-        <html>
-        <head>
-        <!-- Things to try: -->
-        <!-- meta http-equiv="Content-Security-Policy" content="img-src \'self\' *;" / -->
-        <!-- If you set this to file:// + resourceDir, you will see CORS errors in Mozilla console -->
-        <!-- base href="INSERT resourceDir path here" / -->
-        <style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>
-        <style> :-moz-broken { border: 2px dashed #00ff00; }</style>
-        <style> :-moz-user-disabled { border: 2px dashed #0000ff; }</style>
-        <style> img { border: 1px solid #000000; }</style>
-        <style> p { width: 100%; text-align: justify }</style>
-        </head>
-        <body>
-        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        <img width="100%" src="test.png" />
-        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-
-        <!--
-             If you replace this with a file:// URL, you will see the outline of the image in the WebView, with a broken image icon.
-             You will also see in MOZ_LOG output that the file is found, loaded, and finally rejected.
-
-             after uncommenting, emember to set correct single quotes!
-        -->
-        <!-- img width="100%" src="file://" + Qt.resolvedUrl(root.resourceDir) + "/" + "test2.png" />
-        <img width="100%" src="test2.png" />
-        </body>
-        <html>
-    '
+    // could be a string, but with a join()ed array we can more easily comment/uncomment:
+    readonly property string pageContent: [
+        '<html>',
+        '<head>',
+        // Things to try:
+        //'<meta http-equiv="Content-Security-Policy" content="img-src \'self\' *;" />',
+        //If you set this you will see CORS errors in Mozilla console
+        //'<base href="' + 'file://' + resourceDir + '" />',
+        '<style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>',
+        '<style> :-moz-broken { border: 2px dashed #00ff00; }</style>',
+        '<style> :-moz-user-disabled { border: 2px dashed #0000ff; }</style>',
+        '<style> img { border: 1px solid #000000; }</style>',
+        '<style> p { width: 100%; text-align: justify }</style>',
+        '</head>',
+        '<body>',
+        '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>',
+        '<img width="100%" src="test.png" />',
+        '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>',
+        // If you replace this with a file:// URL, you will see the outline of
+        // the image in the WebView, with a broken image icon.  You will also
+        // see in MOZ_LOG output that the file is found, loaded, and finally
+        // rejected.
+        //'<img width="100%" src="file://"' + Qt.resolvedUrl(root.resourceDir) + "/" + '"test2.png" />',
+        '<img width="100%" src="test2.png" />',
+        '</body>',
+        '<html>',
+    ].join("\n")
     SilicaFlickable { id: flickable
         anchors.fill: parent
         contentHeight: testView.height
