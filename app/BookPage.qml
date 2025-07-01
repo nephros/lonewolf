@@ -626,6 +626,7 @@ WebViewPage {
         visible: false
         anchors.fill: parent
         opacity: book.progress == 100 ? 0 : Theme.opacityOverlay
+        onOpacityChanged: if (opacity == 0) visible = false
         Behavior on opacity { FadeAnimator { } }
         color: Theme.highlightDimmerColor
         MouseArea {
