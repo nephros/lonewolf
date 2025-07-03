@@ -26,6 +26,7 @@ Source2:    %{name}.profile
 Source3:    Alegreya-Medium.otf
 Source4:    Alegreya-Regular.otf
 Source100:  harbour-lonewolf.yaml
+Requires:   libsailfishapp-launcher
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -114,7 +115,6 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %define plugindir %{_datadir}/%{name}/qml/plugins
 %else
 %define plugindir %{_libdir}/qt5/qml
-Requires: libsailfishapp-launcher
 %endif
 
 # undefine macros that may interfere:

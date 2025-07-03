@@ -38,7 +38,6 @@ Macros2:
     %define plugindir %{_datadir}/%{name}/qml/plugins
     %else
     %define plugindir %{_libdir}/qt5/qml
-    Requires: libsailfishapp-launcher
     %endif
 
     # undefine macros that may interfere:
@@ -81,8 +80,8 @@ Description: |
       Help: https://www.projectaon.org/en/ReadersHandbook/Home
     %endif
 
-#Requires:
-  # libsailfishapp-launcher
+Requires:
+  - libsailfishapp-launcher
   # qt5-qtdeclarative-import-Lonewolf
 PkgBR:
   - sailfish-svg2png
