@@ -40,6 +40,12 @@ Macros2:
     Requires: libsailfishapp-launcher
     %endif
 
+    # undefine macros that may interfere:
+    %if %{with harbour}
+    %undefine vendor
+    %undefine chum
+    %endif
+
 Description: |
     %{summary}.
 

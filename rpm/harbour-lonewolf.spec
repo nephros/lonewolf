@@ -123,6 +123,12 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 Requires: libsailfishapp-launcher
 %endif
 
+# undefine macros that may interfere:
+%if %{with harbour}
+%undefine vendor
+%undefine chum
+%endif
+
 %prep
 %setup -q -n %{name}-%{version}
 
