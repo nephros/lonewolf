@@ -11,6 +11,8 @@ Name:       lonewolf
 %define appname %{name}
 %define pkgname %{name}
 %define __provides_exclude ^font..lang=.*$
+%define __requires_exclude_from %{plugindir}
+%define plugindir %{_libdir}/qt5/qml/Lonewolf/
 
 Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.1.9
@@ -122,7 +124,7 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 # << build pre
 
 %cmake .  \
-    -DQT_IMPORTS_DIR=%{_libdir}/qt5/qml \
+    -DQT_IMPORTS_DIR=%{plugindir} \
     -DLONEWOLF_DIR=%{_datadir}/%{name} \
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
@@ -191,7 +193,7 @@ desktop-file-install --delete-original       \
 
 %files -n qt5-qtdeclarative-import-Lonewolf
 %defattr(-,root,root,-)
-%{_libdir}/qt5/qml/Lonewolf/
+%{plugindir}
 # >> files qt5-qtdeclarative-import-Lonewolf
 # << files qt5-qtdeclarative-import-Lonewolf
 

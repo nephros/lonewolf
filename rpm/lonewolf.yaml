@@ -19,6 +19,10 @@ Macros:
   - 'appname;%{name}'
   - 'pkgname;%{name}'
   - '__provides_exclude;^font..lang=.*$'
+  - '__requires_exclude_from;%{plugindir}'
+  - 'plugindir;%{_libdir}/qt5/qml/Lonewolf/'
+  # for harbour:
+  # 'plugindir;%{_datadir}/%{name}/qml/plugins/LoneWolf'
 Macros2:
   - |
     please_ignore;this macro
@@ -81,7 +85,7 @@ PkgConfigBR:
 Configure: cmake
 Builder: cmake
 ConfigOptions:
-  - '-DQT_IMPORTS_DIR=%{_libdir}/qt5/qml'
+  - '-DQT_IMPORTS_DIR=%{plugindir}'
   - '-DLONEWOLF_DIR=%{_datadir}/%{name}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'
@@ -104,7 +108,7 @@ SubPackages:
       Summary: Lonewolf player QML plugin
       Group: Libraries
       Files:
-        - '%{_libdir}/qt5/qml/Lonewolf/'
+        - '%{plugindir}'
 
     - Name:  tts-plugin
       Summary: Text-to-Speech support for %{name}
