@@ -1,4 +1,4 @@
-Name: lonewolf
+Name: harbour-lonewolf
 Summary: A role-playing choose-your-own-adventure game
 # 0.1.1 is upstream, fourth digit is SFOS version
 Version: 0.1.1.9
@@ -10,19 +10,19 @@ SCM: https://github.com/nephros/lonewolf
 Sources:
     - '%{name}-%{version}.tar.gz'
     - lonewolf-app-icon.svg
-    - lonewolf.profile
+    - '%{name}.profile'
     - Alegreya-Medium.otf
     - Alegreya-Regular.otf
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
-  - 'orgname;%{name}'
-  - 'appname;%{name}'
+  - 'appname;lonewolf'
+  - 'orgname;lonewolf'
   - 'pkgname;%{name}'
   - '__provides_exclude;^font..lang=.*$'
   - '__requires_exclude_from;%{plugindir}'
-  - 'plugindir;%{_libdir}/qt5/qml/Lonewolf/'
+  - 'plugindir;%{_libdir}/qt5/qml/'
   # for harbour:
-  # 'plugindir;%{_datadir}/%{name}/qml/plugins/LoneWolf'
+  # 'plugindir;%{_datadir}/%{name}/qml/plugins'
 Macros2:
   - |
     please_ignore;this macro
@@ -86,7 +86,6 @@ Configure: cmake
 Builder: cmake
 ConfigOptions:
   - '-DQT_IMPORTS_DIR=%{plugindir}'
-  - '-DLONEWOLF_DIR=%{_datadir}/%{name}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'
 NoIconCache: true

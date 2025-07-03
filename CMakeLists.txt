@@ -1,4 +1,4 @@
-project(lonewolf C CXX)
+project(harbour-lonewolf C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 
 # Do not remove this line, its required for the correct functionality of the Ubuntu-SDK
@@ -26,7 +26,7 @@ option(INSTALL_TESTS "Install the tests on make install" on)
 
 set(APP_NAME          "Lone Wolf")
 set(APP_ID            "lonewolf.timsueberkrueb")
-set(LONEWOLF_DIR "share/lonewolf/qml")
+set(LONEWOLF_DIR      "share/harbour-lonewolf/qml")
 set(MAIN_QML          "Main.qml")
 set(ICON              "lonewolf")
 
