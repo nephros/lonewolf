@@ -610,7 +610,8 @@ WebViewPage {
         imgViewer.visible = true
     }
 
-    // avoid hard dependency to Sailfish.Gallery:
+    // avoid detection of dependency to Sailfish.Gallery:
+    // sorry, harbour people! ;)
     property QtObject imgViewer
     function makeImgViewer() {
       var qml = "
@@ -626,7 +627,7 @@ WebViewPage {
              opacity: visible ? 1.0 : 0
              Behavior on opacity { FadeAnimator{} }
          }"
-      var v = Qt.createQmlObject(qml)
+         imgViewer = Qt.createQmlObject(qml, root)
     }
 
     Rectangle {

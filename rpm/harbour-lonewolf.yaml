@@ -1,7 +1,7 @@
 Name: harbour-lonewolf
 Summary: A role-playing choose-your-own-adventure game
 # 0.1.1 is upstream, fourth digit is SFOS version
-Version: 0.1.1.9
+Version: 0.1.1.10
 Release: 0
 Group: Applications
 License: GPLv3 and OFL
