@@ -18,8 +18,9 @@ Macros:
   - 'appname;lonewolf'
   - 'orgname;lonewolf'
   - 'pkgname;%{name}'
-  - '__provides_exclude;^font.*$'
-  - '__requires_exclude_from;%{plugindir}'
+  # '__requires_exclude_from;%{plugindir}'
+  - '__provides_exclude;^(font|qml).*$'
+  - '__provides_exclude_from;%{plugindir}'
 Macros2:
   - |
     please;ignore this macro

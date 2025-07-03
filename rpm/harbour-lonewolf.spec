@@ -11,8 +11,8 @@ Name:       harbour-lonewolf
 %define appname lonewolf
 %define orgname lonewolf
 %define pkgname %{name}
-%define __provides_exclude ^font.*$
-%define __requires_exclude_from %{plugindir}
+%define __provides_exclude ^(font|qml).*$
+%define __provides_exclude_from %{plugindir}
 
 Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.1.9
