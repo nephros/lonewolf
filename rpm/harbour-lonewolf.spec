@@ -172,7 +172,8 @@ desktop-file-edit  \
 --set-icon=%{name} \
 --set-key=X-Nemo-Application-Type \
 --set-value=silica-qt5 \
---set-icon=%{name} \
+--set-key=X-Nemo-Single-Instance \
+--set-value=yes \
 --remove-key=X-Ubuntu-Touch \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
 printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPermissions=Audio;WebView;Internet\n' \
