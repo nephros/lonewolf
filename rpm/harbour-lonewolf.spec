@@ -168,7 +168,8 @@ mv %{buildroot}%{_datadir}/applications/%{appname}.desktop %{buildroot}%{_datadi
 
 desktop-file-edit  \
 --set-key=Exec \
---set-value="/usr/bin/invoker --single-instance --type=silica-qt5 /usr/bin/sailfish-qml lonewolf" \
+--set-value="sailfish-qml %{name}" \
+--set-icon=%{name} \
 --set-key=X-Nemo-Application-Type \
 --set-value=silica-qt5 \
 --set-icon=%{name} \
