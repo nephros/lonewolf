@@ -18,7 +18,7 @@ Macros:
   - 'appname;lonewolf'
   - 'orgname;lonewolf'
   - 'pkgname;%{name}'
-  - '__provides_exclude;^font..lang=.*$'
+  - '__provides_exclude;^font.*$'
   - '__requires_exclude_from;%{plugindir}'
 Macros2:
   - |
@@ -32,6 +32,7 @@ Macros2:
     %define plugindir %{_datadir}/%{name}/qml/plugins
     %else
     %define plugindir %{_libdir}/qt5/qml
+    Requires: libsailfishapp-launcher
     %endif
 
 Description: |
@@ -68,8 +69,8 @@ Description: |
       Help: https://www.projectaon.org/en/ReadersHandbook/Home
     %endif
 
-Requires:
-  - libsailfishapp-launcher
+#Requires:
+  # libsailfishapp-launcher
   # qt5-qtdeclarative-import-Lonewolf
 PkgBR:
   - sailfish-svg2png
@@ -97,11 +98,8 @@ NoAutoLocale: true
 #BuildArch: noarch
 Files:
   - '%{_datadir}/applications/%{name}.desktop'
-  - '%{_datadir}/icons/*/*/apps/%{name}.png'
-  - '%{_datadir}/icons/*/*/apps/%{name}.svg'
+  - '%{_datadir}/icons/*/*/apps/*'
   - '%{_datadir}/%{name}'
-  - '%dir %{_datadir}/fonts/%{name}'
-  - '%{_datadir}/fonts/%{name}/*'
   - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
 
 SubPackages:

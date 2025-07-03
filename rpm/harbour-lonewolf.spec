@@ -11,7 +11,7 @@ Name:       harbour-lonewolf
 %define appname lonewolf
 %define orgname lonewolf
 %define pkgname %{name}
-%define __provides_exclude ^font..lang=.*$
+%define __provides_exclude ^font.*$
 %define __requires_exclude_from %{plugindir}
 
 Summary:    A role-playing choose-your-own-adventure game
@@ -26,7 +26,6 @@ Source2:    %{name}.profile
 Source3:    Alegreya-Medium.otf
 Source4:    Alegreya-Regular.otf
 Source100:  harbour-lonewolf.yaml
-Requires:   libsailfishapp-launcher
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -116,6 +115,7 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %define plugindir %{_datadir}/%{name}/qml/plugins
 %else
 %define plugindir %{_libdir}/qt5/qml
+Requires: libsailfishapp-launcher
 %endif
 
 %prep
@@ -188,15 +188,15 @@ desktop-file-install --delete-original       \
 %files
 %defattr(-,root,root,-)
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/*/*/apps/%{name}.png
-%{_datadir}/icons/*/*/apps/%{name}.svg
+%{_datadir}/icons/*/*/apps/*
 %{_datadir}/%{name}
-%dir %{_datadir}/fonts/%{name}
-%{_datadir}/fonts/%{name}/*
 %exclude %{_datadir}/%{name}/qml/TTS.qml
 # >> files
 %if %{with harbour}
 %exclude %{_datadir}/icons/*/*/apps/*.svg
+%else
+%dir %{_datadir}/fonts/%{name}
+%{_datadir}/fonts/%{name}/*
 %endif
 # << files
 
