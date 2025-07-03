@@ -114,14 +114,6 @@ Files:
   - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
 
 SubPackages:
-    - Name:  qt5-qtdeclarative-import-Lonewolf
-      AsWholeName: true
-      AutoDepend: false
-      Summary: Lonewolf player QML plugin
-      Group: Libraries
-      Files:
-        - '%{plugindir}'
-
     - Name:  tts-plugin
       Summary: Text-to-Speech support for %{name}
       Group: Games
@@ -140,6 +132,7 @@ SubPackages:
            - Games
           PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
           %endif
+      BuildArch: noarch
       Files:
         - '%{_datadir}/%{name}/qml/TTS.qml'
         - '%{_sysconfdir}/sailjail/permissions/%{name}.profile'

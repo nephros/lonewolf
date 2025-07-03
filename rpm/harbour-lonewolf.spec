@@ -77,16 +77,10 @@ Links:
 %endif
 
 
-%package -n qt5-qtdeclarative-import-Lonewolf
-Summary:    Lonewolf player QML plugin
-Group:      Libraries
-
-%description -n qt5-qtdeclarative-import-Lonewolf
-%{summary}.
-
 %package tts-plugin
 Summary:    Text-to-Speech support for %{name}
 Group:      Games
+BuildArch:  noarch
 Requires:   %{name} = %{version}-%{release}
 Requires:   harbour-dsnote >= 4.7.0
 
@@ -212,12 +206,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/fonts/%{name}/*
 %endif
 # << files
-
-%files -n qt5-qtdeclarative-import-Lonewolf
-%defattr(-,root,root,-)
-%{plugindir}
-# >> files qt5-qtdeclarative-import-Lonewolf
-# << files qt5-qtdeclarative-import-Lonewolf
 
 %files tts-plugin
 %defattr(-,root,root,-)
