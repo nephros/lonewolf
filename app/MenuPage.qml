@@ -76,7 +76,7 @@ Page {
             PageHeader { id: header; //title: "Lone Wolf"
                 Rectangle { anchors.fill: parent; color: "black" }
                 Image {
-                  source: "Lone_Wolf_Header.png"
+                  source:  (Theme.colorScheme == Theme.DarkOnLight ) ? "header_logo_bow.png" : "header_logo_wob.png"
                   sourceSize.height: 400
                   anchors.fill: parent
                   anchors.verticalCenter: parent.verticalCenter
