@@ -20,16 +20,20 @@ Macros:
   - 'pkgname;%{name}'
   - '__provides_exclude;^font..lang=.*$'
   - '__requires_exclude_from;%{plugindir}'
-  - 'plugindir;%{_libdir}/qt5/qml/'
-  # for harbour:
-  # 'plugindir;%{_datadir}/%{name}/qml/plugins'
 Macros2:
   - |
-    please_ignore;this macro
+    please;ignore this macro
     %if 0%{?sailfishos_version} < 40600
     %define cmake_build %__cmake --build "." -j8 --verbose
     %define cmake_install DESTDIR=%buildroot %__cmake --install .
     %endif
+
+    %if %{with harbour}
+    %define plugindir %{_datadir}/%{name}/qml/plugins
+    %else
+    %define plugindir %{_libdir}/qt5/qml
+    %endif
+
 Description: |
     %{summary}.
 

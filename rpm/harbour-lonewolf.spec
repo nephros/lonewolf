@@ -6,13 +6,13 @@
 Name:       harbour-lonewolf
 
 # >> macros
+%bcond_with harbour
 # << macros
 %define appname lonewolf
 %define orgname lonewolf
 %define pkgname %{name}
 %define __provides_exclude ^font..lang=.*$
 %define __requires_exclude_from %{plugindir}
-%define plugindir %{_libdir}/qt5/qml/
 
 Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.1.9
@@ -106,10 +106,16 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %endif
 
 
-%define please_ignore this macro
+%define please ignore this macro
 %if 0%{?sailfishos_version} < 40600
 %define cmake_build %__cmake --build "." -j8 --verbose
 %define cmake_install DESTDIR=%buildroot %__cmake --install .
+%endif
+
+%if %{with harbour}
+%define plugindir %{_datadir}/%{name}/qml/plugins
+%else
+%define plugindir %{_libdir}/qt5/qml
 %endif
 
 %prep
@@ -189,6 +195,9 @@ desktop-file-install --delete-original       \
 %{_datadir}/fonts/%{name}/*
 %exclude %{_datadir}/%{name}/qml/TTS.qml
 # >> files
+%if %{with harbour}
+%exclude %{_datadir}/icons/*/*/apps/*.svg
+%endif
 # << files
 
 %files -n qt5-qtdeclarative-import-Lonewolf
