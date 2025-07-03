@@ -107,6 +107,8 @@ ApplicationWindow {
     CoverBackground { id: coverPage
       Rectangle {
           anchors.fill: parent
+          // do not manglea transparent color, because that gets ugly white-ish
+          visible: (Qt.colorEqual(mainView.bookColor, "transparent") != true)
           color: Theme.highlightBackgroundFromColor(mainView.bookColor, Theme.colorScheme)
           opacity: Theme.highlightBackgroundOpacity
       }
