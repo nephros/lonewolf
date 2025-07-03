@@ -206,6 +206,7 @@ desktop-file-install --delete-original       \
 # >> files
 %if %{with harbour}
 %exclude %{_datadir}/icons/*/*/apps/*.svg
+%exclude %{_datadir}/fonts/%{name}
 %else
 %dir %{_datadir}/fonts/%{name}
 %{_datadir}/fonts/%{name}/*
