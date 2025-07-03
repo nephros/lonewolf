@@ -13,7 +13,7 @@ Name:       lonewolf
 %define __provides_exclude ^font..lang=.*$
 
 Summary:    A role-playing choose-your-own-adventure game
-Version:    0.1.1
+Version:    0.1.1.9
 Release:    0
 Group:      Applications
 License:    GPLv3 and OFL
