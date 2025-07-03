@@ -27,7 +27,6 @@ Source3:    Alegreya-Medium.otf
 Source4:    Alegreya-Regular.otf
 Source100:  lonewolf.yaml
 Requires:   libsailfishapp-launcher
-Requires:   qt5-qtdeclarative-import-Lonewolf
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
