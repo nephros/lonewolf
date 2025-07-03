@@ -18,7 +18,7 @@ WebViewPage {
     Behavior on backgroundColor { ColorAnimation {} }
     backgroundColor: mainView.nightModeEnabled
          ? "black"
-         : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
+         : Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
 
     canNavigateForward: imgViewer.visible ? false : forwardNavigation
 

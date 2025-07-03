@@ -26,24 +26,24 @@ Page {
         gameState.clear()
         startBook(book, "")
     }
-    function getTitle() {
+    function getBookInfo() {
         for (var i=0; i<kaiModel.count; ++i) {
             const b = kaiModel.get(i)
-            if (b.book == gameState.book) { return b.title }
+            if (b.book == gameState.book) { return b }
         }
         for (var i=0; i<magnakaiModel.count; ++i) {
             const b = magnakaiModel.get(i)
-            if (b.book == gameState.book) { return b.title }
+            if (b.book == gameState.book) { return b }
         }
         for (var i=0; i<grandmasterModel.count; ++i) {
             const b = grandmasterModel.get(i)
-            if (b.book == gameState.book) { return b.title }
+            if (b.book == gameState.book) { return b }
         }
         for (var i=0; i<neworderModel.count; ++i) {
             const b = neworderModel.get(i)
-            if (b.book == gameState.book) { return b.title }
+            if (b.book == gameState.book) { return b }
         }
-        return "Lone Wolf"
+        return { "title": "Lone Wolf", "coverColor": "transparent" }
     }
 
     SilicaFlickable {
@@ -136,44 +136,45 @@ Page {
 
             ListModel {
                 id: kaiModel
-                ListElement { book: "01fftd" ; title: "Flight from the Dark" }
-                ListElement { book: "02fotw" ; title: "Fire on the Water" }
-                ListElement { book: "03tcok" ; title: "The Caverns of Kalte" }
-                ListElement { book: "04tcod" ; title: "The Chasm of Doom" }
-                ListElement { book: "05sots" ; title: "Shadow on the Sand" }
+                // colors approx. from collector edition on pape, or from https://shop-magnamund.com/r
+                ListElement { book: "01fftd" ; coverColor: "darkblue"   ; title: "Flight from the Dark" }
+                ListElement { book: "02fotw" ; coverColor: "cadetblue"  ; title: "Fire on the Water" }
+                ListElement { book: "03tcok" ; coverColor: "cyan"       ; title: "The Caverns of Kalte" }
+                ListElement { book: "04tcod" ; coverColor: "blueviolet" ; title: "The Chasm of Doom" }
+                ListElement { book: "05sots" ; coverColor: "firebrick"  ; title: "Shadow on the Sand" }
             }
             ListModel {
                 id: magnakaiModel
-                ListElement { book: "06tkot" ; title: "The Kingdoms of Terror" }
-                ListElement { book: "07cd"   ; title: "Castle Death" }
-                ListElement { book: "08tjoh" ; title: "The Jungle of Horrors" }
-                ListElement { book: "09tcof" ; title: "The Cauldron of Fear" }
-                ListElement { book: "10tdot" ; title: "The Dungeons of Torgar" }
-                ListElement { book: "11tpot" ; title: "The Prisoners of Time" }
-                ListElement { book: "12tmod" ; title: "The Masters of Darkness" }
+                ListElement { book: "06tkot" ; coverColor: "dodgerblue"     ; title: "The Kingdoms of Terror" }
+                ListElement { book: "07cd"   ; coverColor: "black"          ; title: "Castle Death" }
+                ListElement { book: "08tjoh" ; coverColor: "darkseagreen"   ; title: "The Jungle of Horrors" }
+                ListElement { book: "09tcof" ; coverColor: "darksalmon"     ; title: "The Cauldron of Fear" }
+                ListElement { book: "10tdot" ; coverColor: "darkslategrey"  ; title: "The Dungeons of Torgar" }
+                ListElement { book: "11tpot" ; coverColor: "darkorchid"     ; title: "The Prisoners of Time" }
+                ListElement { book: "12tmod" ; coverColor: "darkmagenta"    ; title: "The Masters of Darkness" }
             }
             ListModel {
                 id: grandmasterModel
-                ListElement { book: "13tplor" ; title: "The Plague Lords of Ruel" }
-                ListElement { book: "14tcok"  ; title: "The Captives of Kaag" }
-                ListElement { book: "15tdc"   ; title: "The Darke Crusade" }
-                ListElement { book: "16tlov"  ; title: "The Legacy of Vashna" }
-                ListElement { book: "17tdoi"  ; title: "The Deathlord of Ixia" }
-                ListElement { book: "18dotd"  ; title: "Dawn of the Dragons" }
-                ListElement { book: "19wb"    ; title: "Wolf's Bane" }
-                ListElement { book: "20tcon"  ; title: "The Curse of Naar" }
+                ListElement { book: "13tplor" ; coverColor: "darkseagreen" ; title: "The Plague Lords of Ruel" }
+                ListElement { book: "14tcok"  ; coverColor: "darkorchid" ; title: "The Captives of Kaag" }
+                ListElement { book: "15tdc"   ; coverColor: "darkturquoise" ; title: "The Darke Crusade" }
+                ListElement { book: "16tlov"  ; coverColor: "darkslategrey" ; title: "The Legacy of Vashna" }
+                ListElement { book: "17tdoi"  ; coverColor: "darkkhaki" ; title: "The Deathlord of Ixia" }
+                ListElement { book: "18dotd"  ; coverColor: "crimson" ; title: "Dawn of the Dragons" }
+                ListElement { book: "19wb"    ; coverColor: "peru" ; title: "Wolf's Bane" }
+                ListElement { book: "20tcon"  ; coverColor: "lightsteelblue" ; title: "The Curse of Naar" }
 
             }
             ListModel {
                 id: neworderModel
-                ListElement { book: "21votm" ; title: "Voyage of the Moonstone" }
-                ListElement { book: "22tbos" ; title: "The Buccaneers of Shadaki" }
-                ListElement { book: "23mh"   ; title: "Mydnight's Hero" }
-                ListElement { book: "24rw"   ; title: "Rune War" }
-                ListElement { book: "25totw" ; title: "Trail of the Wolf" }
-                ListElement { book: "26tfobm"; title: "The Fall of Blood Mountain" }
-                ListElement { book: "27v"    ; title: "Vampirium" }
-                ListElement { book: "28thos" ; title: "The Hunger of Sejanoz" }
+                ListElement { book: "21votm" ; coverColor: "mediumaquamarine" ; title: "Voyage of the Moonstone" }
+                ListElement { book: "22tbos" ; coverColor: "cadetblue" ; title: "The Buccaneers of Shadaki" }
+                ListElement { book: "23mh"   ; coverColor: "coral" ; title: "Mydnight's Hero" }
+                ListElement { book: "24rw"   ; coverColor: "crimson" ; title: "Rune War" }
+                ListElement { book: "25totw" ; coverColor: "steelblue" ; title: "Trail of the Wolf" }
+                ListElement { book: "26tfobm"; coverColor: "goldenrod" ; title: "The Fall of Blood Mountain" }
+                ListElement { book: "27v"    ; coverColor: "indigo" ; title: "Vampirium" }
+                ListElement { book: "28thos" ; coverColor: "yellowgreen" ; title: "The Hunger of Sejanoz" }
             }
 
             SectionHeader { text: "Available Books" }

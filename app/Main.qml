@@ -56,7 +56,9 @@ ApplicationWindow {
     cover: coverPage
 
     function goToBookTab() {
-      mainView.bookTitle = menuPage.getTitle()
+      const info = menuPage.getBookInfo()
+      mainView.bookTitle = info.title
+      mainView.bookColor = info.coverColor
       pageStack.replaceAbove(null, bookComponent)
     }
     function popBookTab() {
@@ -103,9 +105,14 @@ ApplicationWindow {
     }
 
     CoverBackground { id: coverPage
+      Rectangle {
+          anchors.fill: parent
+          color: Theme.highlightBackgroundFromColor(mainView.bookColor, Theme.colorScheme)
+          opacity: Theme.highlightBackgroundOpacity
+      }
       Image {
           source: "./lonewolf-bighead.png"
-          z: -1
+          //z: -1
           anchors.fill: parent
           fillMode: Image.PreserveAspectFit
       }
@@ -126,6 +133,7 @@ ApplicationWindow {
 
     property bool nightModeEnabled: false
     property string bookTitle: "Lone Wolf"
+    property string bookColor: "transparent"
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
     readonly property int maxendurance: inneworder ? gameState.neworder_maxendurance : gameState.maxendurance
     readonly property int combatskill: inneworder ? gameState.neworder_combatskill : gameState.combatskill
