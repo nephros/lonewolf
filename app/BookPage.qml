@@ -1,7 +1,6 @@
 import QtQuick 2.4
 import QtFeedback 5.0
 import Sailfish.Silica 1.0
-import Sailfish.Gallery 1.0 as Gallery
 import Sailfish.WebView 1.0
 import Sailfish.WebEngine 1.0
 import Sailfish.WebView.Popups 1.0
@@ -65,6 +64,7 @@ WebViewPage {
         //WebEngine.onRecvObserve.connect(function(message, data) {
         //    console.log("Engine event contents: ", message, JSON.stringify(data));
         //})
+        makeImgViewer()
     }
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
@@ -610,14 +610,23 @@ WebViewPage {
         imgViewer.visible = true
     }
 
-    Gallery.ImageViewer { id: imgViewer
-        anchors.fill: parent
-        anchors.centerIn: parent
-        visible: false
-        active: visible
-        onClicked: visible = false
-        opacity: visible ? 1.0 : 0
-        Behavior on opacity { FadeAnimator{} }
+    // avoid hard dependency to Sailfish.Gallery:
+    property QtObject imgViewer
+    function makeImgViewer() {
+      var qml = "
+          import QtQuick 2.4
+          import Sailfish.Silica 1.0
+         " + [ "import", "Sailfish.Gallery", "1.0" ].join(" ") + "\n"
+         + " ImageViewer { id: imgViewer
+             anchors.fill: parent
+             anchors.centerIn: parent
+             visible: false
+             active: visible
+             onClicked: visible = false
+             opacity: visible ? 1.0 : 0
+             Behavior on opacity { FadeAnimator{} }
+         }"
+      var v = Qt.createQmlObject(qml)
     }
 
     Rectangle {
