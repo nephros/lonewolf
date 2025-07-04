@@ -19,12 +19,22 @@ Macros:
   - 'appname;lonewolf'
   - 'orgname;lonewolf'
   - 'pkgname;%{name}'
+  - plugindir;%{_datadir}/%{name}/qml/plugins
+  # plugindir;%{_libdir}/qt5/qml
   # '__requires_exclude_from;%{plugindir}'
   - '__provides_exclude;^(font|qml).*$'
   - '__provides_exclude_from;%{plugindir}'
-Macros2:
   - |
     please;ignore this macro
+    # undefine macros that may interfere with harbour:
+    %if %{with harbour}
+    %undefine vendor
+    %undefine chum
+    %endif
+
+Macros2:
+  - |
+    please_also;ignore this macro
     %if 0%{?sailfishos_version} < 40600
     %if 0%{?sailfishos_version} <= 40000
     %define cmake_build %__cmake --build "."
@@ -33,18 +43,6 @@ Macros2:
     %define cmake_build %__cmake --build "." -j8 --verbose
     %define cmake_install DESTDIR=%buildroot %__cmake --install .
     %endif
-    %endif
-
-    %if %{with harbour}
-    %define plugindir %{_datadir}/%{name}/qml/plugins
-    %else
-    %define plugindir %{_libdir}/qt5/qml
-    %endif
-
-    # undefine macros that may interfere:
-    %if %{with harbour}
-    %undefine vendor
-    %undefine chum
     %endif
 
 Description: |

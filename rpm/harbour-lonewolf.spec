@@ -11,11 +11,18 @@ Name:       harbour-lonewolf
 %define appname lonewolf
 %define orgname lonewolf
 %define pkgname %{name}
+%define plugindir %{_datadir}/%{name}/qml/plugins
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
+%define please ignore this macro
+# undefine macros that may interfere with harbour:
+%if %{with harbour}
+%undefine vendor
+%undefine chum
+%endif
 
 Summary:    A role-playing choose-your-own-adventure game
-Version:    0.1.240704
+Version:    0.1.250704
 Release:    0
 Group:      Applications
 License:    GPLv3 and OFL
@@ -100,7 +107,7 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %endif
 
 
-%define please ignore this macro
+%define please_also ignore this macro
 %if 0%{?sailfishos_version} < 40600
 %if 0%{?sailfishos_version} <= 40000
 %define cmake_build %__cmake --build "."
@@ -109,18 +116,6 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %define cmake_build %__cmake --build "." -j8 --verbose
 %define cmake_install DESTDIR=%buildroot %__cmake --install .
 %endif
-%endif
-
-%if %{with harbour}
-%define plugindir %{_datadir}/%{name}/qml/plugins
-%else
-%define plugindir %{_libdir}/qt5/qml
-%endif
-
-# undefine macros that may interfere:
-%if %{with harbour}
-%undefine vendor
-%undefine chum
 %endif
 
 %prep
