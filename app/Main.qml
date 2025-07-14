@@ -22,7 +22,7 @@ ApplicationWindow {
         scope: settings
         path: "ui"
         property int font: 2
-        property bool saveOnQuit: false
+        //property bool saveOnQuit: false
         property bool styleHtml: true
         property bool autoTts: false
     }
@@ -44,9 +44,11 @@ ApplicationWindow {
     Connections { target: Qt.application; onAboutToQuit: willQuit() }
     onWillQuit: {
         if (_willquitHandled) return
+        /*
         if (uisettings.saveOnQuit) {
              gameState.copyTo(quickSaveState);
         }
+        */
         ttsStop()
         _willquitHandled=true
     }

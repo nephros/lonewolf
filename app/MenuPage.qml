@@ -107,12 +107,14 @@ Page {
                     onClicked: loadQuickSave()
                 }
             }
+            /*
             TextSwitch {
                 text: "Auto-Save on Quit"
                 description: "Automatically perform a Quick Save when the app is closed"
                 checked: uisettings.saveOnQuit
                 onCheckedChanged: uisettings.saveOnQuit = checked
             }
+            */
             TextSwitch { id: styleswitch
                 text: "Apply text styling"
                 description: "Add styling to the book pages for a more authentic look"
