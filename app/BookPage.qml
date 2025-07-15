@@ -334,7 +334,8 @@ WebViewPage {
         }
         function handleUserClick(text) {
             if (text == "random") {
-                random.visible = true
+                //random.visible = true
+                random.show()
             } else if (text == "action") {
                 haptics.play()
                 root.showChartPage()
@@ -571,53 +572,62 @@ WebViewPage {
     }
     }
 
-    Rectangle {
-        id: random
-        anchors.fill: parent
-        color: Theme.highlightDimmerFromColor("darkgreen", Theme.colorScheme)
-        opacity: Theme.opacityOverlay
-        visible: false
-
+    DockedPanel { id: random
+        width:  parent.width
+        height: parent.height/2
+        dock: Dock.Bottom
+        modal: true
         property string randomNumber
         property bool numberRevealed: false
-
-        onVisibleChanged: { 
+        onOpenChanged: { 
             numberRevealed = false
-            if (visible) {
+            if (open) {
                 randomNumber = Util.getRandom()
                 timer.start()
             }
         }
         Timer { id: timer; interval: 1000; onTriggered: random.numberRevealed = true }
-        Column {
-            spacing: Theme.paddingLarge
-            width: parent.width
-            anchors.centerIn: parent
-            Label { id: islabel
-                width: parent.width
-                font.pixelSize: Theme.fontSizeLarge
-                text: "Your random number is:"
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                Behavior on y { PropertyAnimation { } }
-            }
-            Label { id: number
-                width: parent.width
-                font.pixelSize: Theme.fontSizeHuge
-                text: random.randomNumber
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                opacity: random.numberRevealed ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimator { duration: 3000; easing.type: Easing.InBounce } }
-                color: opacity == 1 ? Theme.primaryColor : Theme.highlightColor
-                Behavior on opacity { FadeAnimator { } }
-            }
+        Image {
+            anchors.fill: parent; anchors.centerIn: parent; 
+            source: "./lonewolf-bighead.png"
+            fillMode: Image.PreserveAspectFit
         }
-        MouseArea {
+        Rectangle {
+            id: randomRect
             anchors.fill: parent
-            enabled: random.numberRevealed
-            onClicked: { random.visible = false; }
+            color: Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
+            opacity: Theme.opacityOverlay
+            Column {
+                spacing: Theme.paddingLarge
+                width: parent.width
+                anchors.centerIn: parent
+                Label { id: islabel
+                    width: parent.width
+                    font.pixelSize: Theme.fontSizeLarge
+                    text: "Your random number is:"
+                    color: Theme.highlightColor
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                    Behavior on y { PropertyAnimation { } }
+                }
+                Label { id: number
+                    width: parent.width
+                    font.pixelSize: Theme.fontSizeHuge
+                    text: random.randomNumber
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                    opacity: random.numberRevealed ? 1.0 : 0.0
+                    Behavior on opacity { FadeAnimator { duration: 3000; easing.type: Easing.InBounce } }
+                    color: opacity == 1 ? Theme.primaryColor : Theme.highlightColor
+                    Behavior on opacity { FadeAnimator { } }
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                enabled: random.open && random.numberRevealed
+                //onClicked: { random.visible = false; }
+                onClicked: { random.hide() }
+            }
         }
     }
 
