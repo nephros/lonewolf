@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtFeedback 5.0
+import QtGraphicalEffects 1.0
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
 import Sailfish.WebEngine 1.0
@@ -235,7 +236,7 @@ WebViewPage {
                     '<style> figure { margin-left: auto; margin-right: auto; }</style>',
                     //'<style> img { border: 1px solid #000000; width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>',
                     (mainView.nightModeEnabled
-                        ? '<style> img { filter: invert(100%) brightness(80%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
+                        ? '<style> img { filter: invert(100%) sepia(40%) brightness(80%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
                         : '<style> img { filter: sepia(120%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
                     ),
                     '<style> figcaption { font-style: italic; text-align: center;}</style>',
@@ -688,11 +689,62 @@ WebViewPage {
     function showIllustration(source) {
         imgViewer.source = source
         imgViewer.visible = true
+        imgViewer.map = false
     }
 
     function showMap() {
         imgViewer.source = Qt.resolvedUrl(book.cacheDir + "/" + "map.png")
         imgViewer.visible = true
+        imgViewer.map = true
+    }
+
+    // slight Sepia and somw desat if night mode
+    Colorize { id: mapcol
+        z: imgViewer.z+1
+        visible: (imgViewer.opacity > 0) && imgViewer.map
+        source: imgViewer
+        anchors.fill: imgViewer
+        opacity: mainView.nightModeEnabled ? 0.5 : 0.25
+        saturation: 0.5
+        hue: 0.07
+        lightness: -0.4
+    }
+
+    // Sepia for day mode
+    Colorize { id: daycol
+        z: imgViewer.z+1
+        visible: !mainView.nightModeEnabled && (imgViewer.opacity > 0) && !imgViewer.map
+        source: imgViewer
+        anchors.fill: imgViewer
+        saturation: 0.5
+        hue: 0.14
+        lightness: 0
+    }
+
+    // needed by inverter
+    Image { id: allWhite
+        visible: false
+        source: 'white-square.png'
+        anchors.fill: imgViewer
+    }
+
+    // invert in night mode
+    Blend { id: inverter
+        visible: false
+        source: imgViewer
+        foregroundSource: allWhite
+        mode: 'negation'
+        anchors.fill: imgViewer
+    }
+    // Sepia and de-brightness for night mode
+    Colorize { id: nightcol
+        z: imgViewer.z+1
+        visible: mainView.nightModeEnabled && (imgViewer.opacity > 0) && !imgViewer.map
+        source: inverter
+        anchors.fill: imgViewer
+        saturation: 0.2
+        hue: 0.07
+        lightness: 0
     }
 
     // avoid detection of dependency to Sailfish.Gallery:
@@ -704,13 +756,14 @@ WebViewPage {
           import Sailfish.Silica 1.0
          " + [ "import", "Sailfish.Gallery", "1.0" ].join(" ") + "\n"
          + " ImageViewer { id: imgViewer
+             property bool map: false
              anchors.fill: parent
              anchors.centerIn: parent
              visible: false
              active: visible
              onClicked: visible = false
              opacity: visible ? 1.0 : 0
-             Behavior on opacity { FadeAnimator{} }
+             //Behavior on opacity { FadeAnimator{} }
          }"
          imgViewer = Qt.createQmlObject(qml, root)
     }
