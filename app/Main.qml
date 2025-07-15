@@ -62,6 +62,9 @@ ApplicationWindow {
       mainView.bookTitle = info.title
       mainView.bookColor = info.coverColor
       pageStack.replaceAbove(null, bookComponent)
+      if (mainView.ttsAvailable && uisettings.autoTts) {
+          ttsPlay(info.title)
+      }
     }
     function popBookTab() {
       pageStack.replaceAbove(null, menuPage)

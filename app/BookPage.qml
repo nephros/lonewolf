@@ -28,6 +28,7 @@ WebViewPage {
         /* TTS: on first load, play something so the daemon/service is ready */
         if ((root.status == PageStatus.Activating) && firstView) {
             firstView = false
+            /*
             if (mainView.ttsAvailable) {
                 if (uisettings.autoTts) {
                     mainView.ttsPlay(mainView.bookTitle)
@@ -35,6 +36,7 @@ WebViewPage {
                     mainView.ttsPlay("---")
                 }
             }
+            */
         }
     }
     signal showChartPage
