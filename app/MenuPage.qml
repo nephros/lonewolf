@@ -96,6 +96,25 @@ Page {
                 width: parent.width
             }
 
+            SectionHeader { text: "Current State" }
+            Label { id: gamestateLabel
+                visible: gameState.book != "" && gameState.pageId != ""
+
+                anchors.margins: Theme.paddingMedium
+                property string bookTitle: ""
+                property string bookPage: ""
+                text: "Current Progress:\n“%1”".arg(bookTitle)
+                    + (/^sect/.test(gameState.pageId) ? " page %2".arg(bookPage) : "")
+                color: Theme.secondaryHighlightColor
+                horizontalAlignment: Qt.AlignHCenter
+                wrapMode: Text.Wrap
+                width: parent.width
+                onVisibleChanged: {
+                  var b = getBookInfo()
+                  bookTitle = b.title
+                  bookPage  = gameState.pageId.replace(/\D/g,'');
+                }
+            }
             ButtonLayout {
                 Button {
                     text: gameState.book == "" && gameState.pageId == "" ? "Start Book 1" : "Continue"
@@ -107,6 +126,7 @@ Page {
                     onClicked: loadQuickSave()
                 }
             }
+            SectionHeader { text: "UX Options" }
             /*
             TextSwitch {
                 text: "Auto-Save on Quit"
