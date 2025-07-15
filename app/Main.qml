@@ -58,7 +58,7 @@ ApplicationWindow {
     cover: coverPage
 
     function goToBookTab() {
-      const info = menuPage.getBookInfo()
+      const info = menuPage.getBookInfo(gameState.book)
       mainView.bookTitle = info.title
       mainView.bookColor = info.coverColor
       pageStack.replaceAbove(null, bookComponent)

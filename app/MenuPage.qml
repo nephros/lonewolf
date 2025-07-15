@@ -26,18 +26,18 @@ Page {
         gameState.clear()
         startBook(book, "")
     }
-    function getBookInfo() {
+    function getBookInfo(bid) {
         for (var i=0; i<kaiModel.count; ++i) {
             const b = kaiModel.get(i)
-            if (b.book == gameState.book) { return b }
+            if (b.book == bid) { return b }
         }
         for (var i=0; i<magnakaiModel.count; ++i) {
             const b = magnakaiModel.get(i)
-            if (b.book == gameState.book) { return b }
+            if (b.book == bid) { return b }
         }
         for (var i=0; i<grandmasterModel.count; ++i) {
             const b = grandmasterModel.get(i)
-            if (b.book == gameState.book) { return b }
+            if (b.book == bid) { return b }
         }
         for (var i=0; i<neworderModel.count; ++i) {
             const b = neworderModel.get(i)
@@ -96,21 +96,21 @@ Page {
                 width: parent.width
             }
 
-            SectionHeader { text: "Current State" }
+            SectionHeader { text: "Adventure  Progress" }
             Label { id: gamestateLabel
                 visible: gameState.book != "" && gameState.pageId != ""
 
                 anchors.margins: Theme.paddingMedium
                 property string bookTitle: ""
                 property string bookPage: ""
-                text: "Current Progress:\n“%1”".arg(bookTitle)
+                text: "“%1”".arg(bookTitle)
                     + (/^sect/.test(gameState.pageId) ? " page %2".arg(bookPage) : "")
-                color: Theme.secondaryHighlightColor
+                color: Theme.secondaryColor
                 horizontalAlignment: Qt.AlignHCenter
                 wrapMode: Text.Wrap
                 width: parent.width
                 onVisibleChanged: {
-                  var b = getBookInfo()
+                  var b = getBookInfo(gameState.book)
                   bookTitle = b.title
                   bookPage  = gameState.pageId.replace(/\D/g,'');
                 }
@@ -124,6 +124,24 @@ Page {
                     text: "Load Quick Save"
                     enabled: quickSaveState.pageId != ""
                     onClicked: loadQuickSave()
+                }
+            }
+            Label { id: quicksaveLabel
+                visible: quickSaveState.pageId != ""
+
+                anchors.margins: Theme.paddingMedium
+                property string bookTitle: ""
+                property string bookPage: ""
+                text: "“%1”".arg(bookTitle)
+                    + (/^sect/.test(quickSaveState.pageId) ? " page %2".arg(bookPage) : "")
+                color: Theme.secondaryColor
+                horizontalAlignment: Qt.AlignHCenter
+                wrapMode: Text.Wrap
+                width: parent.width
+                onVisibleChanged: {
+                  var b = getBookInfo(quickSaveState.book)
+                  bookTitle = b.title
+                  bookPage  = quickSaveState.pageId.replace(/\D/g,'');
                 }
             }
             SectionHeader { text: "UX Options" }
