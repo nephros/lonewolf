@@ -18,9 +18,9 @@ include /etc/sailjail/permissions/WebView.permission
 # Sessions
 dbus-user.talk org.mkiol.Speech
 # Signals
-dbus-user.broadcast org.mkiol.Speech.*
+dbus-user.broadcast org.mkiol.Speech=org.mkiol.Speech.*@/
 # Methods
-dbus-user.call org.mkiol.Speech.TtsPlaySpeech
-dbus-user.call org.mkiol.Speech.TtsPlaySpeech2
-dbus-user.call org.mkiol.Speech.TtsStopSpeech
+dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsPlaySpeech@/
+dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsPlaySpeech2@/
+dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsStopSpeech@/
 
