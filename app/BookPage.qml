@@ -224,8 +224,14 @@ WebViewPage {
                 newstyle=[
                     '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
                     '<style> p { text-align: justify; }</style>',
-                    '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
-                    '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
+                    (mainView.nightModeEnabled
+                        ? '<style> .actionlink { border-bottom: 1px dashed #414141; }</style>'
+                        : '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>'
+                    ),
+                    (mainView.nightModeEnabled
+                        ? '<style> .pagelink { border-bottom: 1px solid #414141; }</style>'
+                        : '<style> .pagelink { border-bottom: 1px solid #212121; }</style>'
+                    ),
                     '<style> .attribute { font-variant-caps: small-caps; }</style>',
                     '<style> .footnote { font-style: italic; }</style>',
                     '<style> .dedication { font-style: italic; font-weight: bold; text-align: center; margin-left: auto; margin-right: auto; }</style>',
@@ -246,8 +252,18 @@ WebViewPage {
                     ].join('\n')
             } else {
                 newstyle=[
-                    '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>',
-                    '<style> .pagelink { border-bottom: 1px solid #212121; }</style>',
+                    (mainView.nightModeEnabled
+                        ? '<style> img { filter: invert(100%) brightness(80%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
+                        : '<style> img { filter: sepia(120%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
+                    ),
+                    (mainView.nightModeEnabled
+                        ? '<style> .actionlink { border-bottom: 1px dashed #414141; }</style>'
+                        : '<style> .actionlink { border-bottom: 1px dashed #212121; }</style>'
+                    ),
+                    (mainView.nightModeEnabled
+                        ? '<style> .pagelink { border-bottom: 1px solid #414141; }</style>'
+                        : '<style> .pagelink { border-bottom: 1px solid #212121; }</style>'
+                    ),
                     ].join('\n')
             }
             newcontent = newcontent.replace('</head>', newstyle + '\n' + '</head>')
