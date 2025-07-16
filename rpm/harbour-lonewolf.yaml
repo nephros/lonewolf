@@ -49,6 +49,8 @@ Macros2:
     BuildRequires: sdk-harbour-rpmvalidator
     %endif
 
+Check: true # so we can do a fake clean section below it:
+
 Description: |
     %{summary}.
 

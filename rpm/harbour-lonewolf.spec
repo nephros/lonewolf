@@ -197,9 +197,9 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
-%post
-# >> post
-# fake post step to have a clean section
+%check
+# >> check
+# this is just here so we can include a clean section below:
 %clean
 %if 0%{?harbour_validation:1}
 echo '=========== Checking for Harbour compatability.'
@@ -208,7 +208,7 @@ echo '=========== DONE checking for Harbour compatability.'
 %else
 echo '=========== NOT checking for Harbour compatability.'
 %endif
-# << post
+# << check
 
 %files
 %{_datadir}/applications/%{name}.desktop
