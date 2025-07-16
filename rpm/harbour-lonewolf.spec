@@ -183,7 +183,7 @@ desktop-file-edit  \
 printf '\n\n[X-Sailjail]\nOrganizationName=%{name}\nApplicationName=%{name}\nPermissions=Audio;WebView;Internet\n' \
 >> %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-printf '\n\n[X-HarbourBackup]\nBackupConfigList=/apps/games/lonewolf\nBackupPathList=.cache/lonewolf/\n'
+printf '\n\n[X-HarbourBackup]\nBackupConfigList=/apps/games/lonewolf\nBackupPathList=.cache/%{name}/\n' \
 >> %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # generate some icons
