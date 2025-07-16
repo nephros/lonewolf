@@ -160,7 +160,8 @@ install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 # S:5: Scumming script
 install -d %{buildroot}/%{_datadir}/%{name}/_cheat
-install -pm755 %{S:5} %{buildroot}/%{_datadir}/%{name}/_cheat
+# habrour will not allow executable in share, so mode 644:
+install -pm644 %{S:5} %{buildroot}/%{_datadir}/%{name}/_cheat
 
 
 # rename default desktop file:
