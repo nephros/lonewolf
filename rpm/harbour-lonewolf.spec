@@ -13,12 +13,6 @@ Name:       harbour-lonewolf
 %define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
-%define please ignore this macro
-# undefine macros that may interfere with harbour:
-%if %{with harbour}
-%undefine vendor
-%undefine _chum
-%endif
 
 Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.250704
@@ -116,6 +110,12 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %define cmake_build %__cmake --build "." -j8 --verbose
 %define cmake_install DESTDIR=%buildroot %__cmake --install .
 %endif
+%endif
+# undefine macros that may interfere with harbour:
+%if %{with harbour}
+%undefine vendor
+%undefine _vendor
+%undefine _chum
 %endif
 %if 0%{?harbour_validation:1}
 BuildRequires: sdk-harbour-rpmvalidator
