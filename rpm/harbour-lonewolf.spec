@@ -10,6 +10,7 @@ Name:       harbour-lonewolf
 # << macros
 %define pkgname %{name}
 %define plugindir %{_datadir}/%{name}/
+%define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
 %define please ignore this macro
@@ -158,7 +159,8 @@ install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
 install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
 
 # S:5: Scumming script
-install -pm755 %{S:5} %{buildroot}/%{_datadir}/%{name}/
+install -d %{buildroot}/%{_datadir}/%{name}/_cheat
+install -pm755 %{S:5} %{buildroot}/%{_datadir}/%{name}/_cheat
 
 
 # rename default desktop file:

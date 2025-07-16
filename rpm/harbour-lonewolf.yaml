@@ -22,7 +22,7 @@ Macros:
   - 'pkgname;%{name}'
   - plugindir;%{_datadir}/%{name}/
   # plugindir;%{_libdir}/qt5/qml
-  # '__requires_exclude_from;%{plugindir}'
+  - '__requires_exclude_from;^%{_datadir}/%{name}/_cheat/.*\.sh$'
   - '__provides_exclude;^(font|qml).*$'
   - '__provides_exclude_from;%{plugindir}'
   - |
