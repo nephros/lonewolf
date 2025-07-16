@@ -20,7 +20,7 @@ Macros:
   - 'appname;lonewolf'
   - 'orgname;lonewolf'
   - 'pkgname;%{name}'
-  - plugindir;%{_datadir}/%{name}/qml/plugins
+  - plugindir;%{_datadir}/%{name}/
   # plugindir;%{_libdir}/qt5/qml
   # '__requires_exclude_from;%{plugindir}'
   - '__provides_exclude;^(font|qml).*$'

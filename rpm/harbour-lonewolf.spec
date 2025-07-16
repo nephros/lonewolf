@@ -11,7 +11,7 @@ Name:       harbour-lonewolf
 %define appname lonewolf
 %define orgname lonewolf
 %define pkgname %{name}
-%define plugindir %{_datadir}/%{name}/qml/plugins
+%define plugindir %{_datadir}/%{name}/
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
 %define please ignore this macro
