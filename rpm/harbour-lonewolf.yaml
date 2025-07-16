@@ -32,7 +32,6 @@ Macros:
     %undefine vendor
     %undefine _chum
     %endif
-
 Macros2:
   - |
     please_also;ignore this macro
@@ -44,6 +43,9 @@ Macros2:
     %define cmake_build %__cmake --build "." -j8 --verbose
     %define cmake_install DESTDIR=%buildroot %__cmake --install .
     %endif
+    %endif
+    %if 0%{?harbour_validation:1}
+    BuildRequires: sdk-harbour-rpmvalidator
     %endif
 
 Description: |
@@ -63,7 +65,7 @@ Description: |
     This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
     the original Lone Wolf app for Ubuntu Phone by Michael Terry.
 
-    %if "0%{?_chum}"
+    %if 0%{?_chum}
     Title: Lonewolf
     Type: desktop-application
     DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
@@ -89,6 +91,7 @@ PkgBR:
   - cmake
   - gettext
   - intltool
+  # check package in clean step
 PkgConfigBR:
   - Qt5Core
   - Qt5Qml

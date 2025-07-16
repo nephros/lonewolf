@@ -67,7 +67,7 @@ You are now Lone Wolf.
 This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
 the original Lone Wolf app for Ubuntu Phone by Michael Terry.
 
-%if "0%{?_chum}"
+%if 0%{?_chum}
 Title: Lonewolf
 Type: desktop-application
 DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
@@ -116,6 +116,9 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 %define cmake_build %__cmake --build "." -j8 --verbose
 %define cmake_install DESTDIR=%buildroot %__cmake --install .
 %endif
+%endif
+%if 0%{?harbour_validation:1}
+BuildRequires: sdk-harbour-rpmvalidator
 %endif
 
 %prep
@@ -193,6 +196,19 @@ done
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
+
+%post
+# >> post
+# fake post step to have a clean section
+%clean
+%if 0%{?harbour_validation:1}
+echo '=========== Checking for Harbour compatability.'
+find ~/rpmbuild/RPMS -type f -name %{name}-%{version}*.rpm -exec /usr/libexec/sdk-harbour-rpmvalidator/rpmvalidation.sh -d 0 --no-color {} \; ||:
+echo '=========== DONE checking for Harbour compatability.'
+%else
+echo '=========== NOT checking for Harbour compatability.'
+%endif
+# << post
 
 %files
 %{_datadir}/applications/%{name}.desktop
