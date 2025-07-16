@@ -8,8 +8,6 @@ Name:       harbour-lonewolf
 # >> macros
 %bcond_with harbour
 # << macros
-%define appname lonewolf
-%define orgname lonewolf
 %define pkgname %{name}
 %define plugindir %{_datadir}/%{name}/
 %define __provides_exclude ^(font|qml).*$
@@ -18,7 +16,7 @@ Name:       harbour-lonewolf
 # undefine macros that may interfere with harbour:
 %if %{with harbour}
 %undefine vendor
-%undefine chum
+%undefine _chum
 %endif
 
 Summary:    A role-playing choose-your-own-adventure game

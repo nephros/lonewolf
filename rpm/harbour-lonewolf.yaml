@@ -17,8 +17,8 @@ Sources:
     - savescumming.sh
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
-  - 'appname;lonewolf'
-  - 'orgname;lonewolf'
+  # 'appname;lonewolf'
+  # 'orgname;lonewolf'
   - 'pkgname;%{name}'
   - plugindir;%{_datadir}/%{name}/
   # plugindir;%{_libdir}/qt5/qml
@@ -30,7 +30,7 @@ Macros:
     # undefine macros that may interfere with harbour:
     %if %{with harbour}
     %undefine vendor
-    %undefine chum
+    %undefine _chum
     %endif
 
 Macros2:
