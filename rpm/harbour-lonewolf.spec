@@ -32,6 +32,7 @@ Source1:    lonewolf-app-icon.svg
 Source2:    %{name}.profile
 Source3:    Alegreya-Medium.otf
 Source4:    Alegreya-Regular.otf
+Source5:    savescumming.sh
 Source100:  harbour-lonewolf.yaml
 Requires:   libsailfishapp-launcher
 BuildRequires:  pkgconfig(Qt5Core)
@@ -139,7 +140,6 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 # << build post
 
 %install
-rm -rf %{buildroot}
 # >> install pre
 # << install pre
 %cmake_install
@@ -159,7 +159,12 @@ install -d %{buildroot}/%{_datadir}/fonts/%{name}/
 install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
 install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
 
-mv %{buildroot}%{_datadir}/applications/%{appname}.desktop %{buildroot}%{_datadir}/applications/%{name}.desktop
+# S:5: Scumming script
+install -pm755 %{S:5} %{buildroot}/%{_datadir}/%{name}/
+
+
+# rename default desktop file:
+mv %{buildroot}%{_datadir}/applications/lonewolf.desktop %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 desktop-file-edit  \
 --set-key=Exec \
@@ -189,7 +194,6 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
-%defattr(-,root,root,-)
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/*/*/apps/*
 %{_datadir}/%{name}
@@ -205,7 +209,6 @@ desktop-file-install --delete-original       \
 # << files
 
 %files tts-plugin
-%defattr(-,root,root,-)
 %{_datadir}/%{name}/qml/TTS.qml
 %{_sysconfdir}/sailjail/permissions/%{name}.profile
 # >> files tts-plugin
