@@ -555,8 +555,17 @@ WebViewPage {
         canAccept: false //combat.done
         property alias props: combat.props
         property alias you: combat.you
-        backgroundColor: Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
-
+        backgroundColor: mainView.nightModeEnabled
+           ? "black"
+           : Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
+        Image {
+            anchors.top: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            source: "./combat_trans.png"
+            fillMode: Image.PreserveAspectFit
+        }
         DialogHeader { id: header
             acceptText: ""
             cancelText: "Back to Page"
