@@ -24,6 +24,14 @@ Page {
         readonly property int neworder: mainView.inneworder
     }
 
+    QtObject { id: c
+        // conveniance properties, display only:
+        property bool _magnakai_circle_fire: you.magnakai_huntmastery && you.magnakai_weaponmastery
+        property bool _magnakai_circle_light: you.magnakai_curing && you.magnakai_animalcontrol
+        property bool _magnakai_circle_solaris: you.magnakai_huntmastery && you.magnakai_pathsmanship && you.magnakai_invisibility
+        property bool _magnakai_circle_spirit: you.magnakai_psisurge && you.magnakai_psiscreen && you.magnakai_nexus && you.magnakai_divination
+    }
+
     Image {
         source: d.magnakai ? "./ac-02.png" : "./ac-01.png"
         fillMode: Image.PreserveAspectFit
@@ -653,6 +661,38 @@ Page {
                 text: "Kai Disciplines"
                 visible: d.kai
             }
+            DetailItem {
+                visible: d.kai
+                width: parent.width/2
+                label: "Rank"
+                value: ranknames[rank]
+                property int rank: countRanks()
+                readonly property var ranknames: [
+                    "",
+                    "Novice",
+                    "Intuite",
+                    "Doan",
+                    "Acolyte",
+                    "Initiate", //--You begin the Lone Wolf adventures with this level of Kai training
+                    "Aspirant",
+                    "Guardian",
+                    "Warmarn or Journeyman",
+                    "Savant",
+                    "Master",
+                ]
+                function countRanks() {
+                    const keys = [
+                      "kai_camouflage", "kai_hunting", "kai_sixthsense",
+                      "kai_tracking", "kai_healing", "kai_weaponskill", "kai_mindshield",
+                      "kai_mindblast", "kai_animalkinship", "kai_mindovermatter",
+                    ]
+                    const r = keys.reduce(function(acc, val, idx) {
+                          if (you[val]) { acc +=1 }
+                          return acc
+                    }, 5) // start at "Initiate"
+                    return r
+                }
+            }
             Grid {
                 id: disciplines
                 columns: 2
@@ -753,9 +793,52 @@ Page {
                 visible: d.kai
             }
 
-            SectionHeader {
-                text: "Magnakai Disciplines"
+            SectionHeader { text: "Magnakai Disciplines" }
+            Row {
+                width: parent.width
                 visible: d.magnakai
+                DetailItem {
+                    width: parent.width/2
+                    label: "Rank"
+                    value: ranknames[rank]
+                    property int rank: countRanks()
+                    readonly property var ranknames: [
+                        "",
+                        "Kai Master",
+                        "Kai Master Senior",
+                        "Kai Master Superior", // --You begin the Lone Wolf Magnakai adventures with this level of training.
+                        "Primate", // 4
+                        "Tutelary",
+                        "Principalin", // 6
+                        "Mentora",
+                        "Scion-kai",
+                        "Archmaster", // 9
+                        "Kai Grand Master",
+                    ]
+                    function countRanks() {
+                        const keys = [
+                            "magnakai_weaponmastery", "magnakai_animalcontrol",
+                            "magnakai_curing", "magnakai_invisibility", "magnakai_huntmastery",
+                            "magnakai_pathsmanship", "magnakai_psisurge", "magnakai_psiscreen",
+                            "magnakai_nexus", "magnakai_divination",
+                        ]
+
+                        const r = keys.reduce(function(acc, val, idx) {
+                              if (you[val]) { acc +=1 }
+                              return acc
+                        }, 3) // start at "Kai Master Superior"
+                        return r
+                    }
+                }
+                DetailItem {
+                    width: parent.width/2
+                    label: "Lore Circles"
+                    value: ""
+                        + (c._magnakai_circle_fire    ? "Circle of Fire\n" : ""  )
+                        + (c._magnakai_circle_light   ? "Circle of Light\n" : ""  )
+                        + (c._magnakai_circle_solaris ? "Circle of Solaris\n"  : "" )
+                        + (c._magnakai_circle_spirit  ? "Circle of Spirit"  : "" )
+                }
             }
             Grid {
                 columns: 2
