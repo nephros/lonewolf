@@ -138,7 +138,7 @@ ApplicationWindow {
       }
     }
 
-    property bool nightModeEnabled: false
+    property bool nightModeEnabled: { var d = new Date(); return ( (d.getHours() >= 22) || (d.getHours() <= 5) ) }
     property string bookTitle: "Lone Wolf"
     property string bookColor: "transparent"
     readonly property int endurance: inneworder ? gameState.neworder_endurance : gameState.endurance
