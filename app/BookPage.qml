@@ -472,8 +472,15 @@ WebViewPage {
                 anchors.right: plusminus.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingLarge
+                property bool hintShown: false
             }
-
+            TapInteractionHint{ id: ttshint; running: false; loops: 3; taps: 1; anchors.centerIn: readbtn }
+            InteractionHintLabel{ visible: ttshint.running; text: "Text-to-Speech"
+                anchors.left: parent.left
+                anchors.right: parent.horizontalCenter
+                anchors.bottom: ttshint.top
+                backgroundColor: "transparent"
+            }
 
             IconButton { id: nightmode
                 icon.source: "image://theme/icon-m-light-contrast?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
@@ -483,8 +490,29 @@ WebViewPage {
                 anchors.left: plusminus.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: Theme.paddingLarge
+                property bool hintShown: false
             }
-
+            TapInteractionHint{ id: hint; running: false; loops: 3; taps: 1; anchors.centerIn: nightmode }
+            InteractionHintLabel{ visible: hint.running; text: "Night Mode toggle"
+                anchors.right: parent.right
+                anchors.left: parent.horizontalCenter
+                anchors.bottom: hint.top
+                backgroundColor: "transparent"
+            }
+            Timer {
+                running: uisettings.showHints
+                    && parent.visible
+                    && (!nightmode.hintShown || !readbtn.hintShown)
+                    && !licenseButton.visible
+                interval: 2000
+                repeat: true
+                onTriggered: {
+                    if (!nightmode.hintShown) { hint.start(); nightmode.hintShown = true }
+                    else if (!hint.running && !readbtn.hintShown) { ttshint.start(); readbtn.hintShown = true }
+                    if (nightmode.hintShown && readbtn.hintShown) uisettings.showHints = false
+                }
+            }
+ 
             SecondaryButton {
                 id: licenseButton
                 text: "Accept"

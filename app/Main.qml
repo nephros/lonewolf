@@ -22,6 +22,7 @@ ApplicationWindow {
         scope: settings
         path: "ui"
         property int font: 2
+        property bool showHints: false
         //property bool saveOnQuit: false
         property bool styleHtml: true
         property bool autoTts: false

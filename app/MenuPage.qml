@@ -9,6 +9,7 @@ Page {
     function startBook(book, pageId) {
         gameState.book = book;
         gameState.pageId = pageId;
+        if (pageId == "") uisettings.showHints = true
         goToBookTab();
     }
     function restart() {
