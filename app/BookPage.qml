@@ -149,11 +149,11 @@ WebViewPage {
                 anchors.fill: parent
                 source:"./icon-m-windrose.svg"
                 cache: true
+                opacity: parent.enabled ? 1.0 : Theme.opacityFaint
+                Behavior on opacity { FadeAnimator { } }
             }
-            enabled: !book.inBackMatter && !book.inFrontMatter && (mainView.endurance > 0)
+            enabled: !book.inGame && (mainView.endurance > 0)
             onClicked: root.showMap()
-            opacity: enabled ? 1.0 : Theme.opacityFaint
-            Behavior on opacity { FadeAnimator { } }
         }
         /*
         BackgroundItem {
@@ -202,6 +202,7 @@ WebViewPage {
 
         property bool inBackMatter: false
         property bool inFrontMatter: false
+        property bool inGame: !inBackMatter && !inBackMatter
 
         onPageContentChanged: {
             //console.debug("Loading:", pageId, pageType)
