@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QNetworkAccessManager>
 #include <QStandardPaths>
-#include <QTemporaryDir>
+//#include <QTemporaryDir>
 #include <QTextStream>
 #include <QUrl>
 #include <QXmlQuery>
@@ -64,8 +64,17 @@ downloadOneXmlFile(const QString &filename)
 {
     QString fullURL = "https://www.projectaon.org/data/trunk/en/xml/" + filename;
 
-    QTemporaryDir tempDir;
-    tempDir.setAutoRemove(false);
+    // apparently, does not work with SailJail.
+    //QTemporaryDir tempDir();
+    const QString tp = QDir::tempPath() + "/lonewolf-" + filename;
+    QDir tempDir(tp);
+    if (!tempDir.mkpath(tp)) {
+        qWarning() << "could not create path:" << tp;
+    } else {
+        qDebug() << "created" << tp;
+    };
+
+    //tempDir.setAutoRemove(false);
 
     Downloader downloader;
     downloader.setCacheDir(tempDir.path());
