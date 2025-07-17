@@ -191,15 +191,18 @@ echo '=========== DONE checking for Harbour compatability.'
 %else
 echo '=========== NOT checking for Harbour compatability.'
 %endif
+
+# HACK: make main package file list empty:
+%if 0%{?!_chum}
 # << check
 
 %files
 # >> files
-%if 0%{?!_chum}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/*/*/apps/*
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/qml/TTS.qml
+
 %if %{with harbour}
 %exclude %{_datadir}/icons/*/*/apps/*.svg
 %exclude %{_datadir}/fonts/%{name}
@@ -207,13 +210,16 @@ echo '=========== NOT checking for Harbour compatability.'
 %dir %{_datadir}/fonts/%{name}
 %{_datadir}/fonts/%{name}/*
 %endif
+
+# when building in chum:
+%else
+%exclude %{_datadir}/*
 %endif
+# END HACK: make main package file list empty:
 # << files
 
 %files tts-plugin
 # >> files tts-plugin
-%if 0%{?_chum}
 %{_datadir}/%{name}/qml/TTS.qml
 %{_sysconfdir}/sailjail/permissions/%{name}.profile
-%endif
 # << files tts-plugin
