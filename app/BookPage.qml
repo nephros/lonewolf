@@ -709,7 +709,7 @@ WebViewPage {
                 anchors.topMargin: Theme.paddingSmall
                 anchors.horizontalCenter: parent.horizontalCenter
                 //onClicked: pageStack.pop()
-                onClicked: popBookTab();
+                onClicked: { downloadCover.visible = false; popBookTab(); }
             }
         }
     }
