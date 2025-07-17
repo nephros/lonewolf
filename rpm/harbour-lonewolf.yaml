@@ -52,8 +52,6 @@ Macros2:
 Check: true # so we can do a fake clean section below it:
 
 Description: |
-    %{summary}.
-
     Lone Wolf is a role-playing book series from the 80s.
 
     You are the sole survivor of a devastating attack on the monastery where
@@ -67,23 +65,6 @@ Description: |
 
     This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
     the original Lone Wolf app for Ubuntu Phone by Michael Terry.
-
-    %if 0%{?_chum}
-    Title: Lonewolf
-    Type: desktop-application
-    DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
-    PackagedBy: nephros
-    Categories:
-     - Games
-    Custom:
-      Repo: https://github.com/nephros/lonewolf
-    PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
-    Screenshots:
-      - %{url}/raw/sfos/Screenshot_001.jpg
-      - %{url}/raw/sfos/Screenshot_002.jpg
-    Links:
-      Help: https://www.projectaon.org/en/ReadersHandbook/Home
-    %endif
 
 Requires:
   - libsailfishapp-launcher
@@ -113,12 +94,6 @@ ConfigOptions:
 NoIconCache: true
 NoAutoLocale: true
 #BuildArch: noarch
-Files:
-  - '%{_datadir}/applications/%{name}.desktop'
-  - '%{_datadir}/icons/*/*/apps/*'
-  - '%{_datadir}/%{name}'
-  - '%exclude %{_datadir}/%{name}/qml/TTS.qml'
-
 SubPackages:
     - Name:  tts-plugin
       Summary: Text-to-Speech support for %{name}
@@ -133,6 +108,8 @@ SubPackages:
           Requires the excellent Speech Note (harbour-dsnote) by mkiol, and
           will use its engine and settings configured for English.
 
+          Lonewolf is available from the Jolla Store
+
           %if "0%{?_chum}"
           Title: TTS plugin for Lonewolf
           Type: desktop-application
@@ -141,8 +118,4 @@ SubPackages:
           PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
           %endif
       BuildArch: noarch
-      Files:
-        - '%{_datadir}/%{name}/qml/TTS.qml'
-        - '%{_sysconfdir}/sailjail/permissions/%{name}.profile'
-
 

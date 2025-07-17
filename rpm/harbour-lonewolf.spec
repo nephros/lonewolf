@@ -45,8 +45,6 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  cmake
 
 %description
-%{summary}.
-
 Lone Wolf is a role-playing book series from the 80s.
 
 You are the sole survivor of a devastating attack on the monastery where
@@ -61,23 +59,6 @@ You are now Lone Wolf.
 This App is a port of Tim Süberkrüb's Qt/QML version, which is a port of
 the original Lone Wolf app for Ubuntu Phone by Michael Terry.
 
-%if 0%{?_chum}
-Title: Lonewolf
-Type: desktop-application
-DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
-PackagedBy: nephros
-Categories:
- - Games
-Custom:
-  Repo: https://github.com/nephros/lonewolf
-PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
-Screenshots:
-  - %{url}/raw/sfos/Screenshot_001.jpg
-  - %{url}/raw/sfos/Screenshot_002.jpg
-Links:
-  Help: https://www.projectaon.org/en/ReadersHandbook/Home
-%endif
-
 
 %package tts-plugin
 Summary:    Text-to-Speech support for %{name}
@@ -91,6 +72,8 @@ Adds text-to-speech support to the Lonewolf player.
 
 Requires the excellent Speech Note (harbour-dsnote) by mkiol, and
 will use its engine and settings configured for English.
+
+Lonewolf is available from the Jolla Store
 
 %if "0%{?_chum}"
 Title: TTS plugin for Lonewolf
@@ -211,11 +194,12 @@ echo '=========== NOT checking for Harbour compatability.'
 # << check
 
 %files
+# >> files
+%if 0%{?!_chum}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/*/*/apps/*
 %{_datadir}/%{name}
 %exclude %{_datadir}/%{name}/qml/TTS.qml
-# >> files
 %if %{with harbour}
 %exclude %{_datadir}/icons/*/*/apps/*.svg
 %exclude %{_datadir}/fonts/%{name}
@@ -223,10 +207,13 @@ echo '=========== NOT checking for Harbour compatability.'
 %dir %{_datadir}/fonts/%{name}
 %{_datadir}/fonts/%{name}/*
 %endif
+%endif
 # << files
 
 %files tts-plugin
+# >> files tts-plugin
+%if 0%{?_chum}
 %{_datadir}/%{name}/qml/TTS.qml
 %{_sysconfdir}/sailjail/permissions/%{name}.profile
-# >> files tts-plugin
+%endif
 # << files tts-plugin
