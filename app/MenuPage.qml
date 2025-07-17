@@ -11,16 +11,6 @@ Page {
         gameState.pageId = pageId;
         goToBookTab();
     }
-    function nuke() {
-        gameState.book = "";
-        gameState.pageId = "";
-        gameState.clear()
-    }
-    function nukesave() {
-        quickSaveState.book = "";
-        quickSaveState.pageId = "";
-        quickSaveState.clear()
-    }
     function restart() {
         const book = gameState.book
         gameState.clear()
@@ -53,14 +43,8 @@ Page {
         //contentWidth: width
         PullDownMenu {
             MenuItem { text: "About"; onClicked: pageStack.push("AboutPage.qml") }
-            MenuItem { text: "Delete Quick Save"; enabled: (quickSaveState.pageId != "")
-                onClicked: Remorse.popupAction(root, "Deleting Quick Save", function() { root.nukesave() }, 3000)
-            }
             MenuItem { text: "Restart Book"; enabled: (gameState.pageId != "")
                 onClicked: Remorse.popupAction(root, "Restarting Book", function() { root.restart() }, 3000)
-            }
-            MenuItem { text: "Reset Book and Progress"
-                onClicked: Remorse.popupAction(root, "Progress and Book cleared", function() { root.nuke() }, 3000)
             }
         }
         Column {
