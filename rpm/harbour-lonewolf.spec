@@ -83,8 +83,8 @@ Links:
 Summary:    Text-to-Speech support for %{name}
 Group:      Games
 BuildArch:  noarch
-Requires:   %{name} = %{version}-%{release}
 Requires:   harbour-dsnote >= 4.7.0
+Requires:   %{name}
 
 %description tts-plugin
 Adds text-to-speech support to the Lonewolf player.

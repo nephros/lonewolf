@@ -123,8 +123,10 @@ SubPackages:
     - Name:  tts-plugin
       Summary: Text-to-Speech support for %{name}
       Group: Games
+      AutoDepend: false
       Requires:
         - harbour-dsnote >= 4.7.0
+        - '%{name}'
       Description: |
           Adds text-to-speech support to the Lonewolf player.
 
