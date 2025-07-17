@@ -197,8 +197,8 @@ WebViewPage {
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
         linkColor:  Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.DarkOnLight: Theme.lightOnDark))
 
-        onDirChanged: console.debug("Book dir:", dir)
-        onCacheDirChanged: console.debug("Cache dir:", cacheDir)
+        //onDirChanged: console.debug("Book dir:", dir)
+        //onCacheDirChanged: console.debug("Cache dir:", cacheDir)
 
         property bool inBackMatter: false
 
@@ -367,7 +367,7 @@ WebViewPage {
                 haptics.play();
                 pageView.pageId = text;
             }
-            console.debug("Executed alert action:", text)
+            //console.debug("Executed alert action:", text)
         }
 
         function readText() { 
@@ -505,7 +505,7 @@ WebViewPage {
     onPopupCountChanged: {
         //console.debug("popups:", popupCount)
         if (popupRegistry.length > 50) {
-            console.debug("Cleaning up popups")
+            //console.debug("Cleaning up popups")
             var tmp = popupRegistry
             for (var i = 0; i < popupRegistry.length-1; ++i) {
                 tmp[i].destroy()
