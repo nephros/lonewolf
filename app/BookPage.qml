@@ -708,7 +708,8 @@ WebViewPage {
                 anchors.top: progressBar.bottom
                 anchors.topMargin: Theme.paddingSmall
                 anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: pageStack.pop()
+                //onClicked: pageStack.pop()
+                onClicked: popBookTab();
             }
         }
     }
