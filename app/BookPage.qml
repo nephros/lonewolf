@@ -503,8 +503,25 @@ WebViewPage {
     }
 
     /* Our dummy popup thing never gets deleted. See https://github.com/sailfishos/sailfish-components-webview/issues/179
-     *  So collect them and destroy from time to time:
+     * So collect them and destroy from time to time:
     */
+    QtObject { id: popupRegistry
+        readonly property int max: 50
+        property var purgatory: []
+        //property list<QtObject> purgatory
+        function purge() {
+            //console.debug("popups:", popupCount)
+            if (purgatory.length > max) {
+                //console.debug("Cleaning up popups:", purgatory.length)
+                for (var i = max; i < purgatory.length-1; ++i) {
+                    purgatory[i].destroy()
+                }
+                purgatory.length = max
+                //console.debug("Cleaned up popups, remaining:", purgatory.length)
+            }
+        }
+    }
+    /*
     property int popupCount: popupRegistry.length
     property var popupRegistry: []
     onPopupCountChanged: {
@@ -518,15 +535,15 @@ WebViewPage {
             popupRegistry = tmp
         }
     }
+    */
 
     Component { id: dummyAlertPopup; AlertPopupInterface { id: dummyAlertItem
         opacity: visible ? 1.0 : 0.0
         Timer { id: timer; interval: 300; onTriggered: { parent.accepted(); } } // visible = false } }
         //Component.onDestruction: console.debug("dummy dead")
         Component.onCompleted: { //console.debug("dummy ready")
-            var reg = root.popupRegistry
-            reg.push(dummyAlertItem)
-            root.popupRegistry = reg
+            popupRegistry.purgatory.push(dummyAlertItem)
+            popupRegistry.purge()
             timer.start()
         }
     }}
