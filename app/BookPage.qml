@@ -476,10 +476,11 @@ WebViewPage {
             }
             TapInteractionHint{ id: ttshint; running: false; loops: 3; taps: 1; anchors.centerIn: readbtn }
             InteractionHintLabel{ visible: ttshint.running; text: "Text-to-Speech"
-                anchors.left: parent.left
-                anchors.right: parent.horizontalCenter
+                //anchors.left: parent.left
+                //anchors.right: parent.horizontalCenter
                 anchors.bottom: ttshint.top
-                backgroundColor: "transparent"
+                //backgroundColor: "transparent"
+                textColor: mainView.nightModeEnabled ? Theme.highlightColor : Theme.darkPrimaryColor
             }
 
             IconButton { id: nightmode
@@ -494,10 +495,11 @@ WebViewPage {
             }
             TapInteractionHint{ id: hint; running: false; loops: 3; taps: 1; anchors.centerIn: nightmode }
             InteractionHintLabel{ visible: hint.running; text: "Night Mode toggle"
-                anchors.right: parent.right
-                anchors.left: parent.horizontalCenter
+                //anchors.right: parent.right
+                //anchors.left: parent.horizontalCenter
                 anchors.bottom: hint.top
-                backgroundColor: "transparent"
+                //backgroundColor: "transparent"
+                textColor: mainView.nightModeEnabled ? Theme.highlightColor : Theme.darkPrimaryColor
             }
             Timer {
                 running: uisettings.showHints
