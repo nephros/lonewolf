@@ -150,7 +150,7 @@ WebViewPage {
                 source:"./icon-m-windrose.svg"
                 cache: true
             }
-            enabled: !book.inBackMatter && (mainView.endurance > 0)
+            enabled: !book.inBackMatter && !book.inFrontMatter && (mainView.endurance > 0)
             onClicked: root.showMap()
             opacity: enabled ? 1.0 : Theme.opacityFaint
             Behavior on opacity { FadeAnimator { } }
@@ -201,13 +201,17 @@ WebViewPage {
         //onCacheDirChanged: console.debug("Cache dir:", cacheDir)
 
         property bool inBackMatter: false
+        property bool inFrontMatter: false
 
         onPageContentChanged: {
+            //console.debug("Loading:", pageId, pageType)
             if (pageId == "" && pageView.pageId != "")
                 return; // on startup we get this fake-out...
             var content = pageContent;
             if (pageId != "title" && (pageType == "backmatter" || pageType == "deadend")) {
                 inBackMatter = true;
+            } else if (pageType == "frontmatter" || pageType == "frontmatter-separate") {
+                inFrontMatter = true;
             } else if (pageId == "map") {
                 showMap()
             } else if (!inBackMatter) {
