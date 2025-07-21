@@ -16,26 +16,6 @@ Rectangle {
     Behavior on color { ColorAnimation {} }
 
 
-    property bool hintShown: false
-    TapInteractionHint{ id: hint; running: false; loops: 3; taps: 1; anchors.centerIn: varrow }
-    InteractionHintLabel{ visible: hint.running; text: "Switch Gold, Meals, ..."
-        anchors.left: parent.left
-        anchors.right: parent.horizontalCenter
-        anchors.bottom: hint.bottom
-        //backgroundColor: "transparent"
-        textColor: mainView.nightModeEnabled ? Theme.highlightColor : Theme.darkPrimaryColor
-        invert: true
-    }
-    Timer {
-        running: uisettings.showHints
-            && parent.visible
-            && !hintShown
-            && mainView.gold > 0
-        interval: 10000
-        onTriggered: {
-            if (!hintShown) { hint.start(); hintShown = true }
-        }
-    }
     Row { id: varrow
         anchors.left: parent.left
         anchors.leftMargin: Theme.paddingLarge
@@ -112,7 +92,6 @@ Rectangle {
             }
         }
     }
-
     Row { id: endurancerow
         anchors.right: parent.right
         anchors.rightMargin: Theme.paddingLarge
