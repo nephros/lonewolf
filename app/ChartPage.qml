@@ -126,10 +126,12 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_endurance -=1 : you.endurance -=1
+                        enabled: d.neworder ? (you.neworder_endurance > 0) : (you.endurance > 0)
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-add"
+                        enabled: (you.endurance < you.maxendurance)
                         onClicked: d.neworder ? you.neworder_endurance +=1 : you.endurance +=1
                     }
                 }
@@ -183,11 +185,13 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_gold -=1 : you.gold -=1
+                        enabled: d.neworder ? (you.neworder_gold > 0) : (you.gold > 0)
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-add"
                         onClicked: d.neworder ? you.neworder_gold +=1 : you.gold +=1
+                        enabled: d.neworder ? (you.neworder_gold < 50) : (you.gold < 50)
                     }
                 }
                 Label {
@@ -219,6 +223,7 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_quiver -=1 : you.quiver -=1
+                        enabled: d.neworder ? (you.neworder_quiver > 0) : (you.quiver >0)
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
@@ -254,6 +259,7 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_meals -=1 : you.meals -=1
+                        enabled: d.neworder ? (you.neworder_meals > 0) : (you.meals > 0)
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
