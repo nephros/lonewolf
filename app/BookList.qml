@@ -12,7 +12,7 @@ Column { id: root
     spacing: Theme.paddingSmall
     width: parent.width
 
-    /*
+	/*
     Item {
         width: parent.width
         height: title.height //Math.max(title.height, buyButton.height)
@@ -37,18 +37,7 @@ Column { id: root
             anchors.top: parent.top
         }
     }
-    */
-    Label {
-        id: title
-        text: root.title
-        font.pixelSize: Theme.fontSizeLarge
-        font.bold: true
-        color: Theme.highlightColor
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right //buyButton.left
-        verticalAlignment: Text.AlignBottom
-    }
+	*/
     Label {
         text: root.description
         width: parent.width
