@@ -18,29 +18,13 @@ Item {
         spacing: Theme.paddingSmall
         width: parent.width
 
-        Item {
+        Label {
+            id: title
             width: parent.width
-            height: title.height //Math.max(title.height, buyButton.height)
-            Label {
-                id: title
-                text: root.title
-                font.pixelSize: Theme.fontSizeLarge
-                font.bold: true
-                color: Theme.highlightColor
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right //buyButton.left
-                verticalAlignment: Text.AlignBottom
-            }
-            /*Button {
-                id: buyButton
-                visible: root.product && !root.product.bought
-                enabled: !root.buying
-                text: "$2.99"
-                color: theme.palette.normal.positive
-                anchors.right: parent.right
-                anchors.top: parent.top
-            }*/
+            text: root.title
+            font.pixelSize: Theme.fontSizeLarge
+            font.bold: true
+            color: Theme.highlightColor
         }
         Label {
             text: root.description
@@ -48,25 +32,16 @@ Item {
             wrapMode: Text.Wrap
             color: Theme.secondaryHighlightColor
         }
-        Grid {
+        Column {
             id: buttonFlow
-            columns: 7
-            horizontalItemAlignment: Grid.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width - marginWidth * 2
-            spacing: Theme.paddingLarge
-            property real buttonWidth: Theme.buttonWidthTiny
-            property real marginWidth: (parent.width - buttonWidth) % (buttonWidth + spacing) / 2
+            width: parent.width
             Repeater {
                 model: root.model
-                delegate: Button {
-                    icon.source: (root.product && !root.product.bought) ? "locked" : ""
-                    text: (root.product && !root.product.bought) ? "" : index + 1
+                delegate: ValueButton {
+                    label: "Book " + Number(index+1)
+                    value: title
                     onClicked: root.startBook(book)
-                    width: buttonFlow.buttonWidth
-                    height: width
-                    //color: "#203432"
-                    //enabled: !root.product || root.product.bought
                 }
             }
         }
