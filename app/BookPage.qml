@@ -152,7 +152,7 @@ WebViewPage {
                 opacity: parent.enabled ? 1.0 : Theme.opacityFaint
                 Behavior on opacity { FadeAnimator { } }
             }
-            enabled: !book.inGame && (mainView.endurance > 0)
+            enabled: book.inGame && (mainView.endurance > 0)
             onClicked: root.showMap()
         }
         /*
