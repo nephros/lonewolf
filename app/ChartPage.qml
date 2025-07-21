@@ -689,7 +689,7 @@ Page {
                     const r = keys.reduce(function(acc, val, idx) {
                           if (you[val]) { acc +=1 }
                           return acc
-                    }, 5) // start at "Initiate"
+                    }, 0)
                     return r
                 }
             }
@@ -826,7 +826,7 @@ Page {
                         const r = keys.reduce(function(acc, val, idx) {
                               if (you[val]) { acc +=1 }
                               return acc
-                        }, 3) // start at "Kai Master Superior"
+                        }, 0)
                         return r
                     }
                 }
