@@ -69,9 +69,10 @@ downloadOneXmlFile(const QString &filename)
     // /tmp does not seem to work under SailJail, so use the cache dir
     QTemporaryDir tempDir(tmpTpl);
     tempDir.setAutoRemove(false);
+    if (!tempDir.isValid())
+        qDebug() << Q_FUNC_INFO << "tmpdir error:" << tmpDir.errorString();
 
-    qDebug() << Q_FUNC_INFO << "tmp dir" << tempDir.path();
-    Downloader downloader;
+    ownloader downloader;
     downloader.setCacheDir(tempDir.path());
     downloader.addFile(fullURL);
 
