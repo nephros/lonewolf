@@ -935,7 +935,7 @@ Page {
                 visible: d.magnakai
             }
             SectionHeader {
-                text: "Weaponmastery Checklist"
+                text: "Weaponmastery Proficiencies"
                 color: Theme.highlightColor
                 visible: d.magnakai
             }
@@ -1431,9 +1431,9 @@ Page {
                 width: 1
                 height: 1
             }
-            Label {
+            SectionHeader {
                 text: "Notes"
-                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeLarge
             }
             TextArea {
                 id: notes
