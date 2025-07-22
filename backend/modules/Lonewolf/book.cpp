@@ -109,16 +109,19 @@ void Book::downloadBook()
     if (isBookDownloaded())
         return;
 
-
     QDir().mkpath(cacheDir());
 
     if (!m_filename.isEmpty()) {
         QString filePath = downloadOneXmlFile(m_filename + ".xml");
         qDebug() << Q_FUNC_INFO << "file path" << filePath;
+        qDebug() << Q_FUNC_INFO << "loading";
         xmlSetExternalEntityLoader(loadEntity);
+        qDebug() << Q_FUNC_INFO << "parsing";
         m_dom = xmlReadFile(filePath.toUtf8(), NULL, XML_PARSE_NOENT);
-        if (m_dom == NULL)
+        if (m_dom == NULL) {
+            qDebug() << Q_FUNC_INFO << "DOM is empty!";
             return;
+        }
     }
 }
 
