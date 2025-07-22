@@ -64,7 +64,8 @@ downloadOneXmlFile(const QString &filename)
 {
     QString fullURL = "https://www.projectaon.org/data/trunk/en/xml/" + filename;
 
-    QTemporaryDir tempDir;
+    // /tmp does not seem to work under SailJail, so use the cache dir
+    QTemporaryDir tempDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/tmp/dl-");
     tempDir.setAutoRemove(false);
 
     Downloader downloader;
@@ -108,10 +109,12 @@ void Book::downloadBook()
     if (isBookDownloaded())
         return;
 
+
     QDir().mkpath(cacheDir());
 
     if (!m_filename.isEmpty()) {
         QString filePath = downloadOneXmlFile(m_filename + ".xml");
+        qDebug() << Q_FUNC_INFO << "file path" << filePath;
         xmlSetExternalEntityLoader(loadEntity);
         m_dom = xmlReadFile(filePath.toUtf8(), NULL, XML_PARSE_NOENT);
         if (m_dom == NULL)
