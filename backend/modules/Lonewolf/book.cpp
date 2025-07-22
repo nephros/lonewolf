@@ -68,6 +68,7 @@ downloadOneXmlFile(const QString &filename)
     QTemporaryDir tempDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/tmp/dl-");
     tempDir.setAutoRemove(false);
 
+    qDebug() << Q_FUNC_INFO << "tmp dir path" << tempDir.path();
     Downloader downloader;
     downloader.setCacheDir(tempDir.path());
     downloader.addFile(fullURL);
@@ -75,6 +76,7 @@ downloadOneXmlFile(const QString &filename)
     QEventLoop loop;
     QObject::connect(&downloader, &Downloader::progressChanged, [&loop, &downloader]() {
         if (downloader.progress() == 100) {
+            qDebug() << Q_FUNC_INFO << "DL done.";
             loop.quit();
         }
     });
