@@ -56,7 +56,8 @@ WebViewPage {
 
     Component.onCompleted: {
         if (book.progress < 100) {
-            book.downloadBook();
+            //book.downloadBook();
+            dlTimer.start()
             pageView.pageId = "license";
             book.inBackMatter = false;
             downloadCover.visible = false;
@@ -68,6 +69,13 @@ WebViewPage {
         //})
         makeImgViewer()
     }
+        Timer { id: dlTimer
+            interval: 400
+            onTriggered: {
+              console.debug("Starting download")
+              book.downloadBook();
+            }
+        }
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
     SilicaFlickable { id: flickable
