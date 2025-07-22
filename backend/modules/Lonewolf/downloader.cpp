@@ -68,6 +68,7 @@ void Downloader::fileFinished()
         FileData &data = m_replies[i];
         if (data.reply == sender()) {
             QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
+            qDebug() << Q_FUNC_INFO << "writing" << data.total << "bytes to" << localFile.fileName();
             if (localFile.open(QIODevice::WriteOnly)) {
                 localFile.write(data.reply->readAll());
                 localFile.close();
