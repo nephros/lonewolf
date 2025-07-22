@@ -67,12 +67,15 @@ void Downloader::fileFinished()
     for (int i = 0; i < m_replies.length(); i++) {
         FileData &data = m_replies[i];
         if (data.reply == sender()) {
-            qDebug() << Q_FUNC_INFO << "error" << data.reply->errorString();
-            QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
-            qDebug() << Q_FUNC_INFO << "writing" << data.total << "bytes to" << localFile.fileName();
-            if (localFile.open(QIODevice::WriteOnly)) {
-                localFile.write(data.reply->readAll());
-                localFile.close();
+            if (data.reply->error() == QNetworkReply::NoError) {
+                QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
+                qDebug() << Q_FUNC_INFO << "Writing" << data.total << "bytes to" << localFile.fileName();
+                if (localFile.open(QIODevice::WriteOnly)) {
+                    localFile.write(data.reply->readAll());
+                    localFile.close();
+                }
+            } else {
+                qDebug() << Q_FUNC_INFO << "Download error:" << data.reply->errorString();
             }
 
             data.reply->deleteLater();
