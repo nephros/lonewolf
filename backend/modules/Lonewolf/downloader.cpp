@@ -67,6 +67,7 @@ void Downloader::fileFinished()
     for (int i = 0; i < m_replies.length(); i++) {
         FileData &data = m_replies[i];
         if (data.reply == sender()) {
+            qDebug() << Q_FUNC_INFO << "error" << data.reply->errorString();
             QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
             if (localFile.open(QIODevice::WriteOnly)) {
                 localFile.write(data.reply->readAll());
