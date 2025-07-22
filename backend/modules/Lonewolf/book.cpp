@@ -64,11 +64,12 @@ downloadOneXmlFile(const QString &filename)
 {
     QString fullURL = "https://www.projectaon.org/data/trunk/en/xml/" + filename;
 
+    qDebug() << Q_FUNC_INFO << "tmp dir template" << QStandardPaths::writableLocation(QStandardPaths::CacheLocation) << "/tmp/dl-XXXXXX";
     // /tmp does not seem to work under SailJail, so use the cache dir
-    QTemporaryDir tempDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/tmp/");
+    QTemporaryDir tempDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/tmp/dl-XXXXXX");
     tempDir.setAutoRemove(false);
 
-    qDebug() << Q_FUNC_INFO << "tmp dir path" << tempDir.path();
+    qDebug() << Q_FUNC_INFO << "tmp dir" << tempDir.path();
     Downloader downloader;
     downloader.setCacheDir(tempDir.path());
     downloader.addFile(fullURL);
