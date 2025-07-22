@@ -81,6 +81,8 @@ downloadOneXmlFile(const QString &filename)
         if (downloader.progress() == 100) {
             qDebug() << Q_FUNC_INFO << "DL done.";
             loop.quit();
+        } else {
+            qDebug() << Q_FUNC_INFO << "DL" << downloader.progress();
         }
     });
     loop.exec();
