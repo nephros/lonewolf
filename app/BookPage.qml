@@ -450,7 +450,7 @@ WebViewPage {
                 anchors.centerIn: parent
                 IconButton {
                     icon.source: "image://theme/icon-splus-remove"
-                    onClicked: WebEngineSettings.pixelRatio-=0.5
+                    onClicked: WebEngineSettings.pixelRatio-=0.2
                 }
                 IconButton {
                     icon.source: "image://theme/icon-m-font-size?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
@@ -458,7 +458,7 @@ WebViewPage {
                 }
                 IconButton {
                     icon.source: "image://theme/icon-splus-add"
-                    onClicked: WebEngineSettings.pixelRatio+=0.5
+                    onClicked: WebEngineSettings.pixelRatio+=0.2
                 }
             }
 
