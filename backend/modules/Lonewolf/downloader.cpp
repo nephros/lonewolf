@@ -40,6 +40,7 @@ void Downloader::setDone()
 
 void Downloader::addFile(const QUrl &url)
 {
+    qDebug() << Q_FUNC_INFO << "Downloading" << url.toString();
     Downloader::FileData data;
     data.reply = m_manager.get(QNetworkRequest(url));
     data.received = 0;
