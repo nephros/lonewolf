@@ -72,7 +72,7 @@ downloadOneXmlFile(const QString &filename)
     if (!tempDir.isValid())
         qDebug() << Q_FUNC_INFO << "tmpdir error:" << tmpDir.errorString();
 
-    ownloader downloader;
+    Downloader downloader;
     downloader.setCacheDir(tempDir.path());
     downloader.addFile(fullURL);
 
