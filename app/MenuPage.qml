@@ -277,6 +277,7 @@ Page {
             showIndex: false
             width: parent.width
             anchors.centerIn: parent
+            smooth: true
         }
         Item { id: placer
             anchors.top: bc.bottom
@@ -288,6 +289,7 @@ Page {
             anchors.horizontalCenter: bc.horizontalCenter
             text: "Play “%1”".arg(startItem.title)
             onClicked:  { startItem.visible = false; root.startBook(startItem.book, "") }
+            color: Theme.highlightFromColor(root.getBookInfo(startItem.book).coverColor, Theme.colorScheme )
         }
     }
 }
