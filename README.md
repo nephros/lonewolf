@@ -23,9 +23,11 @@ You are the sole survivor of a devastating attack on the monastery where you wer
 
 See the issues section for planned and implemented features, and currently-known bugs.
 
+### Font Configuration Example
+
 Example fontconfig file for setting up a font for the game:
 
-This should be installed as e.g. `~/config/fontconfig/lone-wolf.conf`, and font files be placed in `~/.local/share/fonts`.
+This should be installed as e.g. `~/.config/fontconfig/lone-wolf.conf`, and font files be placed in `~/.local/share/fonts`.
 ```
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
