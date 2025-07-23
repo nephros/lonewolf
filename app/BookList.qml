@@ -12,6 +12,7 @@ Item {
     signal startBook(string book, string title)
 
     height: column.height
+    anchors.bottomMargin: Theme.paddingMedium
 
     Column {
         id: column
@@ -32,40 +33,24 @@ Item {
             wrapMode: Text.Wrap
             color: Theme.secondaryHighlightColor
         }
-        Grid {
-            id: buttonFlow
+        SlideshowView { id: slides
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
-            columns: 2
-            Repeater {
-                model: root.model
-                delegate: GridItem {
-                    width: buttonFlow.width/2
-                    contentHeight: cover.height
-                    //contentHeight: cover.height + label.height + Theme.paddingMedium
-                    BookCover { id: cover
-                        width: parent.width
-                        anchors.left: parent.left
-                        book: model.book
-                    }
-                    /*
-                    Label { id: label
-                        anchors.horizontalCenter: cover.horizontalCenter
-                        anchors.top: cover.bottom
-                        anchors.topMargin: Theme.paddingMedium
-                        text: "%1: %2".arg(index+1).arg(title)
-                        wrapMode: Text.WordWrap
-                    }
-                    */
-                    onClicked: root.startBook(book, title)
+            width: parent.width // - Theme.horizontalPageMargin
+            height: itemWidth/600*800
+            //clip: true
+            itemWidth: Math.floor(width / 2.5)
+            Component.onCompleted: positionViewAtIndex(0, PathView.Beginning)
+            model: root.model
+            delegate: GridItem {
+                anchors.leftMargin: Theme.paddingSmall
+                anchors.rightMargin: Theme.paddingSmall
+                width: slides.itemWidth
+                contentHeight: cover.height
+                BookCover { id: cover
+                    width: parent.width
+                    book: model.book
                 }
-                /*
-                delegate: ValueButton {
-                    label: "Book " + Number(index+1)
-                    value: title
-                    onClicked: root.startBook(book)
-                }
-                */
+                onClicked: root.startBook(book, title)
             }
         }
     }
