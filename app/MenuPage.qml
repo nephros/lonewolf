@@ -200,6 +200,7 @@ Page {
                 ListElement { book: "26tfobm"; coverColor: "goldenrod"        ; title: "The Fall of Blood Mountain" }
                 ListElement { book: "27v"    ; coverColor: "indigo"           ; title: "Vampirium" }
                 ListElement { book: "28thos" ; coverColor: "yellowgreen"      ; title: "The Hunger of Sejanoz" }
+                ListElement { book: "29tsoc" ; coverColor: "cadetblue"        ; title: "The Storms of Chai" }
             }
 
             SectionHeader { text: "Available Books" }
