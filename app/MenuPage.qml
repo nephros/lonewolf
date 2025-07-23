@@ -36,7 +36,7 @@ Page {
         }
         for (var i=0; i<neworderModel.count; ++i) {
             const b = neworderModel.get(i)
-            if (b.book == gameState.book) { return b }
+            if (b.book == bid) { return b }
         }
         return { "title": "Lone Wolf", "coverColor": "transparent" }
     }
