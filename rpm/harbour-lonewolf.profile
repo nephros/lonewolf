@@ -10,7 +10,8 @@
 # x-sailjail-permission = Audio
 # x-sailjail-permission = WebView
 
-include /etc/sailjail/permissions/Base.permission
+#do not include base, it breaks DNS?!
+#include /etc/sailjail/permissions/Base.permission
 include /etc/sailjail/permissions/Internet.permission
 include /etc/sailjail/permissions/Audio.permission
 include /etc/sailjail/permissions/WebView.permission
