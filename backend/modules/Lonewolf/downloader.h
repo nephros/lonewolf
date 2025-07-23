@@ -47,7 +47,7 @@ protected:
     QString m_cacheDir;
     int m_progress;
     QVector<FileData> m_replies;
-    QNetworkAccessManager m_manager;
+    QNetworkAccessManager *m_manager;
 };
 
 #endif // DOWNLOADER_H

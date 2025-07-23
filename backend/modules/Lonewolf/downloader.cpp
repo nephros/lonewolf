@@ -7,6 +7,7 @@ Downloader::Downloader(QObject *parent) :
     QObject(parent),
     m_progress(0)
 {
+    m_manager = new QNetworkAccessManager(this);
 }
 
 Downloader::~Downloader()
@@ -41,7 +42,7 @@ void Downloader::setDone()
 void Downloader::addFile(const QUrl &url)
 {
     Downloader::FileData data;
-    data.reply = m_manager.get(QNetworkRequest(url));
+    data.reply = m_manager->get(QNetworkRequest(url));
     data.received = 0;
     data.total = 0;
     m_replies.append(data);
