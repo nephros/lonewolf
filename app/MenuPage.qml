@@ -5,12 +5,16 @@ import Lonewolf 1.0
 Page {
     id: root
 
-
     function startBook(book, pageId) {
         gameState.book = book;
         gameState.pageId = pageId;
         if (pageId == "") uisettings.showHints = true
         goToBookTab();
+    }
+    function startBookQuestion(book, title) {
+        startItem.book = book;
+        startItem.title = title;
+        startItem.visible = true
     }
     function restart() {
         const book = gameState.book
@@ -81,7 +85,13 @@ Page {
                 width: parent.width
             }
 
-            SectionHeader { text: "Adventure  Progress" }
+            SectionHeader { text: "Adventure Progress" }
+            BookCover {
+                visible: gamestateLabel.visible
+                book: gameState.book
+                width: parent.width/2
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
             Label { id: gamestateLabel
                 visible: gameState.book != "" && gameState.pageId != ""
 
@@ -208,14 +218,14 @@ Page {
                 model: kaiModel
                 title: "Kai Series"
                 description: "Save your country from a looming threat.\nStart here if you've never played before."
-                onStartBook: root.startBook(book, "")
+                onStartBook: root.startBookQuestion(book, title)
                 width: parent.width
             }
             BookList {
                 model: magnakaiModel
                 title: "Magnakai Series"
                 description: "Save the realm from the Darklords by collecting the Lorestones of Varetta."
-                onStartBook: root.startBook(book, "")
+                onStartBook: root.startBookQuestion(book, title)
                 width: parent.width
                 //product: magnakaiProduct
             }
@@ -223,7 +233,7 @@ Page {
                 model: grandmasterModel
                 title: "Grandmaster Series"
                 description: "Save the world from the Dark God Naar and his minions."
-                onStartBook: root.startBook(book, "")
+                onStartBook: root.startBookQuestion(book, title)
                 width: parent.width
                 //product: grandmasterProduct
             }
@@ -231,10 +241,50 @@ Page {
                 model: neworderModel
                 title: "New Order Series"
                 description: "Continue thwarting the forces of evil as one of Lone Wolf's disciples."
-                onStartBook: root.startBook(book, "")
+                onStartBook: root.startBookQuestion(book, title)
                 width: parent.width
                 //product: neworderProduct
             }
+        }
+    }
+    BackgroundItem { id: startItem
+        property string book
+        property string title
+        clip: true
+        visible: false
+        anchors.fill: parent
+        anchors.centerIn: parent
+        onClicked:  { visible = false }
+        Rectangle {
+            color: Theme.overlayBackgroundColor
+            opacity: Theme.opacityOverlay
+            anchors.fill: parent
+            anchors.centerIn: parent
+        }
+        /*
+        Label {
+            width: parent.width
+            anchors.bottom: bc.top
+            text: startItem.title
+            horizontalAlignment: Qt.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
+        */
+        BookCover { id: bc
+            book: startItem.book
+            width: parent.width
+            anchors.centerIn: parent
+        }
+        Item { id: placer
+            anchors.top: bc.bottom
+            anchors.bottom: parent.bottom
+        }
+        Button {
+            //anchors.top: bc.bottom
+            anchors.verticalCenter: placer.verticalCenter
+            anchors.horizontalCenter: bc.horizontalCenter
+            text: "Play “%1”".arg(startItem.title)
+            onClicked:  { startItem.visible = false; root.startBook(startItem.book, "") }
         }
     }
 }
