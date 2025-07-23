@@ -50,6 +50,15 @@ Item {
                     width: parent.width
                     book: model.book
                 }
+                Label {
+                    //anchors.fill: cover
+                    width: cover.width
+                    anchors.centerIn: cover
+                    visible: (cover.status == Image.Error)
+                    text: title
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                }
                 onClicked: root.startBook(book, title)
             }
         }
