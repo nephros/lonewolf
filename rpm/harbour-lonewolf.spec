@@ -227,6 +227,6 @@ echo '=========== NOT checking for Harbour compatability.'
 
 %files tts-plugin
 %{_datadir}/%{name}/qml/TTS.qml
-%{_sysconfdir}/sailjail/permissions/%{name}.profile
+%config %{_sysconfdir}/sailjail/permissions/%{name}.profile
 # >> files tts-plugin
 # << files tts-plugin

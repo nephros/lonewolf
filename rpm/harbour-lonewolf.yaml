@@ -143,6 +143,6 @@ SubPackages:
       BuildArch: noarch
       Files:
         - '%{_datadir}/%{name}/qml/TTS.qml'
-        - '%{_sysconfdir}/sailjail/permissions/%{name}.profile'
+        - '%config %{_sysconfdir}/sailjail/permissions/%{name}.profile'
 
 
