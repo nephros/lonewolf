@@ -88,6 +88,7 @@ Page {
             SectionHeader { text: "Adventure Progress" }
             BookCover {
                 visible: gamestateLabel.visible
+                showIndex: false
                 book: gameState.book
                 width: parent.width/2
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -272,6 +273,7 @@ Page {
         */
         BookCover { id: bc
             book: startItem.book
+            showIndex: false
             width: parent.width
             anchors.centerIn: parent
         }

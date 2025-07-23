@@ -8,7 +8,11 @@ import Sailfish.Silica 1.0
 
 Image { id: root
     property string book
+    property bool showIndex: true
+    // Can not distribute local images, see Project AON license, and Issue #19
+    //onBookChanged: if (book) { source = Qt.resolvedUrl("./covers/" + book + ".jpg") }
     onBookChanged: if (book) { source = "https://www.projectaon.org/data/trunk/en/jpeg/lw/" + book + "/skins/ebook/cover.jpg" }
+
     height: width/600*800
     sourceSize.width:600
     sourceSize.height:800
@@ -18,7 +22,30 @@ Image { id: root
     BusyIndicator {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
-        running: parent.book && (parent.status != Image.Ready)
+        running: parent.book && ((parent.status != Image.Ready) && (parent.status != Image.Error))
+    }
+    Rectangle {
+        visible: root.showIndex
+        height: parent.height*1/5
+        width: height
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: Theme.paddingSmall
+        radius: height/4
+        color: Theme.lightPrimaryColor
+        opacity: 0.75
+        border.width: 2
+        border.color: Theme.darkPrimaryColor
+
+        Label {
+            anchors.centerIn: parent
+            text: root.showIndex ? index+1 : ""
+            color: Theme.darkPrimaryColor
+            opacity: 1.0
+            font.pixelSize: parent.height*2/3
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+        }
     }
 }
 
