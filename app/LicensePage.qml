@@ -1,7 +1,7 @@
 /*
- * This file is part of FIXME
+ * This file is part of Lonewolf
  * SPDX-FileCopyrightText: Copyright (c) 2025 Peter G. (nephros)
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: GPLv3
  */
 import QtQuick 2.6
 import Sailfish.Silica 1.0
