@@ -13,8 +13,8 @@ case $1 in
 	;;
 	puzzle)
 		# Puzzle
-		dconf write /apps/games/lonewolf/current/book "'10tdot'"
-		dconf write /apps/games/lonewolf/current/pageId "'sect160'"
+		dconf write /apps/games/lonewolf/current/book "'09tcof'"
+		dconf write /apps/games/lonewolf/current/pageId "'sect204'"
 	;;
 	dead)
 		# Dead/dead end:
@@ -23,8 +23,12 @@ case $1 in
 		dconf write /apps/games/lonewolf/current/pageId "'sect41'"
 		echo "use the option leading to sect 10!"
 	;;
+	CLEARALL)
+		rm -r ~/.cache/QtProject/QtQmlViewer/*
+		dconf reset -f  /apps/games/lonewolf/
+	;;
 	*)
-		printf 'USAGE: %s [finished|combat|puzzle|dead]\n\n'
+		printf 'USAGE: %s [finished|combat|puzzle|dead|CLEARALL]\n\n'
 		exit 1
 	;;
 esac
