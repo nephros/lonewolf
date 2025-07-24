@@ -100,43 +100,43 @@ Page {
             }
 
             SectionHeader { text: "Adventure Progress" }
-            BookCover {
-                visible: gamestateLabel.visible
-                showIndex: false
-                book: gameState.book
-                width: parent.width/2
-                anchors.horizontalCenter: parent.horizontalCenter
-                // if we have a game state, we have accepted the license
-                mayDisplay: uisettings.licenseAccepted || (gameState.book != "" && gameState.pageId != "license")
-            }
-            Label { id: gamestateLabel
+            BackgroundItem { id: startBookItem
                 visible: gameState.book != "" && gameState.pageId != ""
-
-                anchors.margins: Theme.paddingMedium
-                property string bookTitle: ""
-                property string bookPage: ""
-                text: "“%1”".arg(bookTitle)
-                    + (/^sect/.test(gameState.pageId) ? " page %2".arg(bookPage) : "")
-                color: Theme.secondaryColor
-                horizontalAlignment: Qt.AlignHCenter
-                wrapMode: Text.Wrap
                 width: parent.width
-                onVisibleChanged: {
-                  var b = getBookInfo(gameState.book)
-                  bookTitle = b.title
-                  bookPage  = gameState.pageId.replace(/\D/g,'');
+                height: stateCover.height + stateLabel.height
+                onClicked: goToBookTab()
+                BookCover { id: stateCover
+                    showIndex: false
+                    book: gameState.book
+                    width: parent.width/2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    // if we have a game state, we have accepted the license
+                    mayDisplay: uisettings.licenseAccepted || (gameState.book != "" && gameState.pageId != "license")
+                }
+                Label { id: stateLabel
+                    anchors.top: stateCover.bottom
+                    anchors.horizontalCenter: stateCover.horizontalCenter
+                    anchors.margins: Theme.paddingMedium
+                    property string bookPage: ""
+                    text: gameState.book == "" && gameState.pageId == ""
+                         ? "Start Book 1"
+                         : "Continue" + (/^sect/.test(gameState.pageId) ? " on page %2".arg(bookPage) : "")
+                    color: Theme.secondaryColor
+                    horizontalAlignment: Qt.AlignHCenter
+                    wrapMode: Text.Wrap
+                    //width: parent.width
+                    width: stateCover.width
+                    onVisibleChanged: {
+                      bookPage  = gameState.pageId.replace(/\D/g,'');
+                    }
                 }
             }
-            ButtonLayout {
-                Button {
-                    text: gameState.book == "" && gameState.pageId == "" ? "Start Book 1" : "Continue"
-                    onClicked: goToBookTab()
-                }
-                SecondaryButton {
-                    text: "Load Quick Save"
-                    enabled: quickSaveState.pageId != ""
-                    onClicked: loadQuickSave()
-                }
+            Item { height: Theme.itemSizeMedium; width: 1 }
+            SecondaryButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Load Quick Save"
+                enabled: quickSaveState.pageId != ""
+                onClicked: loadQuickSave()
             }
             Label { id: quicksaveLabel
                 visible: quickSaveState.pageId != ""
