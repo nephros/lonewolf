@@ -12,7 +12,7 @@ Image { id: root
     property bool mayDisplay: uisettings.licenseAccepted
     // Can not distribute local images, see Project AON license, and Issue #19
     //onBookChanged: if (book) { source = Qt.resolvedUrl("./covers/" + book + ".jpg") }
-    source: (mayDisplay && book)
+    source: (mayDisplay && book && (book != "29tsoc")) // 29 has no image
             ? "https://www.projectaon.org/data/trunk/en/jpeg/lw/" + book + "/skins/ebook/cover.jpg"
             : ""
 
