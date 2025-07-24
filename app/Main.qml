@@ -21,6 +21,7 @@ ApplicationWindow {
         id: uisettings
         scope: settings
         path: "ui"
+        property bool licenseAccepted: false
         property int font: 2
         property bool showHints: false
         //property bool saveOnQuit: false
@@ -62,7 +63,7 @@ ApplicationWindow {
     }
     property bool _willquitHandled: false
 
-    initialPage: menuPage
+    initialPage: uisettings.licenseAccepted ? menuPage : licensePage
     cover: coverPage
 
     function goToBookTab() {
@@ -90,6 +91,10 @@ ApplicationWindow {
     BookPage {
         id: bookComponent
         you: gameState
+    }
+
+    LicensePage {
+        id: licensePage
     }
 
     property alias tts: ttsplugin.item
