@@ -366,7 +366,7 @@ WebViewPage {
                 console.debug("Switching Book", you.book)
                 // "book,lw,09foo"
                 haptics.play();
-                you.copyTo(lastBook); } )
+                you.copyTo(lastBook);
                 you.book = text.split(',')[2];
                 pageView.pageId = "";
                 popBookTab();
