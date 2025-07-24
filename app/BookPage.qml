@@ -196,7 +196,7 @@ WebViewPage {
 
         bgColor:   mainView.nightModeEnabled ? "black" : "bisque"
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
-        linkColor:  Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.DarkOnLight: Theme.lightOnDark))
+        linkColor: Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.LightOnDark : Theme.DarkOnLight ))
 
         //onDirChanged: console.debug("Book dir:", dir)
         //onCacheDirChanged: console.debug("Cache dir:", cacheDir)
