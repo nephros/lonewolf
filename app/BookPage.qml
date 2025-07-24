@@ -176,8 +176,7 @@ WebViewPage {
     Book {
         id: book
         dir: Qt.resolvedUrl(".")
-        //filename: you.book ? you.book : "01fftd"
-        filename: you.book
+        filename: you.book ? you.book : "01fftd"
         pageId: pageView.pageId
 
         //property var images: []
