@@ -12,6 +12,7 @@ Page { id: root
     Label { id: licenselabel
         text: "<p>This app uses content covered by the<br /><a href='https://www.projectaon.org/en/Main/License'>Project AON License</a>.</p>" +
               "<p>You have to accept and abide by the license terms in order to download or use any of the material covered by the license.</p>"
+        color: Theme.secondaryHighlightColor
         linkColor: Theme.highlightColor
         onLinkActivated: Qt.openUrlExternally(link)
         wrapMode: Text.Wrap
@@ -35,6 +36,7 @@ Page { id: root
         Label { id: licLabel
             width: parent.width
             text: licenseHtml
+            color: Theme.secondaryColor
             linkColor: Theme.highlightColor
             onLinkActivated: Qt.openUrlExternally(link)
             wrapMode: Text.Wrap
