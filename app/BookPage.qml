@@ -11,7 +11,6 @@ WebViewPage {
 
     property var you
     property bool canDoBackAction: false
-    property bool firstView: true
     //readonly property product: bookProduct()
 
     Behavior on backgroundColor { ColorAnimation {} }
@@ -24,19 +23,6 @@ WebViewPage {
     onStatusChanged: {
         if ((root.status == PageStatus.Active) && (pageStack.nextPage() == null)) {
             var cp = pageStack.pushAttached(chartPage)
-        }
-        /* TTS: on first load, play something so the daemon/service is ready */
-        if ((root.status == PageStatus.Activating) && firstView) {
-            firstView = false
-            /*
-            if (mainView.ttsAvailable) {
-                if (uisettings.autoTts) {
-                    mainView.ttsPlay(mainView.bookTitle)
-                } else {
-                    mainView.ttsPlay("---")
-                }
-            }
-            */
         }
     }
     signal showChartPage
