@@ -89,7 +89,7 @@ WebViewPage {
                 id: quickSave
                 //icon.source: "save"
                 text: "Quick Save"
-                enabled: !book.inBackMatter && mainView.endurance > 0
+                enabled: book.inGame && (mainView.endurance > 0)
                 onClicked: {
                     if (quickSaveState.pageId == "") {
                         var dlg = pageStack.push(saveDialog);
