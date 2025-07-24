@@ -53,8 +53,10 @@ Item {
                 Label {
                     //anchors.fill: cover
                     width: cover.width
-                    anchors.centerIn: cover
-                    visible: (cover.status == Image.Error)
+                    anchors.left: cover.left
+                    anchors.right: cover.right
+                    y: cover.height / (1+Math.sqrt(5)/2) // Golden Mean
+                    visible: (cover.status == Image.Error) || (cover.status == Image.Null)
                     text: title
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap

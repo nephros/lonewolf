@@ -85,6 +85,17 @@ Page {
                 width: parent.width
             }
 
+            Label { id: licenselabel
+                text: "<p>You have accepted the<br /><a href='https://www.projectaon.org/en/Main/License'>Project AON License</a>.</p>"
+                color: Theme.secondaryColor
+                linkColor: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+                onLinkActivated: Qt.openUrlExternally(link)
+                wrapMode: Text.Wrap
+                width: parent.width
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
             SectionHeader { text: "Adventure Progress" }
             BookCover {
                 visible: gamestateLabel.visible
@@ -92,6 +103,8 @@ Page {
                 book: gameState.book
                 width: parent.width/2
                 anchors.horizontalCenter: parent.horizontalCenter
+                // if we have a game state, we have accepted the license
+                mayDisplay: uisettings.licenseAccepted || (gameState.book != "" && gameState.pageId != "license")
             }
             Label { id: gamestateLabel
                 visible: gameState.book != "" && gameState.pageId != ""
