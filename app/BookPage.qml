@@ -194,8 +194,6 @@ WebViewPage {
 
         onPageContentChanged: {
             //console.debug("Loading:", pageId, pageType)
-            if (pageId == "" && pageView.pageId != "")
-                return; // on startup we get this fake-out...
             var content = pageContent;
             // FIXME: What to do if dead?
             if (pageId != "title" && (pageType == "backmatter" || pageType == "deadend")) {
