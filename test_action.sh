@@ -19,7 +19,9 @@ case $1 in
 	dead)
 		# Dead/dead end:
 		dconf write /apps/games/lonewolf/current/book "'10tdot'"
-		dconf write /apps/games/lonewolf/current/pageId "'sect10'"
+		#dconf write /apps/games/lonewolf/current/pageId "'sect10'"
+		dconf write /apps/games/lonewolf/current/pageId "'sect41'"
+		echo "use the option leading to sect 10!"
 	;;
 	*)
 		printf 'USAGE: %s [finished|combat|puzzle|dead]\n\n'
