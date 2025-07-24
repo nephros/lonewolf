@@ -516,7 +516,13 @@ WebViewPage {
                     cancelDownloadButton.visible = true; // can't actually cancel before this (we download xml synchronously)
                     progressBar.indeterminate = false;
                     downloadCover.visible = true;
-                    pageView.pageId = "";
+                    // We have a game state, but the book was not downloaded.
+                    // --> restore the page
+                    if ((you.book == book.filename) && (you.pageId != "")) {
+                        pageView.pageId = you.pageId
+                    } else {
+                        pageView.pageId = "";
+                    }
                     book.downloadImages();
                 }
             }
