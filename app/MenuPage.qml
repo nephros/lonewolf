@@ -336,9 +336,6 @@ Page {
         visible: false
         anchors.fill: parent
         anchors.centerIn: parent
-        anchors.topMargin: (Screen.hasCutouts && Screen.topCutout > 0)
-                    ? Screen.topCutout.height
-                    : 0
 
         onClicked:  { visible = false }
         Rectangle {
@@ -358,7 +355,9 @@ Page {
             anchors.left:  parent.left
             anchors.right: parent.right
             anchors.top:   parent.top
-            anchors.topMargin:   parent.topMargin
+            anchors.topMargin: (Screen.hasCutouts && (Screen.topCutout.height > 0) && isPortrait)
+                        ? Screen.topCutout.height
+                        : 0
             anchors.bottom: bc.top
             anchors.bottomMargin: Theme.paddingSmall
             text: startItem.blurb
