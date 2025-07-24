@@ -224,6 +224,8 @@ Item {
                     TextSwitch { id: youDoubleDamage
                         text: "weak (×2 damage)"
                         description: "(only enable if instructed)"
+                        leftMargin: 0
+                        rightMargin: 0
                     }
                 }
                 Column { id: themcol
@@ -234,6 +236,8 @@ Item {
                         text: d.enemy
                         //color: Theme.primaryColor
                         font.pixelSize: Theme.fontSizeLarge
+                        minimumPixelSize: Theme.fontSizeTiny
+                        fontSizeMode: Text.HorizontalFit
                         horizontalAlignment: Text.AlignHCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -287,10 +291,12 @@ Item {
                     TextSwitch { id: doubleDamage
                         text: "weak (×2 damage)"
                         description: "(only enable if instructed)"
+                        leftMargin: 0
+                        rightMargin: 0
+
                     }
                 }
             }
-
         }
     }
 }
