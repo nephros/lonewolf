@@ -420,6 +420,7 @@ WebViewPage {
                 icon.source: "image://theme/icon-m-previous"
                 enabled: book.prevPageId != ""
                 onClicked: pageView.pageId = book.prevPageId;
+                visible: !licenseButton.visible
             }
             IconButton {
                 id: next
@@ -431,6 +432,7 @@ WebViewPage {
                 icon.source: "image://theme/icon-m-next"
                 enabled: book.nextPageId != ""
                 onClicked: pageView.pageId = book.nextPageId
+                visible: !licenseButton.visible
             }
 
             Row { id: plusminus
