@@ -88,9 +88,8 @@ ApplicationWindow {
         id: menuPage
     }
 
-    BookPage {
-        id: bookComponent
-        you: gameState
+    Component { id: bookComponent
+        BookPage { you: gameState }
     }
 
     LicensePage {
