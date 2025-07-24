@@ -363,11 +363,12 @@ WebViewPage {
                 var dlg = pageStack.push(puzzlePage, { answers: text.split(',')[1], you: root.you })
                 dlg.done.connect(function() { if (dlg.newpage != "not set") pageView.pageId = dlg.newpage })
             } else if (text.indexOf("book,") == 0) {
+                console.debug("Switching Book", you.book)
                 // "book,lw,09foo"
                 haptics.play();
+                you.copyTo(lastBook); } )
                 you.book = text.split(',')[2];
                 pageView.pageId = "";
-                console.debug("Switching Book", you.book)
                 popBookTab();
             } else {
                 haptics.play();

@@ -28,6 +28,13 @@ ApplicationWindow {
         property bool autoTts: false
     }
 
+    // game state at end of the last book
+    // so we can restart the current one correctly
+    GameState {
+        path: "lastbook"
+        id: lastBook
+    }
+
     GameState {
         path: "quicksave"
         id: quickSaveState
