@@ -101,13 +101,12 @@ Page {
 
             SectionHeader { text: "Adventure Progress" }
             BackgroundItem { id: startBookItem
-                visible: gameState.book != "" && gameState.pageId != ""
                 width: parent.width
                 height: stateCover.height + stateLabel.height
                 onClicked: goToBookTab()
                 BookCover { id: stateCover
                     showIndex: false
-                    book: gameState.book
+                    book: gameState.book != "" ? gameState.book : "01fftd"
                     width: parent.width/2
                     anchors.horizontalCenter: parent.horizontalCenter
                     // if we have a game state, we have accepted the license
@@ -377,7 +376,7 @@ Page {
         }
         Button { anchors.centerIn: placer
             text: "%1 “%2”".arg( startItem.resume ? "Continue" : "Play" ).arg(startItem.title)
-            onClicked:  { startItem.visible = false; root.startBook(book, "") }
+            onClicked:  { startItem.visible = false; root.startBook(startItem.book, "") }
             color: Theme.highlightFromColor(startItem.coverColor, Theme.colorScheme )
         }
     }
