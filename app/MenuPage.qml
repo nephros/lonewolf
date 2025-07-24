@@ -11,9 +11,12 @@ Page {
         if (pageId == "") uisettings.showHints = true
         goToBookTab();
     }
-    function startBookQuestion(book, title) {
-        startItem.book = book;
-        startItem.title = title;
+    function startBookQuestion(book) {
+        const b = getBookInfo(book)
+        startItem.book       = b.book
+        startItem.title      = b.title
+        startItem.coverColor = b.coverColor
+        startItem.blurb      = b.blurb
         startItem.visible = true
     }
     function restart() {
@@ -294,14 +297,14 @@ Page {
                 model: kaiModel
                 title: "Kai Series"
                 description: "Save your country from a looming threat.\nStart here if you've never played before."
-                onStartBook: root.startBookQuestion(book, title)
+                onStartBook: root.startBookQuestion(book)
                 width: parent.width
             }
             BookList {
                 model: magnakaiModel
                 title: "Magnakai Series"
                 description: "Save the realm from the Darklords by collecting the Lorestones of Varetta."
-                onStartBook: root.startBookQuestion(book, title)
+                onStartBook: root.startBookQuestion(book)
                 width: parent.width
                 //product: magnakaiProduct
             }
@@ -309,7 +312,7 @@ Page {
                 model: grandmasterModel
                 title: "Grandmaster Series"
                 description: "Save the world from the Dark God Naar and his minions."
-                onStartBook: root.startBookQuestion(book, title)
+                onStartBook: root.startBookQuestion(book)
                 width: parent.width
                 //product: grandmasterProduct
             }
@@ -317,7 +320,7 @@ Page {
                 model: neworderModel
                 title: "New Order Series"
                 description: "Continue thwarting the forces of evil as one of Lone Wolf's disciples."
-                onStartBook: root.startBookQuestion(book, title)
+                onStartBook: root.startBookQuestion(book)
                 width: parent.width
                 //product: neworderProduct
             }
@@ -326,10 +329,17 @@ Page {
     BackgroundItem { id: startItem
         property string book
         property string title
+        property string coverColor
+        property string blurb
+        property bool resume: false
         clip: true
         visible: false
         anchors.fill: parent
         anchors.centerIn: parent
+        anchors.topMargin: (Screen.hasCutouts && Screen.topCutout > 0)
+                    ? Screen.topCutout.height
+                    : 0
+
         onClicked:  { visible = false }
         Rectangle {
             color: Theme.overlayBackgroundColor
@@ -337,15 +347,6 @@ Page {
             anchors.fill: parent
             anchors.centerIn: parent
         }
-        /*
-        Label {
-            width: parent.width
-            anchors.bottom: bc.top
-            text: startItem.title
-            horizontalAlignment: Qt.AlignHCenter
-            wrapMode: Text.WordWrap
-        }
-        */
         BookCover { id: bc
             book: startItem.book
             showIndex: false
@@ -353,17 +354,32 @@ Page {
             anchors.centerIn: parent
             smooth: true
         }
+        Label { id: blurbLabel
+            anchors.left:  parent.left
+            anchors.right: parent.right
+            anchors.top:   parent.top
+            anchors.topMargin:   parent.topMargin
+            anchors.bottom: bc.top
+            anchors.bottomMargin: Theme.paddingSmall
+            text: startItem.blurb
+            color: Theme.highlightFromColor(startItem.coverColor, Theme.colorScheme )
+            minimumPixelSize: Theme.fontSizeTiny
+            //font.pixelSize: Theme.fontSizeSmall
+            fontSizeMode: Text.VerticalFit
+            verticalAlignment:  Text.AlignBottom
+            wrapMode: Text.WordWrap
+            truncationMode: TruncationMode.Fade
+        }
         Item { id: placer
+            anchors.left:  parent.left
+            anchors.right: parent.right
             anchors.top: bc.bottom
             anchors.bottom: parent.bottom
         }
-        Button {
-            //anchors.top: bc.bottom
-            anchors.verticalCenter: placer.verticalCenter
-            anchors.horizontalCenter: bc.horizontalCenter
-            text: "Play “%1”".arg(startItem.title)
-            onClicked:  { startItem.visible = false; root.startBook(startItem.book, "") }
-            color: Theme.highlightFromColor(root.getBookInfo(startItem.book).coverColor, Theme.colorScheme )
+        Button { anchors.centerIn: placer
+            text: "%1 “%2”".arg( startItem.resume ? "Continue" : "Play" ).arg(startItem.title)
+            onClicked:  { startItem.visible = false; root.startBook(book, "") }
+            color: Theme.highlightFromColor(startItem.coverColor, Theme.colorScheme )
         }
     }
 }

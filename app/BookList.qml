@@ -9,7 +9,7 @@ Item {
     property string description
     property var product: null
     property bool buying
-    signal startBook(string book, string title)
+    signal startBook(string book)
 
     height: column.height
     anchors.bottomMargin: Theme.paddingMedium
@@ -61,7 +61,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                 }
-                onClicked: root.startBook(book, title)
+                onClicked: root.startBook(book)
             }
         }
     }
