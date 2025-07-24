@@ -71,6 +71,7 @@ WebViewPage {
         //}
         PullDownMenu {
             visible: book.progress == 100
+            quickSelect: true
             MenuItem {
                 id: quickSave
                 //icon.source: "save"
