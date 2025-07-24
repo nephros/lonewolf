@@ -511,7 +511,7 @@ WebViewPage {
                 repeat: true
                 onTriggered: {
                     if (!nightmode.hintShown) { hint.start(); nightmode.hintShown = true }
-                    else if (!hint.running && !readbtn.hintShown) { ttshint.start(); readbtn.hintShown = true }
+                    else if (ttsAvailable && !hint.running && !readbtn.hintShown) { ttshint.start(); readbtn.hintShown = true }
                     if (nightmode.hintShown && readbtn.hintShown) uisettings.showHints = false
                 }
             }
