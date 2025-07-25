@@ -799,7 +799,7 @@ Page {
                 visible: d.kai
             }
 
-            SectionHeader { text: "Magnakai Disciplines" }
+            SectionHeader { text: "Magnakai Disciplines"; visible: d.magnakai }
             Row {
                 width: parent.width
                 visible: d.magnakai
