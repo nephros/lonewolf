@@ -847,7 +847,7 @@ Page {
             }
 
             SectionHeader {
-                text: "Grand Weaponmastery Checklist"
+                text: "Grand Weaponmastery Proficiencies"
                 font.capitalization: Font.SmallCaps
                 color: Theme.highlightColor
                 visible: d.grandmaster
@@ -871,7 +871,7 @@ Page {
             }
 
             SectionHeader {
-                text: "Grand Master Disciplines"
+                text: "New Order Disciplines"
                 font.capitalization: Font.SmallCaps
                 visible: d.neworder
             }
