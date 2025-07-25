@@ -409,78 +409,13 @@ Page {
                 spacing: 1
                 property real itemWidth: col.width
                 visible: !d.neworder
-
-                ChartItem {
-                    text: you.special1
-                    you: root.you
-                    prop: "special1"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special2
-                    you: root.you
-                    prop: "special2"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special3
-                    you: root.you
-                    prop: "special3"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special4
-                    you: root.you
-                    prop: "special4"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special5
-                    you: root.you
-                    prop: "special5"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special6
-                    you: root.you
-                    prop: "special6"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special7
-                    you: root.you
-                    prop: "special7"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special8
-                    you: root.you
-                    prop: "special8"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special9
-                    you: root.you
-                    prop: "special9"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special10
-                    you: root.you
-                    prop: "special10"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special11
-                    you: root.you
-                    prop: "special11"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.special12
-                    you: root.you
-                    prop: "special12"
-                    width: specials.itemWidth
+                Repeater { model: 12
+                    delegate: ChartItem {
+                        text: you[prop]
+                        you: root.you
+                        prop: "special" + Number(index+1)
+                        width: specials.itemWidth
+                    }
                 }
             }
             Grid {
@@ -490,91 +425,22 @@ Page {
                 flow: Grid.TopToBottom
                 spacing: 1
                 visible: d.neworder
-
-                ChartItem {
-                    text: you.neworder_special1
-                    you: root.you
-                    prop: "neworder_special1"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special2
-                    you: root.you
-                    prop: "neworder_special2"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special3
-                    you: root.you
-                    prop: "neworder_special3"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special4
-                    you: root.you
-                    prop: "neworder_special4"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special5
-                    you: root.you
-                    prop: "neworder_special5"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special6
-                    you: root.you
-                    prop: "neworder_special6"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special7
-                    you: root.you
-                    prop: "neworder_special7"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special8
-                    you: root.you
-                    prop: "neworder_special8"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special9
-                    you: root.you
-                    prop: "neworder_special9"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special10
-                    you: root.you
-                    prop: "neworder_special10"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special11
-                    you: root.you
-                    prop: "neworder_special11"
-                    width: specials.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_special12
-                    you: root.you
-                    prop: "neworder_special12"
-                    width: specials.itemWidth
+                Repeater { model: 12
+                    delegate: ChartItem {
+                        text: you[prop]
+                        you: root.you
+                        prop: "neworder_special" + Number(index+1)
+                        width: neworder_specials.itemWidth
+                    }
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.kai
-            }
             SectionHeader {
                 text: "Kai Disciplines"
                 font.capitalization: Font.SmallCaps
                 visible: d.kai
             }
+
             DetailItem {
                 visible: d.kai
                 width: parent.width/2
