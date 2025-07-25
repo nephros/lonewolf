@@ -15,6 +15,22 @@ case $1 in
 		# Puzzle
 		dconf write /apps/games/lonewolf/current/book "'09tcof'"
 		dconf write /apps/games/lonewolf/current/pageId "'sect204'"
+		printf 'The answer to this riddle is:\n\t50\n'
+		sleep 5
+	;;
+	harbour-screenshot-1)
+		# Puzzle
+		dconf write /apps/games/lonewolf/current/book "'04tcod'"
+		dconf write /apps/games/lonewolf/current/pageId "'sect273'"
+		dconf write /apps/games/lonewolf/current/endurance 28
+		dconf write /apps/games/lonewolf/current/gold 50
+	;;
+	harbour-screenshot-2)
+		# Puzzle
+		dconf write /apps/games/lonewolf/current/book "'02fotw'"
+		dconf write /apps/games/lonewolf/current/pageId "'sect1'"
+		dconf write /apps/games/lonewolf/current/endurance 26
+		dconf write /apps/games/lonewolf/current/gold 9
 	;;
 	dead)
 		# Dead/dead end:
@@ -28,7 +44,7 @@ case $1 in
 		dconf reset -f  /apps/games/lonewolf/
 	;;
 	*)
-		printf 'USAGE: %s [finished|combat|puzzle|dead|CLEARALL]\n\n'
+		printf 'USAGE: %s [finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n\tScreenshot IDs (N): 1 2\n'
 		exit 1
 	;;
 esac
