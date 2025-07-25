@@ -57,6 +57,7 @@ WebViewPage {
     }
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
+    ThemeEffect { id: success; effect: ThemeEffect.PressStrong }
     SilicaFlickable { id: flickable
         opacity: imgViewer.visible ? Theme.opacityFaint : 1.0
         Behavior on opacity { FadeAnimator { } }
@@ -344,10 +345,9 @@ WebViewPage {
             } else if (text.indexOf("external,") == 0) {
                 Qt.openUrlExternally(text.split(',')[1]);
             } else if (text.indexOf("puzzle-page,") == 0) {
-                //puzzle.answers = text.split(',')[1];
-                //puzzle.visible = true;
-                var dlg = pageStack.push(puzzlePage, { answers: text.split(',')[1], you: root.you })
-                dlg.done.connect(function() { if (dlg.newpage != "not set") pageView.pageId = dlg.newpage })
+                puzzlePanel.answers = text.split(',')[1]
+                puzzlePanel.you = root.you
+                puzzlePanel.show()
             } else if (text.indexOf("book,") == 0) {
                 console.debug("Switching Book", you.book)
                 // "book,lw,09foo"
@@ -606,29 +606,34 @@ WebViewPage {
     }
     }
 
-    Component { id: puzzlePage
-    Dialog { id: dialog
-        //backNavigation: puzzle.done
-        //showNavigationIndicator: puzzle.done
-        canAccept: false
+    DockedPanel { id: puzzlePanel
+        width:  parent.width
+        height: parent.height/3
+        dock: Dock.Bottom
+        modal: true
         property alias answers: puzzle.answers
         property alias you: puzzle.you
-        property string newpage: "not set"
-        backgroundColor: Theme.highlightDimmerFromColor("darkblue", Theme.colorScheme)
-
-        DialogHeader { id: header
-            acceptText: ""
-            cancelText: "Back to Page"
+        Separator {
+            width: parent.width
+            anchors.verticalCenter: parent.top
+            horizontalAlignment: Qt.AlignHCenter
         }
-        Puzzle {
-            id: puzzle
-            anchors.top: header.bottom
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            onGoTo: { dialog.newpage = page; dialog.close() }
+        Rectangle {
+            id: puzzleRect
+            anchors.fill: parent
+            color: mainView.nightModeEnabled
+                ? "black"
+                : Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
+            opacity: Theme.opacityOverlay
         }
-    }
+        Puzzle { id: puzzle
+            anchors.fill: parent
+            onGoTo: {
+              succes.play()
+              pageView.pageId = solution
+              puzzlePanel.hide()
+          }
+        }
     }
 
     DockedPanel { id: random

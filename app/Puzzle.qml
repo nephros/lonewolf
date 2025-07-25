@@ -7,7 +7,7 @@ Item {
 
     property var you
     property string answers
-    signal goTo(string page)
+    signal goTo(string solution)
 
     property bool wrong: false
     property var guesses: []
@@ -34,7 +34,7 @@ Item {
             anchors.topMargin: Theme.itemSizeLarge
             anchors.bottomMargin: Theme.itemSizeLarge
             horizontalAlignment: Text.AlignHCenter
-            text: "Enter number"
+            text: "Your Answer"
             font.pixelSize: Theme.fontSizeLarge
             color: Theme.highlightColor
         }
@@ -69,6 +69,7 @@ Item {
             }
         }
     }
+    /*
     Item {
         anchors.top: content.bottom
         anchors.bottom: parent.bottom
@@ -87,6 +88,7 @@ Item {
             color: Theme.highlightFromColor("yellow", Theme.colorScheme)
         }
     }
+    */
     Item { id: wrongItem
         anchors.top: parent.top
         anchors.bottom: content.top

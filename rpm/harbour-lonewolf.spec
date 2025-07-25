@@ -89,8 +89,10 @@ Requires:   %{name}
 %description tts-plugin
 Adds text-to-speech support to the Lone Wolf app from Jolla Harbour.
 
-Requires the excellent Speech Note (harbour-dsnote) by mkiol, and
-will use its engine and settings configured for English.
+Requires the excellent Speech Note (harbour-dsnote) by mkiol, this means you have to have the Openrepos (Storeman) 
+mkiol repo enabled in order to istall this.
+
+The plugin will use engine and settings configured for English.
 
 %if "0%{?_chum}"
 Title: TTS plugin for Lone Wolf
