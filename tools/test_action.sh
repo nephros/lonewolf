@@ -1,6 +1,11 @@
 #!/bin/sh
 
 case $1 in
+	starterpack)
+		if [ -e 01fftd_starterpack.dconf ]; then
+		    cat 01fftd_starterpack.dconf | dconf load /apps/games/lonewolf/current/
+		fi
+	;;
 	finished)
 		# end of book -> new book
 		dconf write /apps/games/lonewolf/current/book "'09tcof'"
@@ -44,7 +49,7 @@ case $1 in
 		dconf reset -f  /apps/games/lonewolf/
 	;;
 	*)
-		printf 'USAGE: %s [finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n\tScreenshot IDs (N): 1 2\n'
+		printf 'USAGE: %s [starterpack|finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n\tScreenshot IDs (N): 1 2\n'
 		exit 1
 	;;
 esac
