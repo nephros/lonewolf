@@ -279,10 +279,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-            }
             SectionHeader {
                 text: "Weapons"
                 font.capitalization: Font.SmallCaps
@@ -329,10 +325,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-            }
             SectionHeader {
                 text: "Backpack Items (%1 meals: %2 free)".arg(meals).arg(slots)
                 font.capitalization: Font.SmallCaps
@@ -393,10 +385,6 @@ Page {
                 visible: d.neworder
             }
 
-            Item {
-                width: 1
-                height: 1
-            }
             SectionHeader {
                 text: "Special Items"
                 font.capitalization: Font.SmallCaps
@@ -707,11 +695,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.magnakai
-            }
             SectionHeader {
                 text: "Weaponmastery Proficiencies"
                 font.capitalization: Font.SmallCaps
@@ -797,11 +780,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.grandmaster
-            }
             SectionHeader {
                 text: "Grand Master Disciplines"
                 font.capitalization: Font.SmallCaps
@@ -900,11 +878,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.grandmaster
-            }
             SectionHeader {
                 text: "Grand Weaponmastery Checklist"
                 font.capitalization: Font.SmallCaps
@@ -990,11 +963,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.neworder
-            }
             SectionHeader {
                 text: "Grand Master Disciplines"
                 font.capitalization: Font.SmallCaps
@@ -1121,11 +1089,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.neworder
-            }
             SectionHeader {
                 text: "Grand Weaponmastery Checklist"
                 font.capitalization: Font.SmallCaps
@@ -1210,10 +1173,6 @@ Page {
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-            }
             SectionHeader {
                 text: "Notes"
                 font.capitalization: Font.SmallCaps
