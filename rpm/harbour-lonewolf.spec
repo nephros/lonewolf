@@ -87,17 +87,19 @@ Requires:   harbour-dsnote >= 4.7.0
 Requires:   %{name}
 
 %description tts-plugin
-Adds text-to-speech support to the Lonewolf player.
+Adds text-to-speech support to the Lone Wolf app from Jolla Harbour.
 
 Requires the excellent Speech Note (harbour-dsnote) by mkiol, and
 will use its engine and settings configured for English.
 
 %if "0%{?_chum}"
-Title: TTS plugin for Lonewolf
+Title: TTS plugin for Lone Wolf
 Type: desktop-application
 Categories:
  - Games
 PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
+Screenshots:
+ - https://github.com/nephros/harbour-lonewolf/raw/sfos/Screenshot_004.jpg
 %endif
 
 
