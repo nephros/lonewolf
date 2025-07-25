@@ -377,10 +377,10 @@ WebViewPage {
 
         Connections {
             target: WebEngineSettings
-            onPixelRatioChanged: uisettings.font = WebEngineSettings.pixelRatio
+            onPixelRatioChanged: uisettings.fontF = WebEngineSettings.pixelRatio
         }
         Component.onCompleted: {
-            WebEngineSettings.pixelRatio = uisettings.font
+            WebEngineSettings.pixelRatio = uisettings.fontF
             WebEngineSettings.autoLoadImages = true
             //WebEngineSettings.setPreference("permissions.default.image", 1, WebEngineSettings.IntPref)
             WebEngineSettings.javascriptEnabled = true // <-- This apparently does not work, but the following does:

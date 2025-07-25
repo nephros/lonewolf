@@ -22,7 +22,8 @@ ApplicationWindow {
         scope: settings
         path: "ui"
         property bool licenseAccepted: false
-        property int font: 2
+        //property int font: 2 // deprecated, use the float:
+        property double fontF: 2.0
         property bool showHints: false
         //property bool saveOnQuit: false
         property bool styleHtml: true
