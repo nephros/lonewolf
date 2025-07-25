@@ -13,7 +13,7 @@ Page {
     backgroundColor: mainView.nightModeEnabled
         ? "black"
         //: "#7f7f4c"
-        : Theme.highlightDimmerFromColor("#333300", Theme.colorScheme)
+        : Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
 
     QtObject {
         id: d
@@ -35,10 +35,12 @@ Page {
     Image {
         source: d.magnakai ? "./ac-02.png" : "./ac-01.png"
         fillMode: Image.PreserveAspectFit
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        width: parent.width*4/5
-        height: parent.height/3
+        //anchors.bottom: parent.bottom
+        anchors.bottom: flicker.bottom
+        anchors.right: flicker.right
+        anchors.margins: Theme.paddingLarge
+        width: flicker.width*4/5
+        height: flicker.height/3
         opacity: 0.8
         cache: true; smooth: false
     }
@@ -63,47 +65,38 @@ Page {
 
             Grid {
                 columns: 3
+                anchors.margins: Theme.paddingSmall
                 verticalItemAlignment: Grid.AlignVCenter
                 columnSpacing: Theme.paddingSmall
                 rowSpacing: Theme.paddingSmall
-
                 Label {
-                    text: "Combat Skill"
+                    text: "Max Endurance"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
-                    id: combatSkillBox
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.combatskill
+                    text: you.maxendurance
                     you: root.you
-                    prop: "combatskill"
-                    width: Theme.buttonWidthSmall
+                    prop: "maxendurance"
+                    width: combatSkillBox.width
                     visible: !d.neworder
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_combatskill
+                    text: you.neworder_maxendurance
                     you: root.you
-                    prop: "neworder_combatskill"
-                    width: Theme.buttonWidthSmall
+                    prop: "neworder_maxendurance"
+                    width: combatSkillBox.width
                     visible: d.neworder
                 }
-                Row {
-                    IconButton {
-                        width: Theme.buttonWidthTiny
-                        icon.source: "image://theme/icon-splus-remove"
-                        onClicked: d.neworder ? you.neworder_combatskill -=1 : you.combatskill -=1
-                    }
-                    IconButton {
-                        width: Theme.buttonWidthTiny
-                        icon.source: "image://theme/icon-splus-add"
-                        onClicked: d.neworder ? you.neworder_combatskill +=1 : you.combatskill +=1
-                    }
-                }
+                Item {height: 1; width: 1} // spacer/placeholder for Grid
+
 
                 Label {
                     text: "Endurance"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -137,30 +130,45 @@ Page {
                 }
 
                 Label {
-                    text: "Max Endurance"
+                    text: "Combat Skill"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
+                    id: combatSkillBox
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.maxendurance
+                    text: you.combatskill
                     you: root.you
-                    prop: "maxendurance"
-                    width: combatSkillBox.width
+                    prop: "combatskill"
+                    width: Theme.buttonWidthSmall
                     visible: !d.neworder
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_maxendurance
+                    text: you.neworder_combatskill
                     you: root.you
-                    prop: "neworder_maxendurance"
-                    width: combatSkillBox.width
+                    prop: "neworder_combatskill"
+                    width: Theme.buttonWidthSmall
                     visible: d.neworder
                 }
-                Item {height: 1; width: 1}
+                Row {
+                    IconButton {
+                        width: Theme.buttonWidthTiny
+                        icon.source: "image://theme/icon-splus-remove"
+                        onClicked: d.neworder ? you.neworder_combatskill -=1 : you.combatskill -=1
+                    }
+                    IconButton {
+                        width: Theme.buttonWidthTiny
+                        icon.source: "image://theme/icon-splus-add"
+                        onClicked: d.neworder ? you.neworder_combatskill +=1 : you.combatskill +=1
+                    }
+                }
+
 
                 Label {
                     text: "Belt Pouch"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -197,6 +205,7 @@ Page {
                 Label {
                     text: "Quiver"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                     visible: d.magnakai || d.grandmaster || d.neworder
                 }
                 ChartItem {
@@ -235,6 +244,7 @@ Page {
                 Label {
                     text: "Meals"
                     color: Theme.highlightColor
+                    font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -275,6 +285,7 @@ Page {
             }
             SectionHeader {
                 text: "Weapons"
+                font.capitalization: Font.SmallCaps
             }
             Grid {
                 id: weapons
@@ -324,6 +335,7 @@ Page {
             }
             SectionHeader {
                 text: "Backpack Items (%1 meals: %2 free)".arg(meals).arg(slots)
+                font.capitalization: Font.SmallCaps
                 property int meals: d.neworder ? you.neworder_meals : you.meals
                 property int slots: 8 - meals
             }
@@ -493,6 +505,7 @@ Page {
             }
             SectionHeader {
                 text: "Special Items"
+                font.capitalization: Font.SmallCaps
             }
             Grid {
                 id: specials
@@ -665,6 +678,7 @@ Page {
             }
             SectionHeader {
                 text: "Kai Disciplines"
+                font.capitalization: Font.SmallCaps
                 visible: d.kai
             }
             DetailItem {
@@ -799,7 +813,11 @@ Page {
                 visible: d.kai
             }
 
-            SectionHeader { text: "Magnakai Disciplines"; visible: d.magnakai }
+            SectionHeader {
+                text: "Magnakai Disciplines"
+                font.capitalization: Font.SmallCaps
+                visible: d.magnakai
+            }
             Row {
                 width: parent.width
                 visible: d.magnakai
@@ -936,6 +954,7 @@ Page {
             }
             SectionHeader {
                 text: "Weaponmastery Proficiencies"
+                font.capitalization: Font.SmallCaps
                 color: Theme.highlightColor
                 visible: d.magnakai
             }
@@ -1025,6 +1044,7 @@ Page {
             }
             SectionHeader {
                 text: "Grand Master Disciplines"
+                font.capitalization: Font.SmallCaps
                 visible: d.grandmaster
             }
             Grid {
@@ -1127,6 +1147,7 @@ Page {
             }
             SectionHeader {
                 text: "Grand Weaponmastery Checklist"
+                font.capitalization: Font.SmallCaps
                 color: Theme.highlightColor
                 visible: d.grandmaster
             }
@@ -1216,6 +1237,7 @@ Page {
             }
             SectionHeader {
                 text: "Grand Master Disciplines"
+                font.capitalization: Font.SmallCaps
                 visible: d.neworder
             }
             Grid {
@@ -1346,6 +1368,7 @@ Page {
             }
             SectionHeader {
                 text: "Grand Weaponmastery Checklist"
+                font.capitalization: Font.SmallCaps
                 visible: d.neworder
             }
             Grid {
@@ -1433,6 +1456,7 @@ Page {
             }
             SectionHeader {
                 text: "Notes"
+                font.capitalization: Font.SmallCaps
                 font.pixelSize: Theme.fontSizeLarge
             }
             TextArea {
@@ -1440,6 +1464,7 @@ Page {
                 width: parent.width
                 //height: Theme.itemSizeLarge
                 text: you.notes
+                placeholderText: "\n\n\n"
                 visible: !d.neworder
                 Binding {
                     target: you
