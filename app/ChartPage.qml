@@ -337,78 +337,26 @@ Page {
                 text: "Backpack Items (%1 meals: %2 free)".arg(meals).arg(slots)
                 font.capitalization: Font.SmallCaps
                 property int meals: d.neworder ? you.neworder_meals : you.meals
-                property int slots: 8 - meals
+                property int slots: (d.grandmaster ? 10 : 8) - meals
             }
             Grid {
                 id: backpack
                 columns: 2
-                rows: 5
+                //rows: 5
                 flow: Grid.LeftToRight
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
                 visible: !d.neworder
-
-                ChartItem {
-                    text: you.backpack1
-                    you: root.you
-                    prop: "backpack1"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack2
-                    you: root.you
-                    prop: "backpack2"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack3
-                    you: root.you
-                    prop: "backpack3"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack4
-                    you: root.you
-                    prop: "backpack4"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack5
-                    you: root.you
-                    prop: "backpack5"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack6
-                    you: root.you
-                    prop: "backpack6"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack7
-                    you: root.you
-                    prop: "backpack7"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack8
-                    you: root.you
-                    prop: "backpack8"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.backpack9
-                    you: root.you
-                    prop: "backpack9"
-                    width: backpack.itemWidth
-                    visible: d.grandmaster
-                }
-                ChartItem {
-                    text: you.backpack10
-                    you: root.you
-                    prop: "backpack10"
-                    width: backpack.itemWidth
-                    visible: d.grandmaster
+                Repeater { model: d.grandmaster ? 10 : 8
+                    delegate: ChartItem {
+                        text: you[prop]
+                        you: root.you
+                        prop: "backpack" + Number(index+1)
+                        width: backpack.itemWidth
+                        label: (((d.grandmaster ? 10 : 8) - you.meals ) <= index)
+                               ? "Meal" : ""
+                        acceptableInput: (label != "Meal") || (text.length == 0)
+                    }
                 }
             }
             Grid {
