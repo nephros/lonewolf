@@ -215,6 +215,10 @@ echo '=========== NOT checking for Harbour compatability.'
 find ~/rpmbuild/RPMS -type f -name %{name}-%{version}*.rpm -exec rm -f {} \; ||:
 find ~/rpmbuild/RPMS -type f -name %{name}-debug*-%{version}*.rpm -exec rm -f {} \; ||:
 %endif
+%if %{with harbour}
+# remove TTS package
+find ~/rpmbuild/RPMS -type f -name %{name}-tts-plugin-%{version}*.rpm -exec rm -f {} \; ||:
+%endif
 # << check
 
 %files
