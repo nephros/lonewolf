@@ -565,31 +565,13 @@ Page {
                     return r
                 }
             }
-            Grid {
-                id: disciplines
-                columns: 2
-                rows: 5
-                flow: Grid.TopToBottom
-                spacing: 1
-                property real itemWidth: (col.width - spacing) / 2
-                visible: d.kai
-                Repeater { model: kaidisciplinesModel
-                    delegate: ChartCheck {
-                        you: root.you
-                        text: model.text
-                        checked: you[prop]
-                        prop: prop
-                        note: model.note
-                        width: disciplines.itemWidth
-                    }
-                }
-            }
 
             SectionHeader {
                 text: "Magnakai Disciplines"
                 font.capitalization: Font.SmallCaps
                 visible: d.magnakai
             }
+
             Row {
                 width: parent.width
                 visible: d.magnakai
@@ -636,25 +618,28 @@ Page {
                         + (c._magnakai_circle_spirit  ? "Circle of Spirit"  : "" )
                 }
             }
-            Grid { id: magnakaidisciplines
+
+
+            Grid {
+                id: disciplines
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
-                visible: d.magnakai
-                Repeater { model: magnakaidisciplinesModel
+                visible: d.kai || d.magnakai
+                Repeater {
+                    model: d.kai ? kaidisciplinesModel : (d.magnakai ? magnakaidisciplinesModel : undefined )
                     delegate: ChartCheck {
                         you: root.you
                         text: model.text
                         checked: you[prop]
                         prop: prop
                         note: model.note
-                        width: magnakaidisciplines.itemWidth
+                        width: disciplines.itemWidth
                     }
                 }
             }
-
             SectionHeader {
                 text: "Weaponmastery Proficiencies"
                 font.capitalization: Font.SmallCaps
