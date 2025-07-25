@@ -675,8 +675,8 @@ Page {
                     delegate: ChartCheck {
                         you: root.you
                         text: model.text
-                        checked: you[prop]
-                        prop: prop
+                        checked: you[model.prop]
+                        prop: model.prop
                         note: model.note
                         width: disciplines.itemWidth
                     }
@@ -699,8 +699,8 @@ Page {
                     delegate: ChartCheck {
                         you: root.you
                         text: model.text
-                        checked: you[prop]
-                        prop: prop
+                        checked: you[model.prop]
+                        prop: model.prop
                         width: weaponprofgrid.itemWidth
                     }
                 }
