@@ -103,7 +103,7 @@ PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
 
 %define please_also ignore this macro
 %if 0%{?sailfishos_version} < 40600
-%if 0%{?sailfishos_version} <= 40000
+%if 0%{?sailfishos_version} <= 40001
 %define cmake_build %__cmake --build "."
 %define cmake_install %make_install
 %else
