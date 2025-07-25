@@ -365,75 +365,21 @@ Page {
                 rows: 5
                 flow: Grid.LeftToRight
                 spacing: 1
+                property real itemWidth: (col.width - spacing) / 2
                 visible: d.neworder
-
-                ChartItem {
-                    text: you.neworder_backpack1
-                    you: root.you
-                    prop: "neworder_backpack1"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack2
-                    you: root.you
-                    prop: "neworder_backpack2"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack3
-                    you: root.you
-                    prop: "neworder_backpack3"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack4
-                    you: root.you
-                    prop: "neworder_backpack4"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack5
-                    you: root.you
-                    prop: "neworder_backpack5"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack6
-                    you: root.you
-                    prop: "neworder_backpack6"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack7
-                    you: root.you
-                    prop: "neworder_backpack7"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack8
-                    you: root.you
-                    prop: "neworder_backpack8"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack9
-                    you: root.you
-                    prop: "neworder_backpack9"
-                    width: backpack.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_backpack10
-                    you: root.you
-                    prop: "neworder_backpack10"
-                    width: backpack.itemWidth
+                Repeater{ model: 10
+                    delegate: ChartItem {
+                        text: you[prop]
+                        you: root.you
+                        prop: "neworder_backpack" + Number(index+1)
+                        width: neworder_backpack.itemWidth
+                        label: ((10 - you.neworder_meals ) <= index)
+                               ? "Meal" : ""
+                        acceptableInput: (label != "Meal") || (text.length == 0)
+                    }
                 }
             }
 
-            Item {
-                width: 1
-                height: 1
-                visible: d.neworder
-            }
             Label {
                 text: "Kai Weapon"
                 color: Theme.highlightColor
