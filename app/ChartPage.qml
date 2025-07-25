@@ -44,6 +44,110 @@ Page {
         opacity: 0.8
         cache: true; smooth: false
     }
+    ListModel { id: kaidisciplinesModel
+        ListElement {
+            text: "Camouflage"
+            prop: "kai_camouflage"
+            note: "Blend in with your surroundings"
+        }
+        ListElement {
+            text: "Hunting"
+            prop: "kai_hunting"
+            note: "Skip a meal in certain areas"
+        }
+        ListElement {
+            text: "Sixth Sense"
+            prop: "kai_sixthsense"
+            note: "Warns about imminent danger"
+        }
+        ListElement {
+            text: "Tracking"
+            prop: "kai_tracking"
+            note: "Find the right path"
+        }
+        ListElement {
+            text: "Healing"
+            prop: "kai_healing"
+            note: "+1 EP for each section without combat"
+        }
+        ListElement {
+            text: "Weaponskill"
+            prop: "kai_weaponskill"
+            note: "+2 CS for with chosen weapon"
+        }
+        ListElement {
+            text: "Mindshield"
+            prop: "kai_mindshield"
+            note: "Immune to Mindblast attack"
+        }
+        ListElement {
+            text: "Mindblast"
+            prop: "kai_mindblast"
+            note: "+2 CS against most enemies"
+        }
+        ListElement {
+            text: "Animal Kinship"
+            prop: "kai_animalkinship"
+            note: "Communiate with some animals"
+        }
+        ListElement {
+            text: "Mind Over Matter"
+            prop: "kai_mindovermatter"
+            note: "Move small objects with your mind"
+        }
+    }
+    ListModel { id: magnakaidisciplinesModel
+        ListElement {
+            text: "Weaponmastery"
+            prop: "magnakai_weaponmastery"
+            note: "+3 CS for with chosen weapon"
+        }
+        ListElement {
+            text: "Animal Control"
+            prop: "magnakai_animalcontrol"
+            note: ""
+        }
+        ListElement {
+            text: "Curing"
+            prop: "magnakai_curing"
+            note: "+1 EP for each section without combat"
+        }
+        ListElement {
+            text: "Invisibility"
+            prop: "magnakai_invisibility"
+            note: ""
+        }
+        ListElement {
+            text: "Huntmastery"
+            prop: "magnakai_huntmastery"
+            note: "Skip a meal requirement"
+        }
+        ListElement {
+            text: "Pathsmanship"
+            prop: "magnakai_pathsmanship"
+            note: ""
+        }
+        ListElement {
+            text: "Psi-surge"
+            prop: "magnakai_psisurge"
+            note: "+4CS/-2 EP, or +2CS per round of combat"
+        }
+        ListElement {
+            text: "Psi-screen"
+            prop: "magnakai_psiscreen"
+            note: ""
+        }
+        ListElement {
+            text: "Nexus"
+            prop: "magnakai_nexus"
+            note: ""
+        }
+        ListElement {
+            text: "Divination"
+            prop: "magnakai_divination"
+            note: ""
+        }
+     }
 
     SilicaFlickable {
         id: flicker
@@ -469,96 +573,16 @@ Page {
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
                 visible: d.kai
-
-                ChartCheck {
-                    you: root.you
-                    text: "Camouflage"
-                    checked: you.kai_camouflage
-                    prop: "kai_camouflage"
-                    note: "Blend in with your surroundings"
-                    width: disciplines.itemWidth
+                Repeater { model: kaidisciplinesModel
+                    delegate: ChartCheck {
+                        you: root.you
+                        text: model.text
+                        checked: you[prop]
+                        prop: prop
+                        note: model.note
+                        width: disciplines.itemWidth
+                    }
                 }
-                ChartCheck {
-                    you: root.you
-                    text: "Hunting"
-                    checked: you.kai_hunting
-                    prop: "kai_hunting"
-                    note: "Skip a meal in certain areas"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Sixth Sense"
-                    checked: you.kai_sixthsense
-                    prop: "kai_sixthsense"
-                    note: "Warns about imminent danger"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Tracking"
-                    checked: you.kai_tracking
-                    prop: "kai_tracking"
-                    note: "Find the right path"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Healing"
-                    checked: you.kai_healing
-                    prop: "kai_healing"
-                    note: "+1 EP for each section without combat"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Weaponskill"
-                    checked: you.kai_weaponskill
-                    prop: "kai_weaponskill"
-                    note: "+2 CS for with chosen weapon"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Mindshield"
-                    checked: you.kai_mindshield
-                    prop: "kai_mindshield"
-                    note: "Immune to Mindblast attack"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Mindblast"
-                    checked: you.kai_mindblast
-                    prop: "kai_mindblast"
-                    note: "+2 CS against most enemies"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Animal Kinship"
-                    checked: you.kai_animalkinship
-                    prop: "kai_animalkinship"
-                    note: "Communiate with some animals"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Mind Over Matter"
-                    checked: you.kai_mindovermatter
-                    prop: "kai_mindovermatter"
-                    note: "Move small objects with your mind"
-                    width: disciplines.itemWidth
-                }
-            }
-
-            ChartItem {
-                text: you.weaponskill_weapon
-                you: root.you
-                prop: "weaponskill_weapon"
-                width: parent.width
-                description: "Weaponskill Weapon"
-                visible: d.kai
             }
 
             SectionHeader {
@@ -612,86 +636,22 @@ Page {
                         + (c._magnakai_circle_spirit  ? "Circle of Spirit"  : "" )
                 }
             }
-            Grid {
+            Grid { id: magnakaidisciplines
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
                 spacing: 1
+                property real itemWidth: (col.width - spacing) / 2
                 visible: d.magnakai
-
-                ChartCheck {
-                    you: root.you
-                    text: "Weaponmastery"
-                    checked: you.magnakai_weaponmastery
-                    prop: "magnakai_weaponmastery"
-                    note: "+3 CS for with chosen weapon"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Animal Control"
-                    checked: you.magnakai_animalcontrol
-                    prop: "magnakai_animalcontrol"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Curing"
-                    checked: you.magnakai_curing
-                    prop: "magnakai_curing"
-                    note: "+1 EP for each section without combat"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Invisibility"
-                    checked: you.magnakai_invisibility
-                    prop: "magnakai_invisibility"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Huntmastery"
-                    checked: you.magnakai_huntmastery
-                    prop: "magnakai_huntmastery"
-                    note: "Skip a meal requirement"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Pathsmanship"
-                    checked: you.magnakai_pathsmanship
-                    prop: "magnakai_pathsmanship"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Psi-surge"
-                    checked: you.magnakai_psisurge
-                    prop: "magnakai_psisurge"
-                    note: "+4CS/-2 EP, or +2CS per round of combat"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Psi-screen"
-                    checked: you.magnakai_psiscreen
-                    prop: "magnakai_psiscreen"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Nexus"
-                    checked: you.magnakai_nexus
-                    prop: "magnakai_nexus"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Divination"
-                    checked: you.magnakai_divination
-                    prop: "magnakai_divination"
-                    width: disciplines.itemWidth
+                Repeater { model: magnakaidisciplinesModel
+                    delegate: ChartCheck {
+                        you: root.you
+                        text: model.text
+                        checked: you[prop]
+                        prop: prop
+                        note: model.note
+                        width: magnakaidisciplines.itemWidth
+                    }
                 }
             }
 
