@@ -208,6 +208,11 @@ echo '=========== DONE checking for Harbour compatability.'
 %else
 echo '=========== NOT checking for Harbour compatability.'
 %endif
+%if 0%{?_chum}
+# remove main package, leave TTS Plugin
+find ~/rpmbuild/RPMS -type f -name %{name}-%{version}*.rpm -exec rm -f {} \; ||:
+find ~/rpmbuild/RPMS -type f -name %{name}-debug*-%{version}*.rpm -exec rm -f {} \; ||:
+%endif
 # << check
 
 %files
