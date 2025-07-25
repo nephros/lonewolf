@@ -57,6 +57,7 @@ WebViewPage {
     }
 
     ThemeEffect { id: haptics; effect: ThemeEffect.PressWeak }
+    ThemeEffect { id: success; effect: ThemeEffect.PressStrong }
     SilicaFlickable { id: flickable
         opacity: imgViewer.visible ? Theme.opacityFaint : 1.0
         Behavior on opacity { FadeAnimator { } }
@@ -627,7 +628,11 @@ WebViewPage {
         }
         Puzzle { id: puzzle
             anchors.fill: parent
-            onGoTo: { pageView.pageId = solution; puzzlePanel.hide() }
+            onGoTo: {
+              succes.play()
+              pageView.pageId = solution
+              puzzlePanel.hide()
+          }
         }
     }
 
