@@ -199,7 +199,7 @@ Page {
          }
      }
 
-     ListModel { id: weaponproficiencyModel
+     ListModel { id: weaponmasteryModel
          ListElement {
              text: "Dagger"
              prop: "weaponmastery_dagger"
@@ -775,13 +775,13 @@ Page {
                     }
                 }
             }
-            SectionHeader {
+            SectionHeader { id: weaponmasteryheader
                 text: "Weaponmastery Proficiencies"
                 font.capitalization: Font.SmallCaps
                 color: Theme.highlightColor
                 visible: d.magnakai
             }
-            Grid { id: weaponprofgrid
+            Grid { id: weaponmasterygrid
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
@@ -794,7 +794,7 @@ Page {
                         text: model.text
                         checked: you[model.prop]
                         prop: model.prop
-                        width: weaponprofgrid.itemWidth
+                        width: weaponmasterygrid.itemWidth
                     }
                 }
             }
