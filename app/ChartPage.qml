@@ -190,6 +190,48 @@ Page {
              prop: "weaponmastery_broadsword"
          }
      }
+     ListModel { id: grandweaponmasteryModel
+         ListElement {
+             text: "Dagger"
+             prop: "grandweaponmastery_dagger"
+         }
+         ListElement {
+             text: "Mace"
+             prop: "grandweaponmastery_mace"
+         }
+         ListElement {
+             text: "Warhammer"
+             prop: "grandweaponmastery_warhammer"
+         }
+         ListElement {
+             text: "Axe"
+             prop: "grandweaponmastery_axe"
+         }
+         ListElement {
+             text: "Quarterstaff"
+             prop: "grandweaponmastery_quarterstaff"
+         }
+         ListElement {
+             text: "Spear"
+             prop: "grandweaponmastery_spear"
+         }
+         ListElement {
+             text: "Short Sword"
+             prop: "grandweaponmastery_shortsword"
+         }
+         ListElement {
+             text: "Bow"
+             prop: "grandweaponmastery_bow"
+         }
+         ListElement {
+             text: "Sword"
+             prop: "grandweaponmastery_sword"
+         }
+         ListElement {
+             text: "Broadsword"
+             prop: "grandweaponmastery_broadsword"
+         }
+     }
 
     SilicaFlickable {
         id: flicker
@@ -810,82 +852,21 @@ Page {
                 color: Theme.highlightColor
                 visible: d.grandmaster
             }
-            Grid {
+            Grid { id: grandweaponmasterygrid
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
                 spacing: 1
                 visible: d.grandmaster
-
-                ChartCheck {
-                    you: root.you
-                    text: "Dagger"
-                    checked: you.grandweaponmastery_dagger
-                    prop: "grandweaponmastery_dagger"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Mace"
-                    checked: you.grandweaponmastery_mace
-                    prop: "grandweaponmastery_mace"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Warhammer"
-                    checked: you.grandweaponmastery_warhammer
-                    prop: "grandweaponmastery_warhammer"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Axe"
-                    checked: you.grandweaponmastery_axe
-                    prop: "grandweaponmastery_axe"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Quarterstaff"
-                    checked: you.grandweaponmastery_quarterstaff
-                    prop: "grandweaponmastery_quarterstaff"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Spear"
-                    checked: you.grandweaponmastery_spear
-                    prop: "grandweaponmastery_spear"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Short Sword"
-                    checked: you.grandweaponmastery_shortsword
-                    prop: "grandweaponmastery_shortsword"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Bow"
-                    checked: you.grandweaponmastery_bow
-                    prop: "grandweaponmastery_bow"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Sword"
-                    checked: you.grandweaponmastery_sword
-                    prop: "grandweaponmastery_sword"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Broadsword"
-                    checked: you.grandweaponmastery_broadsword
-                    prop: "grandweaponmastery_broadsword"
-                    width: disciplines.itemWidth
+                property real itemWidth: (col.width - spacing) / 2
+                Repeater { id: wprofrepeater
+                    delegate: ChartCheck {
+                        you: root.you
+                        text: model.text
+                        checked: you[model.prop]
+                        prop: prop
+                        width: grandweaponmasterygrid.itemWidth
+                    }
                 }
             }
 
