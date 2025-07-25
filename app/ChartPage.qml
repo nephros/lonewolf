@@ -99,6 +99,7 @@ Page {
         opacity: 0.8
         cache: true; smooth: false
     }
+
     ListModel { id: kaidisciplinesModel
         ListElement {
             text: "Camouflage"
@@ -151,6 +152,7 @@ Page {
             note: "Move small objects with your mind"
         }
     }
+
     ListModel { id: magnakaidisciplinesModel
         ListElement {
             text: "Weaponmastery"
@@ -203,6 +205,7 @@ Page {
             note: ""
         }
      }
+
      ListModel { id: grandmasterdisciplinesModel
          ListElement {
              text: "G Weaponmastery"
@@ -320,6 +323,7 @@ Page {
              prop: "neworder_bardsmanship"
          }
      }
+
      ListModel { id: weaponmasteryModel
          ListElement {
              text: "Dagger"
@@ -362,6 +366,7 @@ Page {
              prop: "weaponmastery_broadsword"
          }
      }
+
      ListModel { id: grandweaponmasteryModel
          ListElement {
              text: "Dagger"
@@ -404,6 +409,7 @@ Page {
              prop: "grandweaponmastery_broadsword"
          }
      }
+
      ListModel { id: neworderweaponmasteryModel
          ListElement {
              text: "Dagger"
@@ -461,11 +467,9 @@ Page {
             anchors.margins: Theme.paddingSmall
             width: flicker.contentWidth - anchors.margins * 2
 
-            PageHeader { id: header
-                title: "Action Chart"
-            }
+            PageHeader { id: header; title: "Action Chart" }
 
-            Grid {
+            Grid { id: basicgrid
                 columns: 3
                 anchors.margins: Theme.paddingSmall
                 verticalItemAlignment: Grid.AlignVCenter
@@ -477,26 +481,22 @@ Page {
                     font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
                     you: root.you
                     text: d.neworder ? you.neworder_maxendurance : you.maxendurance
                     prop: d.neworder ?  "neworder_maxendurance" : "maxendurance"
                     width: combatSkillBox.width
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 Item {height: 1; width: 1} // spacer/placeholder for Grid
 
 
-                Label {
-                    text: "Endurance"
-                    color: Theme.highlightColor
-                    font.capitalization: Font.SmallCaps
-                }
+                Label { text: "Endurance"; color: Theme.highlightColor; font.capitalization: Font.SmallCaps }
                 ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: d.neworder ? you.neworder_endurance : you.endurance
                     you: root.you
+                    text: d.neworder ? you.neworder_endurance : you.endurance
                     prop: d.neworder ? "endurance" : "neworder_endurance"
                     width: combatSkillBox.width
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 Row {
                     IconButton {
@@ -513,27 +513,13 @@ Page {
                     }
                 }
 
-                Label {
-                    text: "Combat Skill"
-                    color: Theme.highlightColor
-                    font.capitalization: Font.SmallCaps
-                }
-                ChartItem {
-                    id: combatSkillBox
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.combatskill
+                Label { text: "Combat Skill"; color: Theme.highlightColor; font.capitalization: Font.SmallCaps }
+                ChartItem { id: combatSkillBox
                     you: root.you
-                    prop: "combatskill"
+                    text: d.neworder ? you.neworder_combatskill : you.combatskill
+                    prop: d.neworder ? "neworder_combatskill"  : "combatskill"
                     width: Theme.buttonWidthSmall
-                    visible: !d.neworder
-                }
-                ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_combatskill
-                    you: root.you
-                    prop: "neworder_combatskill"
-                    width: Theme.buttonWidthSmall
-                    visible: d.neworder
                 }
                 Row {
                     IconButton {
@@ -548,29 +534,18 @@ Page {
                     }
                 }
 
-
                 Label {
                     text: "Belt Pouch"
                     color: Theme.highlightColor
                     font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.gold
                     you: root.you
-                    prop: "gold"
-                    width: Theme.buttonWidthSmall
-                    visible: !d.neworder
+                    text: d.neworder ? you.neworder_gold : you.gold
+                    prop: d.neworder ?  "neworder_gold" : "gold"
                     description: "Max 50"
-                }
-                ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_gold
-                    you: root.you
-                    prop: "neworder_gold"
                     width: Theme.buttonWidthSmall
-                    visible: d.neworder
-                    description: "Max 50"
                 }
                 Row {
                     IconButton {
@@ -593,22 +568,22 @@ Page {
                     visible: true
                 }
                 ChartItem { id: quiveritem
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.quiver
-                    you: root.you
-                    prop: "quiver"
-                    width: Theme.buttonWidthSmall
                     visible: true
+                    width: Theme.buttonWidthSmall
+                    you: root.you
+                    text: you.quiver
+                    prop: "quiver"
                     description: "Max 6"
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 ChartItem { id: neworder_quiveritem
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_quiver
-                    you: root.you
-                    prop: "neworder_quiver"
-                    width: Theme.buttonWidthSmall
                     visible: false
+                    width: Theme.buttonWidthSmall
+                    you: root.you
+                    text: you.neworder_quiver
+                    prop: "neworder_quiver"
                     description: "Max 6"
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 Row {
                     visible: quiveritem.visible || neworder_quiveritem.visible
@@ -631,12 +606,12 @@ Page {
                     font.capitalization: Font.SmallCaps
                 }
                 ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: d.neworder ? you.neworder_meals : you.meals
-                    you: root.you
-                    prop: "meals"
                     width: Theme.buttonWidthSmall
+                    you: root.you
+                    text: d.neworder ? you.neworder_meals : you.meals
+                    prop: "meals"
                     description: "Each fills a backpack slot"
+                    inputMethodHints: Qt.ImhDigitsOnly
                 }
                 Row {
                     IconButton {
@@ -664,16 +639,16 @@ Page {
                 property real itemWidth: (col.width - spacing) / 2
 
                 ChartItem {
-                    text: d.neworder ? you.neworder_weapon1 : you.weapon1
-                    you: root.you
-                    prop: d.neworder ? "neworder_weapon1 " : "weapon1"
                     width: weapons.itemWidth
+                    you: root.you
+                    text: d.neworder ? you.neworder_weapon1 : you.weapon1
+                    prop: d.neworder ? "neworder_weapon1 " : "weapon1"
                 }
                 ChartItem {
-                    text: d.neworder ? you.neworder_weapon2 : you.weapon2
-                    you: root.you
-                    prop: d.neworder ? "neworder_weapon2 " : "weapon2"
                     width: weapons.itemWidth
+                    you: root.you
+                    text: d.neworder ? you.neworder_weapon2 : you.weapon2
+                    prop: d.neworder ? "neworder_weapon2 " : "weapon2"
                 }
             }
 
@@ -693,10 +668,10 @@ Page {
                 visible: true
                 Repeater { model: d.grandmaster ? 10 : 8
                     delegate: ChartItem {
-                        text: you[prop]
-                        you: root.you
-                        prop: "backpack" + Number(index+1)
                         width: backpack.itemWidth
+                        you: root.you
+                        text: you[prop]
+                        prop: "backpack" + Number(index+1)
                         label: (((d.grandmaster ? 10 : 8) - you.meals ) <= index)
                                ? "Meal" : ""
                         acceptableInput: (label != "Meal") || (text.length == 0)
@@ -713,10 +688,10 @@ Page {
                 visible: false
                 Repeater{ model: 10
                     delegate: ChartItem {
-                        text: you[prop]
-                        you: root.you
-                        prop: "neworder_backpack" + Number(index+1)
                         width: neworder_backpack.itemWidth
+                        you: root.you
+                        text: you[prop]
+                        prop: "neworder_backpack" + Number(index+1)
                         label: ((10 - you.neworder_meals ) <= index)
                                ? "Meal" : ""
                         acceptableInput: (label != "Meal") || (text.length == 0)
@@ -730,10 +705,10 @@ Page {
                 visible: kaiweapon.visible
             }
             ChartItem { id: kaiweapon
-                text: you.neworder_kaiweapon
-                you: root.you
-                prop: "neworder_kaiweapon"
                 width: col.width
+                you: root.you
+                text: you.neworder_kaiweapon
+                prop: "neworder_kaiweapon"
                 visible: false
             }
 
@@ -751,10 +726,10 @@ Page {
                 visible: true
                 Repeater { model: 12
                     delegate: ChartItem {
-                        text: you[prop]
-                        you: root.you
-                        prop: "special" + Number(index+1)
                         width: specials.itemWidth
+                        you: root.you
+                        text: you[prop]
+                        prop: "special" + Number(index+1)
                     }
                 }
             }
@@ -766,10 +741,10 @@ Page {
                 visible: false
                 Repeater { model: 12
                     delegate: ChartItem {
-                        text: you[prop]
-                        you: root.you
-                        prop: "neworder_special" + Number(index+1)
                         width: neworder_specials.itemWidth
+                        you: root.you
+                        text: you[prop]
+                        prop: "neworder_special" + Number(index+1)
                     }
                 }
             }
