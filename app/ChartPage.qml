@@ -15,6 +15,61 @@ Page {
         //: "#7f7f4c"
         : Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
 
+
+    states: [
+        State { name: "kai"; when: mainView.inkai
+            PropertyChanges { target: disciplines; columns: 2; rows: 5 }
+            PropertyChanges { target: disciplines_repeater; model: kaidisciplinesModel }
+            PropertyChanges { target: disciplines_header; text: "Kai Disciplines" }
+
+            PropertyChanges { target: kairank; visible: true }
+
+            PropertyChanges { target: weaponmastery_header; visible: false }
+            PropertyChanges { target: weaponmastery; visible: false }
+
+            PropertyChanges { target: quiverlabel; visible: false } // the others have it
+            PropertyChanges { target: quiveritem; visible: false } // the others have it
+        },
+        State { name: "magnakai"; when: mainView.inmagnakai
+            PropertyChanges { target: disciplines; columns: 2; rows: 5 }
+            PropertyChanges { target: disciplines_repeater; model: magnakaidisciplinesModel }
+            PropertyChanges { target: disciplines_header; text:  "Magnakai Disciplines" }
+
+            PropertyChanges { target: magnakairank; visible: true }
+
+            PropertyChanges { target: weaponmastery_header; text: "Weaponmastery" }
+            PropertyChanges { target: weaponmastery_repeater; model: weaponmasteryModel }
+
+        },
+        State { name: "grandmaster"; when: mainView.ingrandmaster
+            PropertyChanges { target: disciplines; columns: 2; rows: 6 }
+            PropertyChanges { target: disciplines_repeater; model: grandmasterdisciplinesModel }
+            PropertyChanges { target: disciplines_header; text: "Grand Master Disciplines" }
+
+            PropertyChanges { target: weaponmastery_header; text: "Grand Weaponmastery" }
+            PropertyChanges { target: weaponmastery_repeater; model: grandweaponmasteryModel }
+
+        },
+        State { name: "neworder"; when: mainView.inneworder
+            PropertyChanges { target: disciplines; columns: 2; rows: 8 }
+            PropertyChanges { target: disciplines_repeater; model: neworderdisciplinesModel }
+            PropertyChanges { target: disciplines_header; text: "New Order Disciplines" }
+
+            PropertyChanges { target: weaponmastery_header; text: "New Order Weaponmastery" }
+            PropertyChanges { target: weaponmastery_repeater; model: neworderweaponmasteryModel }
+
+            PropertyChanges { target: neworder_quiveritem; visible: true }
+            PropertyChanges { target: weapons; visible: false }
+
+            PropertyChanges { target: backpack; visible: false }
+            PropertyChanges { target: neworder_backpack; visible: true }
+
+            PropertyChanges { target: kaiweapon; visible: true }
+            PropertyChanges { target: specials; visible: false }
+            PropertyChanges { target: neworder_specials; visible: true }
+        }
+    ]
+
     QtObject {
         id: d
         // deprecated aliases, didn't want to bother searching and replacing
@@ -199,6 +254,72 @@ Page {
          }
      }
 
+     ListModel { id: neworderdisciplinesModel
+         ListElement {
+             text: "G Weaponmastery"
+             prop: "neworder_grandweaponmastery"
+         }
+         ListElement {
+             text: "Animal Mastery"
+             prop: "neworder_animalmastery"
+         }
+         ListElement {
+             text: "Deliverance"
+             prop: "neworder_deliverance"
+         }
+         ListElement {
+             text: "Assimilance"
+             prop: "neworder_assimilance"
+         }
+         ListElement {
+             text: "G Huntmastery"
+             prop: "neworder_grandhuntmastery"
+         }
+         ListElement {
+             text: "G Pathsmanship"
+             prop: "neworder_grandpathsmanship"
+         }
+         ListElement {
+             text: "Kai-surge"
+             prop: "neworder_kaisurge"
+         }
+         ListElement {
+             text: "Kai-screen"
+             prop: "neworder_kaiscreen"
+         }
+         ListElement {
+             text: "Grand Nexus"
+             prop: "neworder_grandnexus"
+         }
+         ListElement {
+             text: "Telegnosis"
+             prop: "neworder_telegnosis"
+         }
+         ListElement {
+             text: "Magi-magic"
+             prop: "neworder_magimagic"
+         }
+         ListElement {
+             text: "Kai-alchemy"
+             prop: "neworder_kaialchemy"
+         }
+         ListElement {
+             text: "Astrology"
+             prop: "neworder_astrology"
+         }
+         ListElement {
+             text: "Herbmastery"
+             prop: "neworder_herbmastery"
+         }
+         ListElement {
+             text: "Elementalism"
+             prop: "neworder_elementalism"
+         }
+         ListElement {
+             text: "Bardsmanship"
+             prop: "neworder_bardsmanship"
+         }
+     }
      ListModel { id: weaponmasteryModel
          ListElement {
              text: "Dagger"
@@ -283,6 +404,48 @@ Page {
              prop: "grandweaponmastery_broadsword"
          }
      }
+     ListModel { id: neworderweaponmasteryModel
+         ListElement {
+             text: "Dagger"
+             prop: "neworder_grandweaponmastery_dagger"
+         }
+         ListElement {
+             text: "Mace"
+             prop: "neworder_grandweaponmastery_mace"
+         }
+         ListElement {
+             text: "Warhammer"
+             prop: "neworder_grandweaponmastery_warhammer"
+         }
+         ListElement {
+             text: "Axe"
+             prop: "neworder_grandweaponmastery_axe"
+         }
+         ListElement {
+             text: "Quarterstaff"
+             prop: "neworder_grandweaponmastery_quarterstaff"
+         }
+         ListElement {
+             text: "Spear"
+             prop: "neworder_grandweaponmastery_spear"
+         }
+         ListElement {
+             text: "Short Sword"
+             prop: "neworder_grandweaponmastery_shortsword"
+         }
+         ListElement {
+             text: "Bow"
+             prop: "neworder_grandweaponmastery_bow"
+         }
+         ListElement {
+             text: "Sword"
+             prop: "neworder_grandweaponmastery_sword"
+         }
+         ListElement {
+             text: "Broadsword"
+             prop: "neworder_grandweaponmastery_broadsword"
+         }
+     }
 
     SilicaFlickable {
         id: flicker
@@ -315,19 +478,10 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.maxendurance
                     you: root.you
-                    prop: "maxendurance"
+                    text: d.neworder ? you.neworder_maxendurance : you.maxendurance
+                    prop: d.neworder ?  "neworder_maxendurance" : "maxendurance"
                     width: combatSkillBox.width
-                    visible: !d.neworder
-                }
-                ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_maxendurance
-                    you: root.you
-                    prop: "neworder_maxendurance"
-                    width: combatSkillBox.width
-                    visible: d.neworder
                 }
                 Item {height: 1; width: 1} // spacer/placeholder for Grid
 
@@ -339,19 +493,10 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.endurance
+                    text: d.neworder ? you.neworder_endurance : you.endurance
                     you: root.you
-                    prop: "endurance"
+                    prop: d.neworder ? "endurance" : "neworder_endurance"
                     width: combatSkillBox.width
-                    visible: !d.neworder
-                }
-                ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_endurance
-                    you: root.you
-                    prop: "neworder_endurance"
-                    width: combatSkillBox.width
-                    visible: d.neworder
                 }
                 Row {
                     IconButton {
@@ -441,32 +586,32 @@ Page {
                         enabled: d.neworder ? (you.neworder_gold < 50) : (you.gold < 50)
                     }
                 }
-                Label {
+                Label { id: quiverlabel
                     text: "Quiver"
                     color: Theme.highlightColor
                     font.capitalization: Font.SmallCaps
-                    visible: d.magnakai || d.grandmaster || d.neworder
+                    visible: true
                 }
-                ChartItem {
+                ChartItem { id: quiveritem
                     inputMethodHints: Qt.ImhDigitsOnly
                     text: you.quiver
                     you: root.you
                     prop: "quiver"
                     width: Theme.buttonWidthSmall
-                    visible: d.magnakai || d.grandmaster
+                    visible: true
                     description: "Max 6"
                 }
-                ChartItem {
+                ChartItem { id: neworder_quiveritem
                     inputMethodHints: Qt.ImhDigitsOnly
                     text: you.neworder_quiver
                     you: root.you
                     prop: "neworder_quiver"
                     width: Theme.buttonWidthSmall
-                    visible: d.neworder
+                    visible: false
                     description: "Max 6"
                 }
                 Row {
-                    visible: d.magnakai || d.grandmaster || d.neworder
+                    visible: quiveritem.visible || neworder_quiveritem.visible
                     IconButton {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
@@ -487,20 +632,10 @@ Page {
                 }
                 ChartItem {
                     inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.meals
+                    text: d.neworder ? you.neworder_meals : you.meals
                     you: root.you
                     prop: "meals"
                     width: Theme.buttonWidthSmall
-                    visible: !d.neworder
-                    description: "Each fills a backpack slot"
-                }
-                ChartItem {
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    text: you.neworder_meals
-                    you: root.you
-                    prop: "neworder_meals"
-                    width: Theme.buttonWidthSmall
-                    visible: d.neworder
                     description: "Each fills a backpack slot"
                 }
                 Row {
@@ -522,44 +657,22 @@ Page {
                 text: "Weapons"
                 font.capitalization: Font.SmallCaps
             }
-            Grid {
-                id: weapons
+            Grid { id: weapons
                 columns: 2
                 rows: 1
                 flow: Grid.TopToBottom
                 property real itemWidth: (col.width - spacing) / 2
-                visible: !d.neworder
 
                 ChartItem {
-                    text: you.weapon1
+                    text: d.neworder ? you.neworder_weapon1 : you.weapon1
                     you: root.you
-                    prop: "weapon1"
+                    prop: d.neworder ? "neworder_weapon1 " : "weapon1"
                     width: weapons.itemWidth
                 }
                 ChartItem {
-                    text: you.weapon2
+                    text: d.neworder ? you.neworder_weapon2 : you.weapon2
                     you: root.you
-                    prop: "weapon2"
-                    width: weapons.itemWidth
-                }
-            }
-            Grid {
-                id: neworder_weapons
-                columns: 2
-                rows: 1
-                flow: Grid.TopToBottom
-                visible: d.neworder
-
-                ChartItem {
-                    text: you.neworder_weapon1
-                    you: root.you
-                    prop: "neworder_weapon1"
-                    width: weapons.itemWidth
-                }
-                ChartItem {
-                    text: you.neworder_weapon2
-                    you: root.you
-                    prop: "neworder_weapon2"
+                    prop: d.neworder ? "neworder_weapon2 " : "weapon2"
                     width: weapons.itemWidth
                 }
             }
@@ -577,7 +690,7 @@ Page {
                 flow: Grid.LeftToRight
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
-                visible: !d.neworder
+                visible: true
                 Repeater { model: d.grandmaster ? 10 : 8
                     delegate: ChartItem {
                         text: you[prop]
@@ -597,7 +710,7 @@ Page {
                 flow: Grid.LeftToRight
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
-                visible: d.neworder
+                visible: false
                 Repeater{ model: 10
                     delegate: ChartItem {
                         text: you[prop]
@@ -611,17 +724,17 @@ Page {
                 }
             }
 
-            Label {
+            Label { id: kaiweaponlabel
                 text: "Kai Weapon"
                 color: Theme.highlightColor
-                visible: d.neworder
+                visible: kaiweapon.visible
             }
-            ChartItem {
+            ChartItem { id: kaiweapon
                 text: you.neworder_kaiweapon
                 you: root.you
                 prop: "neworder_kaiweapon"
                 width: col.width
-                visible: d.neworder
+                visible: false
             }
 
             SectionHeader {
@@ -635,7 +748,7 @@ Page {
                 flow: Grid.TopToBottom
                 spacing: 1
                 property real itemWidth: col.width
-                visible: !d.neworder
+                visible: true
                 Repeater { model: 12
                     delegate: ChartItem {
                         text: you[prop]
@@ -645,13 +758,12 @@ Page {
                     }
                 }
             }
-            Grid {
-                id: neworder_specials
+            Grid { id: neworder_specials
                 columns: 1
                 rows: 12
                 flow: Grid.TopToBottom
                 spacing: 1
-                visible: d.neworder
+                visible: false
                 Repeater { model: 12
                     delegate: ChartItem {
                         text: you[prop]
@@ -662,14 +774,12 @@ Page {
                 }
             }
 
-            SectionHeader {
-                text: "Kai Disciplines"
+            SectionHeader { id: disciplines_header
                 font.capitalization: Font.SmallCaps
-                visible: d.kai
             }
 
-            DetailItem {
-                visible: d.kai
+            DetailItem { id: kairank
+                visible: false
                 width: parent.width/2
                 label: "Rank"
                 value: ranknames[rank]
@@ -700,16 +810,9 @@ Page {
                     return r
                 }
             }
-
-            SectionHeader {
-                text: "Magnakai Disciplines"
-                font.capitalization: Font.SmallCaps
-                visible: d.magnakai
-            }
-
-            Row {
+            Row { id: magnakairank
+                visible: false
                 width: parent.width
-                visible: d.magnakai
                 DetailItem {
                     width: parent.width/2
                     label: "Rank"
@@ -754,17 +857,13 @@ Page {
                 }
             }
 
-
-            Grid {
-                id: disciplines
+            Grid { id: disciplines
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
-                visible: d.kai || d.magnakai
-                Repeater {
-                    model: d.kai ? kaidisciplinesModel : (d.magnakai ? magnakaidisciplinesModel : undefined )
+                Repeater { id: disciplines_repeater
                     delegate: ChartCheck {
                         you: root.you
                         text: model.text
@@ -775,284 +874,24 @@ Page {
                     }
                 }
             }
-            SectionHeader { id: weaponmasteryheader
-                text: "Weaponmastery Proficiencies"
+            SectionHeader { id: weaponmastery_header
                 font.capitalization: Font.SmallCaps
                 color: Theme.highlightColor
-                visible: d.magnakai
             }
-            Grid { id: weaponmasterygrid
+            Grid { id: weaponmastery
                 columns: 2
                 rows: 5
                 flow: Grid.TopToBottom
                 spacing: 1
-                visible: false
                 property real itemWidth: (col.width - spacing) / 2
-                Repeater { id: wprofrepeater
+                Repeater { id: weaponmastery_repeater
                     delegate: ChartCheck {
                         you: root.you
                         text: model.text
                         checked: you[model.prop]
                         prop: model.prop
-                        width: weaponmasterygrid.itemWidth
+                        width: weaponmastery.itemWidth
                     }
-                }
-            }
-
-            SectionHeader {
-                text: "Grand Master Disciplines"
-                font.capitalization: Font.SmallCaps
-                visible: d.grandmaster
-            }
-            Grid { id: gmdiscgrid
-                columns: 2
-                rows: 6
-                flow: Grid.TopToBottom
-                spacing: 1
-                visible: d.grandmaster
-                property real itemWidth: (col.width - spacing) / 2
-                Repeater { id: gmdiscrepeater
-                    delegate: ChartCheck {
-                        you: root.you
-                        text: model.text
-                        checked: you[model.prop]
-                        prop: model.prop
-                        width: gmdiscgrid.itemWidth
-                    }
-                }
-            }
-
-            SectionHeader {
-                text: "Grand Weaponmastery Proficiencies"
-                font.capitalization: Font.SmallCaps
-                color: Theme.highlightColor
-                visible: d.grandmaster
-            }
-            Grid { id: grandweaponmasterygrid
-                columns: 2
-                rows: 5
-                flow: Grid.TopToBottom
-                spacing: 1
-                visible: d.grandmaster
-                property real itemWidth: (col.width - spacing) / 2
-                Repeater { id: wprofrepeater
-                    delegate: ChartCheck {
-                        you: root.you
-                        text: model.text
-                        checked: you[model.prop]
-                        prop: prop
-                        width: grandweaponmasterygrid.itemWidth
-                    }
-                }
-            }
-
-            SectionHeader {
-                text: "New Order Disciplines"
-                font.capitalization: Font.SmallCaps
-                visible: d.neworder
-            }
-            Grid {
-                columns: 2
-                rows: 8
-                flow: Grid.TopToBottom
-                spacing: 1
-                visible: d.neworder
-
-                ChartCheck {
-                    you: root.you
-                    text: "G Weaponmastery"
-                    checked: you.neworder_grandweaponmastery
-                    prop: "neworder_grandweaponmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Animal Mastery"
-                    checked: you.neworder_animalmastery
-                    prop: "neworder_animalmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Deliverance"
-                    checked: you.neworder_deliverance
-                    prop: "neworder_deliverance"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Assimilance"
-                    checked: you.neworder_assimilance
-                    prop: "neworder_assimilance"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "G Huntmastery"
-                    checked: you.neworder_grandhuntmastery
-                    prop: "neworder_grandhuntmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "G Pathsmanship"
-                    checked: you.neworder_grandpathsmanship
-                    prop: "neworder_grandpathsmanship"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-surge"
-                    checked: you.neworder_kaisurge
-                    prop: "neworder_kaisurge"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-screen"
-                    checked: you.neworder_kaiscreen
-                    prop: "neworder_kaiscreen"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Grand Nexus"
-                    checked: you.neworder_grandnexus
-                    prop: "neworder_grandnexus"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Telegnosis"
-                    checked: you.neworder_telegnosis
-                    prop: "neworder_telegnosis"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Magi-magic"
-                    checked: you.neworder_magimagic
-                    prop: "neworder_magimagic"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-alchemy"
-                    checked: you.neworder_kaialchemy
-                    prop: "neworder_kaialchemy"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Astrology"
-                    checked: you.neworder_astrology
-                    prop: "neworder_astrology"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Herbmastery"
-                    checked: you.neworder_herbmastery
-                    prop: "neworder_herbmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Elementalism"
-                    checked: you.neworder_elementalism
-                    prop: "neworder_elementalism"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Bardsmanship"
-                    checked: you.neworder_bardsmanship
-                    prop: "neworder_bardsmanship"
-                    width: disciplines.itemWidth
-                }
-            }
-
-            SectionHeader {
-                text: "Grand Weaponmastery Checklist"
-                font.capitalization: Font.SmallCaps
-                visible: d.neworder
-            }
-            Grid {
-                columns: 2
-                rows: 5
-                flow: Grid.TopToBottom
-                spacing: 1
-                visible: d.neworder
-
-                ChartCheck {
-                    you: root.you
-                    text: "Dagger"
-                    checked: you.neworder_grandweaponmastery_dagger
-                    prop: "neworder_grandweaponmastery_dagger"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Mace"
-                    checked: you.neworder_grandweaponmastery_mace
-                    prop: "neworder_grandweaponmastery_mace"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Warhammer"
-                    checked: you.neworder_grandweaponmastery_warhammer
-                    prop: "neworder_grandweaponmastery_warhammer"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Axe"
-                    checked: you.neworder_grandweaponmastery_axe
-                    prop: "neworder_grandweaponmastery_axe"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Quarterstaff"
-                    checked: you.neworder_grandweaponmastery_quarterstaff
-                    prop: "neworder_grandweaponmastery_quarterstaff"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Spear"
-                    checked: you.neworder_grandweaponmastery_spear
-                    prop: "neworder_grandweaponmastery_spear"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Short Sword"
-                    checked: you.neworder_grandweaponmastery_shortsword
-                    prop: "neworder_grandweaponmastery_shortsword"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Bow"
-                    checked: you.neworder_grandweaponmastery_bow
-                    prop: "neworder_grandweaponmastery_bow"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Sword"
-                    checked: you.neworder_grandweaponmastery_sword
-                    prop: "neworder_grandweaponmastery_sword"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Broadsword"
-                    checked: you.neworder_grandweaponmastery_broadsword
-                    prop: "neworder_grandweaponmastery_broadsword"
-                    width: disciplines.itemWidth
                 }
             }
 
@@ -1064,26 +903,11 @@ Page {
             TextArea {
                 id: notes
                 width: parent.width
-                //height: Theme.itemSizeLarge
-                text: you.notes
-                placeholderText: "\n\n\n"
-                visible: !d.neworder
+                text: d.neworder ? you.neworder_notes : you.notes
                 Binding {
                     target: you
-                    property: "notes"
+                    property: d.neworder ?  "neworder_notes" : "notes"
                     value: notes.text
-                }
-            }
-            TextArea {
-                id: neworder_notes
-                //height: Theme.itemSizeLarge
-                width: parent.width
-                text: you.neworder_notes
-                visible: d.neworder
-                Binding {
-                    target: you
-                    property: "neworder_notes"
-                    value: neworder_notes.text
                 }
             }
         }
