@@ -41,7 +41,9 @@ Page {
             const b = neworderModel.get(i)
             if (b.book == bid) { return b }
         }
-        return { "title": "Lone Wolf", "coverColor": "transparent" }
+        //return { "title": "Lone Wolf", "coverColor": "transparent" }
+        // if in doubt, return the first book:
+        return kaiModel.get(0)
     }
 
     SilicaFlickable {
