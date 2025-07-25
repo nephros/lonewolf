@@ -148,6 +148,57 @@ Page {
             note: ""
         }
      }
+     ListModel { id: grandmasterdisciplinesModel
+         ListElement {
+             text: "G Weaponmastery"
+             prop: "grandmaster_grandweaponmastery"
+         }
+         ListElement {
+             text: "Animal Mastery"
+             prop: "grandmaster_animalmastery"
+         }
+         ListElement {
+             text: "Deliverance"
+             prop: "grandmaster_deliverance"
+         }
+         ListElement {
+             text: "Assimilance"
+             prop: "grandmaster_assimilance"
+         }
+         ListElement {
+             text: "G Huntmastery"
+             prop: "grandmaster_grandhuntmastery"
+         }
+         ListElement {
+             text: "G Pathsmanship"
+             prop: "grandmaster_grandpathsmanship"
+         }
+         ListElement {
+             text: "Kai-surge"
+             prop: "grandmaster_kaisurge"
+         }
+         ListElement {
+             text: "Kai-screen"
+             prop: "grandmaster_kaiscreen"
+         }
+         ListElement {
+             text: "Grand Nexus"
+             prop: "grandmaster_grandnexus"
+         }
+         ListElement {
+             text: "Telegnosis"
+             prop: "grandmaster_telegnosis"
+         }
+         ListElement {
+             text: "Magi-magic"
+             prop: "grandmaster_magimagic"
+         }
+         ListElement {
+             text: "Kai-alchemy"
+             prop: "grandmaster_kaialchemy"
+         }
+     }
+
      ListModel { id: weaponproficiencyModel
          ListElement {
              text: "Dagger"
@@ -753,96 +804,21 @@ Page {
                 font.capitalization: Font.SmallCaps
                 visible: d.grandmaster
             }
-            Grid {
+            Grid { id: gmdiscgrid
                 columns: 2
                 rows: 6
                 flow: Grid.TopToBottom
                 spacing: 1
                 visible: d.grandmaster
-
-                ChartCheck {
-                    you: root.you
-                    text: "G Weaponmastery"
-                    checked: you.grandmaster_grandweaponmastery
-                    prop: "grandmaster_grandweaponmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Animal Mastery"
-                    checked: you.grandmaster_animalmastery
-                    prop: "grandmaster_animalmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Deliverance"
-                    checked: you.grandmaster_deliverance
-                    prop: "grandmaster_deliverance"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Assimilance"
-                    checked: you.grandmaster_assimilance
-                    prop: "grandmaster_assimilance"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "G Huntmastery"
-                    checked: you.grandmaster_grandhuntmastery
-                    prop: "grandmaster_grandhuntmastery"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "G Pathsmanship"
-                    checked: you.grandmaster_grandpathsmanship
-                    prop: "grandmaster_grandpathsmanship"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-surge"
-                    checked: you.grandmaster_kaisurge
-                    prop: "grandmaster_kaisurge"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-screen"
-                    checked: you.grandmaster_kaiscreen
-                    prop: "grandmaster_kaiscreen"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Grand Nexus"
-                    checked: you.grandmaster_grandnexus
-                    prop: "grandmaster_grandnexus"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Telegnosis"
-                    checked: you.grandmaster_telegnosis
-                    prop: "grandmaster_telegnosis"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Magi-magic"
-                    checked: you.grandmaster_magimagic
-                    prop: "grandmaster_magimagic"
-                    width: disciplines.itemWidth
-                }
-                ChartCheck {
-                    you: root.you
-                    text: "Kai-alchemy"
-                    checked: you.grandmaster_kaialchemy
-                    prop: "grandmaster_kaialchemy"
-                    width: disciplines.itemWidth
+                property real itemWidth: (col.width - spacing) / 2
+                Repeater { id: gmdiscrepeater
+                    delegate: ChartCheck {
+                        you: root.you
+                        text: model.text
+                        checked: you[model.prop]
+                        prop: model.prop
+                        width: gmdiscgrid.itemWidth
+                    }
                 }
             }
 
