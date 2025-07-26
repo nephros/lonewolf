@@ -214,7 +214,7 @@ Page {
 
      ListModel { id: grandmasterdisciplinesModel
          ListElement {
-             text: "G Weaponmastery"
+             text: "Grand Weaponmastery"
              prop: "grandmaster_grandweaponmastery"
          }
          ListElement {
@@ -230,11 +230,11 @@ Page {
              prop: "grandmaster_assimilance"
          }
          ListElement {
-             text: "G Huntmastery"
+             text: "Grand Huntmastery"
              prop: "grandmaster_grandhuntmastery"
          }
          ListElement {
-             text: "G Pathsmanship"
+             text: "Grand Pathsmanship"
              prop: "grandmaster_grandpathsmanship"
          }
          ListElement {
@@ -265,7 +265,7 @@ Page {
 
      ListModel { id: neworderdisciplinesModel
          ListElement {
-             text: "G Weaponmastery"
+             text: "Grand Weaponmastery"
              prop: "neworder_grandweaponmastery"
          }
          ListElement {
@@ -281,11 +281,11 @@ Page {
              prop: "neworder_assimilance"
          }
          ListElement {
-             text: "G Huntmastery"
+             text: "Grand Huntmastery"
              prop: "neworder_grandhuntmastery"
          }
          ListElement {
-             text: "G Pathsmanship"
+             text: "Grand Pathsmanship"
              prop: "neworder_grandpathsmanship"
          }
          ListElement {
