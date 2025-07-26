@@ -627,6 +627,7 @@ Page {
             SectionHeader {
                 text: "Weapons"
                 font.capitalization: Font.SmallCaps
+                visible: weapons.visible
             }
             Grid { id: weapons
                 columns: 2
@@ -661,7 +662,6 @@ Page {
                 flow: Grid.LeftToRight
                 spacing: 1
                 property real itemWidth: (col.width - spacing) / 2
-                visible: true
                 Repeater { model: d.grandmaster ? 10 : 8
                     delegate: ChartItem {
                         width: backpack.itemWidth
@@ -695,31 +695,17 @@ Page {
                 }
             }
 
-            Label { id: kaiweaponlabel
-                text: "Kai Weapon"
-                color: Theme.highlightColor
-                visible: kaiweapon.visible
-            }
-            ChartItem { id: kaiweapon
-                width: col.width
-                you: root.you
-                text: you.neworder_kaiweapon
-                prop: "neworder_kaiweapon"
-                visible: false
-            }
-
             SectionHeader {
                 text: "Special Items"
                 font.capitalization: Font.SmallCaps
+                visible: specials.visible || neworderspecials.visible
             }
-            Grid {
-                id: specials
+            Grid { id: specials
                 columns: 1
                 rows: 12
                 flow: Grid.TopToBottom
                 spacing: 1
                 property real itemWidth: col.width
-                visible: true
                 Repeater { model: 12
                     delegate: ChartItem {
                         width: specials.itemWidth
@@ -840,14 +826,13 @@ Page {
                         text: model.text
                         checked: you[model.prop]
                         prop: model.prop
-                        note: model.note
+                        note: model.note ? model.note : ""
                         width: disciplines.itemWidth
                     }
                 }
             }
             SectionHeader { id: weaponmastery_header
                 font.capitalization: Font.SmallCaps
-                color: Theme.highlightColor
             }
             Grid { id: weaponmastery
                 columns: 2
