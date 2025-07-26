@@ -48,7 +48,7 @@ Page {
             PropertyChanges { target: d; grandmaster: true }
             PropertyChanges { target: disciplines; columns: 2; rows: 6 }
             PropertyChanges { target: disciplines_repeater; model: grandmasterdisciplinesModel }
-            PropertyChanges { target: disciplines_header; text: "Grand Master Disciplines" }
+            PropertyChanges { target: disciplines_header; text: "Kai Grand Master Disciplines" }
 
             PropertyChanges { target: weaponmastery_header; text: "Grand Weaponmastery" }
             PropertyChanges { target: weaponmastery_repeater; model: grandweaponmasteryModel }
@@ -59,7 +59,7 @@ Page {
 
             PropertyChanges { target: disciplines; columns: 2; rows: 8 }
             PropertyChanges { target: disciplines_repeater; model: neworderdisciplinesModel }
-            PropertyChanges { target: disciplines_header; text: "New Order Grand Master Disciplines" }
+            PropertyChanges { target: disciplines_header; text: "New Order Kai Grand Master Disciplines" }
 
             PropertyChanges { target: weaponmastery_header; text: "Grand Weaponmastery" }
             PropertyChanges { target: weaponmastery_repeater; model: neworderweaponmasteryModel }
