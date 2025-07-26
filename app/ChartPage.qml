@@ -72,6 +72,9 @@ Page {
             PropertyChanges { target: kaiweapon; visible: true }
             PropertyChanges { target: specials; visible: false }
             PropertyChanges { target: neworder_specials; visible: true }
+
+            PropertyChanges { target: notes; visible: false }
+            PropertyChanges { target: neworder_notes; visible: true }
         }
     ]
 
@@ -869,14 +872,24 @@ Page {
                 font.capitalization: Font.SmallCaps
                 font.pixelSize: Theme.fontSizeLarge
             }
-            TextArea {
-                id: notes
+            TextArea { id: notes
                 width: parent.width
-                text: d.neworder ? you.neworder_notes : you.notes
+                text: you.notes
                 Binding {
                     target: you
-                    property: d.neworder ? "neworder_notes" : "notes"
+                    property: "notes"
                     value: notes.text
+                }
+            }
+            // Do not try to merge with the above!
+            TextArea { id: neworder_notes
+                width: parent.width
+                text: you.neworder_notes
+                visible: false
+                Binding {
+                    target: you
+                    property: "neworder_notes"
+                    value: neworder_notes.text
                 }
             }
         }
