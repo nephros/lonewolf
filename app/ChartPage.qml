@@ -508,13 +508,13 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_endurance -=1 : you.endurance -=1
-                        enabled: d.neworder ? (you.neworder_endurance > 0) : (you.endurance > 0)
+                        enabled:   d.neworder ? (you.neworder_endurance > 0) : (you.endurance > 0)
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-add"
-                        enabled: (you.endurance < you.maxendurance)
                         onClicked: d.neworder ? you.neworder_endurance +=1 : you.endurance +=1
+                        enabled: d.neworder ?  (you.neworder_endurance < you.neworder_maxendurance) : (you.endurance < you.maxendurance)
                     }
                 }
 
@@ -531,6 +531,7 @@ Page {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
                         onClicked: d.neworder ? you.neworder_combatskill -=1 : you.combatskill -=1
+                        enabled: d.neworder ? you.neworder_combatskill > 0 : you.combatskill > 0
                     }
                     IconButton {
                         width: Theme.buttonWidthTiny
