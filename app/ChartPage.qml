@@ -639,13 +639,13 @@ Page {
                     width: weapons.itemWidth
                     you: root.you
                     text: d.neworder ? you.neworder_weapon1 : you.weapon1
-                    prop: d.neworder ? "neworder_weapon1 " : "weapon1"
+                    prop: d.neworder ? "neworder_weapon1" : "weapon1"
                 }
                 ChartItem {
                     width: weapons.itemWidth
                     you: root.you
                     text: d.neworder ? you.neworder_weapon2 : you.weapon2
-                    prop: d.neworder ? "neworder_weapon2 " : "weapon2"
+                    prop: d.neworder ? "neworder_weapon2" : "weapon2"
                 }
             }
             SectionHeader {

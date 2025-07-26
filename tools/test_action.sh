@@ -11,7 +11,7 @@ case $1 in
 		    cat 11tpot_magnakai.dconf | dconf load /apps/games/lonewolf/current/
 		fi
 	;;
-	starterpack-gm)
+	starterpack-no)
 		if [ -e 21votm_starterpack.dconf ]; then
 		    cat 21votm_starterpack.dconf | dconf load /apps/games/lonewolf/current/
 		fi
@@ -60,7 +60,7 @@ case $1 in
 	;;
 	*)
 		printf 'USAGE: %s [starterpack-NNNNN|finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n'
-		printf '\tScreenshot IDs (N): 1 2\n\tBooks (NNNN): kai magnakai gm\n'
+		printf '\tScreenshot IDs (N): 1 2\n\tBooks (NNNN): kai magnakai no\n'
 		exit 1
 	;;
 esac
