@@ -29,8 +29,7 @@ Page {
             PropertyChanges { target: weaponmastery_header; visible: false }
             PropertyChanges { target: weaponmastery; visible: false }
 
-            PropertyChanges { target: quiverlabel; visible: false } // the others have it
-            PropertyChanges { target: quiveritem; visible: false } // the others have it
+            PropertyChanges { target: quiver; visible: false } // the others have it
         },
         State { name: "magnakai"; when: mainView.inmagnakai
             PropertyChanges { target: d; magnakai: true }
@@ -571,28 +570,18 @@ Page {
                     text: "Quiver"
                     color: Theme.highlightColor
                     font.capitalization: Font.SmallCaps
-                    visible: true
+                    visible: quiver.visible
                 }
-                ChartItem { id: quiveritem
-                    visible: true
+                ChartItem { id: quiver
                     width: Theme.buttonWidthSmall
                     you: root.you
-                    text: you.quiver
-                    prop: "quiver"
-                    description: "Max 6"
-                    inputMethodHints: Qt.ImhDigitsOnly
-                }
-                ChartItem { id: neworder_quiveritem
-                    visible: false
-                    width: Theme.buttonWidthSmall
-                    you: root.you
-                    text: you.neworder_quiver
-                    prop: "neworder_quiver"
+                    text: d.neworder ? you.neworder_quiver : you.quiver
+                    prop: d.neworder ? "neworder_quiver" : "quiver"
                     description: "Max 6"
                     inputMethodHints: Qt.ImhDigitsOnly
                 }
                 Row {
-                    visible: quiveritem.visible || neworder_quiveritem.visible
+                    visible: quiver.visible
                     IconButton {
                         width: Theme.buttonWidthTiny
                         icon.source: "image://theme/icon-splus-remove"
