@@ -11,7 +11,12 @@ case $1 in
 		    cat 11tpot_magnakai.dconf | dconf load /apps/games/lonewolf/current/
 		fi
 	;;
-	finished)
+	starterpack-gm)
+		if [ -e 21votm_starterpack.dconf ]; then
+		    cat 21votm_starterpack.dconf | dconf load /apps/games/lonewolf/current/
+		fi
+	;;
+		finished)
 		# end of book -> new book
 		dconf write /apps/games/lonewolf/current/book "'09tcof'"
 		dconf write /apps/games/lonewolf/current/pageId "'sect350'"
@@ -54,7 +59,8 @@ case $1 in
 		dconf reset -f  /apps/games/lonewolf/
 	;;
 	*)
-		printf 'USAGE: %s [starterpack-NNNNN|finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n\tScreenshot IDs (N): 1 2\n\tBooks (NNNN): kai magnakai\n'
+		printf 'USAGE: %s [starterpack-NNNNN|finished|combat|puzzle|dead|harbour-screenshot-N|CLEARALL]\n'
+		printf '\tScreenshot IDs (N): 1 2\n\tBooks (NNNN): kai magnakai gm\n'
 		exit 1
 	;;
 esac
