@@ -71,7 +71,7 @@ Page {
             //PropertyChanges { target: weapons; visible: false }
             PropertyChanges { target: kaiweapon; visible: true }
             PropertyChanges { target: specials; visible: false }
-            PropertyChanges { target: neworderspecials; visible: true }
+            PropertyChanges { target: neworder_specials; visible: true }
         }
     ]
 
@@ -648,12 +648,24 @@ Page {
                     prop: d.neworder ? "neworder_weapon2 " : "weapon2"
                 }
             }
+            SectionHeader {
+                visible: kaiweapon.visible
+                text: "Kai Weapon"
+                font.capitalization: Font.SmallCaps
+            }
+            ChartItem { id: kaiweapon
+                width: col.width
+                you: root.you
+                text: you.neworder_kaiweapon
+                prop: "neworder_kaiweapon"
+                visible: false
+            }
 
             SectionHeader {
-                text: "Backpack Items (%1 meals: %2 free)".arg(meals).arg(slots)
+                text: "Backpack Items\n(%1 meals: %2 free)".arg(meals).arg(slots)
                 font.capitalization: Font.SmallCaps
                 property int meals: d.neworder ? you.neworder_meals : you.meals
-                property int slots: (d.grandmaster ? 10 : 8) - meals
+                property int slots: ((d.neworder || d.grandmaster) ? 10 : 8) - meals
             }
             Grid {
                 id: backpack
@@ -698,7 +710,7 @@ Page {
             SectionHeader {
                 text: "Special Items"
                 font.capitalization: Font.SmallCaps
-                visible: specials.visible || neworderspecials.visible
+                visible: specials.visible || neworder_specials.visible
             }
             Grid { id: specials
                 columns: 1
@@ -721,6 +733,7 @@ Page {
                 flow: Grid.TopToBottom
                 spacing: 1
                 visible: false
+                property real itemWidth: col.width
                 Repeater { model: 12
                     delegate: ChartItem {
                         width: neworder_specials.itemWidth
@@ -862,7 +875,7 @@ Page {
                 text: d.neworder ? you.neworder_notes : you.notes
                 Binding {
                     target: you
-                    property: d.neworder ?  "neworder_notes" : "notes"
+                    property: d.neworder ? "neworder_notes" : "notes"
                     value: notes.text
                 }
             }
