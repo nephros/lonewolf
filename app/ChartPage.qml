@@ -18,6 +18,8 @@ Page {
 
     states: [
         State { name: "kai"; when: mainView.inkai
+            PropertyChanges { target: d; kai: true }
+
             PropertyChanges { target: disciplines; columns: 2; rows: 5 }
             PropertyChanges { target: disciplines_repeater; model: kaidisciplinesModel }
             PropertyChanges { target: disciplines_header; text: "Kai Disciplines" }
@@ -31,6 +33,8 @@ Page {
             PropertyChanges { target: quiveritem; visible: false } // the others have it
         },
         State { name: "magnakai"; when: mainView.inmagnakai
+            PropertyChanges { target: d; magnakai: true }
+
             PropertyChanges { target: disciplines; columns: 2; rows: 5 }
             PropertyChanges { target: disciplines_repeater; model: magnakaidisciplinesModel }
             PropertyChanges { target: disciplines_header; text:  "Magnakai Disciplines" }
@@ -42,6 +46,7 @@ Page {
 
         },
         State { name: "grandmaster"; when: mainView.ingrandmaster
+            PropertyChanges { target: d; grandmaster: true }
             PropertyChanges { target: disciplines; columns: 2; rows: 6 }
             PropertyChanges { target: disciplines_repeater; model: grandmasterdisciplinesModel }
             PropertyChanges { target: disciplines_header; text: "Grand Master Disciplines" }
@@ -51,32 +56,33 @@ Page {
 
         },
         State { name: "neworder"; when: mainView.inneworder
+            PropertyChanges { target: d; neworder: true }
+
             PropertyChanges { target: disciplines; columns: 2; rows: 8 }
             PropertyChanges { target: disciplines_repeater; model: neworderdisciplinesModel }
-            PropertyChanges { target: disciplines_header; text: "New Order Disciplines" }
+            PropertyChanges { target: disciplines_header; text: "New Order Grand Master Disciplines" }
 
-            PropertyChanges { target: weaponmastery_header; text: "New Order Weaponmastery" }
+            PropertyChanges { target: weaponmastery_header; text: "Grand Weaponmastery" }
             PropertyChanges { target: weaponmastery_repeater; model: neworderweaponmasteryModel }
 
-            PropertyChanges { target: neworder_quiveritem; visible: true }
-            PropertyChanges { target: weapons; visible: false }
 
             PropertyChanges { target: backpack; visible: false }
             PropertyChanges { target: neworder_backpack; visible: true }
 
+            //PropertyChanges { target: weapons; visible: false }
             PropertyChanges { target: kaiweapon; visible: true }
             PropertyChanges { target: specials; visible: false }
-            PropertyChanges { target: neworder_specials; visible: true }
+            PropertyChanges { target: neworderspecials; visible: true }
         }
     ]
 
     QtObject {
         id: d
         // deprecated aliases, didn't want to bother searching and replacing
-        readonly property int kai: mainView.inkai
-        readonly property int magnakai: mainView.inmagnakai
-        readonly property int grandmaster: mainView.ingrandmaster
-        readonly property int neworder: mainView.inneworder
+        property bool kai: false
+        property bool magnakai: false
+        property bool grandmaster: false
+        property bool neworder: false
     }
 
     QtObject { id: c
