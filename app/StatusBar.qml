@@ -75,7 +75,7 @@ Rectangle {
                 onClicked: {
                     switch (varrow.state) {
                         case "gold":  varrow.state = "meals"; break;
-                        case "meals": varrow.state = mainView.inneworder ? "quiver" : "gold"; break
+                        case "meals": varrow.state = mainView.inkai ? "gold" : "quiver" ; break
                         case "quiver": varrow.state = "gold"
                         default: varrow.state = "gold"
                     }
