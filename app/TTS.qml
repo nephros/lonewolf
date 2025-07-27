@@ -6,14 +6,15 @@ import QtQuick 2.6
 import Nemo.DBus 2.0
 
 Item { id: root
+    property bool ready: (dbus.status == DBusInterface.Available)
     property bool speaking: false
+    property bool idle: false
     property int speakId
     property int serviceState
     property int taskState
 
     onSpeakingChanged: {
         if (!speaking) speakId = -1
-        //console.info("TTS:" + (speaking ? " began " : " stopped " ) + "speaking.")
     }
     property alias keepaliveInterval: keepalive.interval
     // we need to keep the speech going
@@ -28,19 +29,12 @@ Item { id: root
                          if (m == 0) {
                              //keepalive.stop()
                          } else { keepalive.interval = Math.max(500, m/2) }
-                     },
+                    },
                     function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
                     )
         }
     }
-    // https://github.com/mkiol/dsnote/blob/main/dbus/org.mkiol.Speech.xml
-    /*
-        <method name="TtsPlaySpeech">
-            <arg name="text" type="s" direction="in" />
-            <arg name="lang" type="s" direction="in" />
-            <arg name="task" type="i" direction="out" />
-        </method>
-    */
+
     function cleanText(text) {
         const newText
         newText = text.replace(/[ \n]+/g, ' ')
@@ -61,6 +55,14 @@ Item { id: root
         }
     }
     function reallyPlay(text) {
+        // https://github.com/mkiol/dsnote/blob/main/dbus/org.mkiol.Speech.xml
+        /*
+            <method name="TtsPlaySpeech">
+                <arg name="text" type="s" direction="in" />
+                <arg name="lang" type="s" direction="in" />
+                <arg name="task" type="i" direction="out" />
+            </method>
+        */
         //dbus.call("TtsPlaySpeech", [ text, "en" ],
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
         dbus.typedCall("TtsPlaySpeech2", [
@@ -93,11 +95,25 @@ Item { id: root
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
+    Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
+    DBusInterface { id: fdo
+        iface: "org.freedesktop.DBus.Peer"
+        service: "org.mkiol.Speech"
+        path: "/"
+    }
     DBusInterface { id: dbus
         iface: "org.mkiol.Speech"
         service: "org.mkiol.Speech"
         path: "/"
         signalsEnabled: true
+        propertiesEnabled: true
+        watchServiceStatus: true
+        onStatusChanged: {
+            //console.debug("TTS: DBus status", dbus.status)
+            if (dbus.status == DBusInterface.Available) {
+                console.debug("TTS: DBus available.")
+            }
+        }
         // Signals from "org.mkiol.Speech"
         function ttsPlaySpeechFinished(task) {
             //console.debug("TTS: Speech job finished:", task)
@@ -131,19 +147,12 @@ Item { id: root
         function statePropertyChanged(code) {
             //console.debug("TTS: State now:", stateTable[code])
             root.serviceState = code
-            if (code == 3) {root.speaking = false}
-            if (code == 8) {root.speaking = true}
+            root.idle = (code == 3)
         }
         function taskStatePropertyChanged(code) {
             root.taskState = code
-            //console.debug("TTS: Task now:", taskStateTable[code])
-            //if ((code > 1) && (code < 5)) {root.speaking = true}
-            if ((code == 3) || (code == 4)) {root.speaking = true}
-            //if (code == 4) {root.speaking = true}
+            root.speaking = (code != 0)
         }
-        propertiesEnabled: false
-        //property int state
-        //onStateChanged: console.debug("TTS: State property change:", state, ",", stateTable[state])
     }
     readonly property var errorCodeTable: [
         "Generic",

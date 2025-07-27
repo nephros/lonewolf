@@ -99,7 +99,7 @@ ApplicationWindow {
 
     property alias tts: ttsplugin.item
     property bool ttsSpeaking
-    property bool ttsAvailable: false
+	property bool ttsAvailable: (ttsplugin.status == Loader.Ready) && tts.ready
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
     function ttsPlay(text) { if (!ttsAvailable) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
     function ttsStop() { if (!ttsAvailable) return; tts.stop(); console.debug("TTS: Requested to stop")}
@@ -111,10 +111,7 @@ ApplicationWindow {
         // start this late, so startup performance is better
         active: false
         asynchronous: true
-        onLoaded: {
-            mainView.ttsAvailable = true
-            console.info("Text-to-speech plugin found.")
-        }
+        onLoaded: console.info("Text-to-speech plugin found.")
     }
 
     Component.onCompleted: {
