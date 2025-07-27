@@ -20,6 +20,7 @@ Macros:
   # 'appname;lonewolf'
   # 'orgname;lonewolf'
   - 'pkgname;%{name}'
+  - 'lw_minver;0.1.250727' # since 0.1.250727_pre1
   - plugindir;%{_datadir}/%{name}/
   # plugindir;%{_libdir}/qt5/qml
   - '__requires_exclude_from;^%{_datadir}/%{name}/_cheat/.*\.sh$'
@@ -126,7 +127,7 @@ SubPackages:
       AutoDepend: false
       Requires:
         - harbour-dsnote >= 4.7.0
-        - '%{name}'
+        - '%{name} >= %{lw_minver}' #0.1.250727' # since 0.1.250727_pre1
       Description: |
           Adds text-to-speech support to the Lone Wolf app from Jolla Harbour.
 

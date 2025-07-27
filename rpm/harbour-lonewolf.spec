@@ -9,6 +9,7 @@ Name:       harbour-lonewolf
 %bcond_with harbour
 # << macros
 %define pkgname %{name}
+%define lw_minver 0.1.250727
 %define plugindir %{_datadir}/%{name}/
 %define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$
@@ -84,7 +85,7 @@ Summary:    Text-to-Speech support for %{name}
 Group:      Games
 BuildArch:  noarch
 Requires:   harbour-dsnote >= 4.7.0
-Requires:   %{name}
+Requires:   %{name} >= %{lw_minver}
 
 %description tts-plugin
 Adds text-to-speech support to the Lone Wolf app from Jolla Harbour.
