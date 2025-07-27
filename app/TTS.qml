@@ -41,16 +41,10 @@ Item { id: root
         return newText
     }
     function play(text) {
-        const toSpeak = cleanText(text)
-        if (speaking) {
-            //console.debug("TTS: Stopping job before submitting new one!")
-            //dbus.call("TtsStopSpeech", [ speakId ],
-            //    function(r) { reallyPlay(toSpeak);  },
-            //    undefined
-            //)
-            console.warn("TTS: We may not be idle before submitting new job!")
-            reallyPlay(toSpeak);
+        if (speaking || !idle) {
+            console.warn("TTS: Not idle, not submitting new job!")
         } else {
+            const toSpeak = cleanText(text)
             reallyPlay(toSpeak)
         }
     }
