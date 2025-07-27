@@ -19,19 +19,18 @@ Item { id: root
     property alias keepaliveInterval: keepalive.interval
     // we need to keep the speech going
     Timer { id: keepalive
-        running: (root.speaking == true) && (root.speakId >=0)
-        interval: 500
+        interval: 2000
+        repeat: true
         onTriggered: {
-                console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
-                dbus.call("KeepAliveTask", [ root.speakId ],
-                    function(m) {
-                         console.debug("TTS: Speech keepalive", m)
-                         if (m == 0) {
-                             //keepalive.stop()
-                         } else { keepalive.interval = Math.max(500, m/2) }
-                    },
-                    function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
-                    )
+            //console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
+            dbus.call("KeepAliveTask", [ root.speakId ],
+                function(m) {
+                     //console.debug("TTS: Speech keepalive", m)
+                     if (m == 0) { keepalive.interval = 2000; keepalive.stop() }
+                     else { keepalive.interval = Math.max(2000, m/2) }
+                },
+                function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
+            )
         }
     }
 
@@ -122,11 +121,12 @@ Item { id: root
             if (task == root.speakId) { 
                 root.speaking = true
                 call("KeepAliveTask", [ task ],
-                    function(m) { console.debug("TTS: Speech keepalive", m)
-                        root.keepaliveInterval = Math.max(500, m/2); keepalive.restart()
+                    function(m) { //console.debug("TTS: Speech keepalive", m)
+                        if (m==0) { root.keepaliveInterval = 2000; keepalive.stop() }
+                        else { root.keepaliveInterval = Math.max(2000, m/2); keepalive.restart() }
                     },
                     function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
-                    )
+                )
             }
         }
         /*
