@@ -15,6 +15,24 @@ Item { id: root
         if (!speaking) speakId = -1
         //console.info("TTS:" + (speaking ? " began " : " stopped " ) + "speaking.")
     }
+    property alias keepaliveInterval: keepalive.interval
+    // we need to keep the speech going
+    Timer { id: keepalive
+        running: (root.speaking == true) && (root.speakId >=0)
+        interval: 500
+        onTriggered: {
+                console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
+                dbus.call("KeepAliveTask", [ root.speakId ],
+                    function(m) {
+                         console.debug("TTS: Speech keepalive", m)
+                         if (m == 0) {
+                             //keepalive.stop()
+                         } else { keepalive.interval = Math.max(500, m/2) }
+                     },
+                    function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
+                    )
+        }
+    }
     // https://github.com/mkiol/dsnote/blob/main/dbus/org.mkiol.Speech.xml
     /*
         <method name="TtsPlaySpeech">
@@ -88,6 +106,18 @@ Item { id: root
         function errorOccured(code) {
             console.warn("TTS: Speech error:", code, ",", errorCodeTable[code])
             root.speaking = false
+        }
+        function ttsPartialSpeechPlaying(text, task) {
+            console.debug("TTS: Partial task:", task, text)
+            if (task == root.speakId) { 
+                root.speaking = true
+                call("KeepAliveTask", [ task ],
+                    function(m) { console.debug("TTS: Speech keepalive", m)
+                        root.keepaliveInterval = Math.max(500, m/2); keepalive.restart()
+                    },
+                    function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
+                    )
+            }
         }
         /*
             State of the service.
