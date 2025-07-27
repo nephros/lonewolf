@@ -110,7 +110,7 @@ ApplicationWindow {
     Loader { id: ttsplugin
         // start this late, so startup performance is better
         active: false
-        source: Qt.resolvedUrl("TTS.qml")
+        asynchronous: true
         onLoaded: {
             mainView.ttsAvailable = true
             console.info("Text-to-speech plugin found.")
@@ -119,6 +119,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         // start this late, so startup performance is better
+        ttsplugin.setSource(Qt.resolvedUrl("TTS.qml"))
         ttsplugin.active = true
     }
 
