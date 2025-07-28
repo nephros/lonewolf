@@ -10,8 +10,6 @@ Item { id: root
     property bool speaking: false
     property bool idle: false
     property int speakId
-    property int serviceState
-    property int taskState
 
     onSpeakingChanged: {
         if (!speaking) speakId = -1
@@ -143,11 +141,9 @@ Item { id: root
         */
         function statePropertyChanged(code) {
             //console.debug("TTS: State now:", stateTable[code])
-            root.serviceState = code
             root.idle = (code == 3)
         }
         function taskStatePropertyChanged(code) {
-            root.taskState = code
             root.speaking = (code != 0)
         }
     }
