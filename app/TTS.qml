@@ -12,15 +12,6 @@ Item { id: root
     property bool idle: true // assume idle at start, until we hear a signal
     property int currentTask
 
-    property var speech: {
-        // keep the CamelCase properties of the bus interface here::
-        "defaultTtsLang": "",
-        "defaultTtsModel": "",
-        "ttsLangList": ({}),
-        "ttsLangs": [],
-        "ttsModels": [],
-    }
-
     Timer { id: kickservice
         running: root.idle && (Qt.application.state === Qt.ApplicationActive)
         interval: 50000 // service default: 60s
@@ -37,6 +28,8 @@ Item { id: root
         onRunningChanged: console.debug("TTS: Task keepalive timer " + (running ? "started" : "stopped" ))
         //onIntervalChanged: console.debug("TTS: Task keepalive interval" , interval)
     }
+    // Call Ping to initialize, query properties when successful:
+    Component.onCompleted: { fdo.call("Ping", [], function() { console.debug("Pong") }) }
     function wakeTask() {
         //console.warn("TTS: Task keepalive", root.currentTask)
         dbus.call("KeepAliveTask", [ root.currentTask ],
@@ -54,18 +47,6 @@ Item { id: root
                 console.debuf("TTS: Service will shutdown in", m)
             //     keepalive.interval = (m == 0) ? 500 : Math.max(500, m/2)
             }
-            )
-        } else {
-            fdo.call("Ping", [],
-                function() { // success, now retrieve required properties:
-                    //dbus.call("Reload", [], function() {
-                        getBusProp("DefaultTtsLang")
-                        getBusProp("DefaultTtsModel")
-                        //getBusProp("TtsLangList")
-                        //getBusProp("TtsLangs")
-                        getBusProp("TtsModels")
-                    //})
-                }
             )
         }
     }
@@ -94,15 +75,10 @@ Item { id: root
         */
         //dbus.call("TtsPlaySpeech", [ text, "en" ],
 
-        const useModelOrLang = ( (speech["defaultTtsModel"] != "")
-            && (speech["defaultTtsLang"] != "")
-            && (speech["defaultTtsLang"] == "en")
-            ) ? speech["defaultTtsModel"] : "en"
-        const useSpeed = 20
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
         dbus.typedCall("TtsPlaySpeech2", [
                 { "type" : 's', "value": text },
-                { "type" : 's', "value": useModelOrLang} ,
+                { "type" : 's', "value": "en"} ,
                 { "type" : 'a{sv}',
                   "value": [ { "split_into_sentences": false,
                                "use_engine_speed_control": true,
@@ -115,8 +91,6 @@ Item { id: root
             function(task) {
                 if (task < 0) {
                     console.warn("TTS: Speech task ID < 0 indicates an error!")
-                } else {
-                    console.info("TTS: Speech task", task, " submitted using nodel/lang:", useModelOrLang )
                 }
                 root.currentTask = task
             },
@@ -129,29 +103,6 @@ Item { id: root
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
-    // Call Ping to initialize, query properties when successful:
-    Component.onCompleted: {
-        wakeService()
-    }
-    //Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
-    function getBusProp(which) {
-        busprops.call("Get", [ "org.mkiol.Speech", which ],
-            function(r) {
-                console.debug("TTS: DBus: got property:", which, JSON.stringify(r))
-                // lowercase first letter:
-                const pname = which[0].toLowerCase() + which.slice(1)
-                var no = root.speech
-                no[pname] = r
-                root.speech = new Object(no)
-            },
-            function(e,m) { console.warn("TTS: DBus get Property Error:", e, m) }
-        )
-    }
-    DBusInterface { id: busprops
-        iface: "org.freedesktop.DBus.Properties"
-        service: "org.mkiol.Speech"
-        path: "/"
-    }
     DBusInterface { id: fdo
         iface: "org.freedesktop.DBus.Peer"
         service: "org.mkiol.Speech"
@@ -162,7 +113,7 @@ Item { id: root
         service: "org.mkiol.Speech"
         path: "/"
         signalsEnabled: true
-        propertiesEnabled: true
+        //propertiesEnabled: true
         watchServiceStatus: true
         onStatusChanged: {
             //console.debug("TTS: DBus status", dbus.status)
