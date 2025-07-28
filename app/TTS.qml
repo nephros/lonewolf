@@ -83,7 +83,7 @@ Item { id: root
                   "value": [ { "split_into_sentences": false,
                                "use_engine_speed_control": true,
                                "normalize_audio": false,
-                               "speech_speed": useSpeed // 1- 20???
+                               "speech_speed": 11 // 1- 20???
                              }
                   ],
                 },
