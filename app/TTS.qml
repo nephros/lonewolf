@@ -17,17 +17,17 @@ Item { id: root
     property alias keepaliveInterval: keepalive.interval
     // we need to keep the speech going
     Timer { id: keepalive
-        interval: 2000
+        interval: 500
         repeat: true
         onTriggered: root.wakeTask()
     }
     function wakeTask() {
-        //console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
+        console.warn("TTS: Timer Speech keepalive", root.speakId, keepaliveInterval)
         dbus.call("KeepAliveTask", [ root.speakId ],
             function(m) {
                  //console.debug("TTS: Speech keepalive", m)
-                 if (m == 0) { keepaliveInterval = 2000; keepalive.stop() }
-                 else { keepaliveInterval = Math.max(2000, m/2) }
+                 if (m == 0) { keepaliveInterval = 500; keepalive.stop() }
+                 else { keepaliveInterval = Math.max(500, m/2) }
             },
             function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
         )
