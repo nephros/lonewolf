@@ -50,6 +50,8 @@ Page {
             PropertyChanges { target: disciplines_repeater; model: grandmasterdisciplinesModel }
             PropertyChanges { target: disciplines_header; text: "Kai Grand Master Disciplines" }
 
+            PropertyChanges { target: grandmasterrank; visible: true }
+
             PropertyChanges { target: weaponmastery_header; text: "Grand Weaponmastery" }
             PropertyChanges { target: weaponmastery_repeater; model: grandweaponmasteryModel }
 
@@ -771,11 +773,11 @@ Page {
                     "Master",
                 ]
                 function countRanks() {
-                    const keys = [
-                      "kai_camouflage", "kai_hunting", "kai_sixthsense",
-                      "kai_tracking", "kai_healing", "kai_weaponskill", "kai_mindshield",
-                      "kai_mindblast", "kai_animalkinship", "kai_mindovermatter",
-                    ]
+                        var keys = []
+                        for (var i=0; i < kaidisciplinesModel.count; ++i) {
+                            var e = kaidisciplinesModel.get(i)
+                            keys.push(e.prop)
+                        }
                     const r = keys.reduce(function(acc, val, idx) {
                           if (you[val]) { acc +=1 }
                           return acc
@@ -805,12 +807,60 @@ Page {
                         "Kai Grand Master",
                     ]
                     function countRanks() {
-                        const keys = [
-                            "magnakai_weaponmastery", "magnakai_animalcontrol",
-                            "magnakai_curing", "magnakai_invisibility", "magnakai_huntmastery",
-                            "magnakai_pathsmanship", "magnakai_psisurge", "magnakai_psiscreen",
-                            "magnakai_nexus", "magnakai_divination",
-                        ]
+                        var keys = []
+                        for (var i=0; i < magnakaidisciplinesModel.count; ++i) {
+                            var e = magnakaidisciplinesModel.get(i)
+                            keys.push(e.prop)
+                        }
+                        const r = keys.reduce(function(acc, val, idx) {
+                              if (you[val]) { acc +=1 }
+                              return acc
+                        }, 0)
+                        return r
+                    }
+                }
+                DetailItem {
+                    width: parent.width/2
+                    label: "Lore Circles"
+                    forceValueBelow: true
+                    alignment: Qt.AlignLeft
+                    value: ""
+                        + (c._magnakai_circle_fire    ? "Circle of Fire\n" : ""  )
+                        + (c._magnakai_circle_light   ? "Circle of Light\n" : ""  )
+                        + (c._magnakai_circle_solaris ? "Circle of Solaris\n"  : "" )
+                        + (c._magnakai_circle_spirit  ? "Circle of Spirit"  : "" )
+                }
+            }
+
+            Row { id: grandmasterrank
+                visible: false
+                width: parent.width
+                DetailItem {
+                    width: parent.width/2
+                    label: "Rank"
+                    value: grandmasterranknames[rank]
+                    property int rank: countRanks()
+                    readonly property var grandmasterranknames: [
+                        "",
+                       "Kai Grand Master Senior", //<ch.emdash/><em>(You begin the <cite>New Order</cite> adventures at this level of Kai Grand Mastery)</em>",
+                       "Kai Grand Master Superior",
+                       "Kai Grand Sentinel",
+                       "Kai Grand Defender",
+                       "Kai Grand Guardian",
+                       "Sun Knight",
+                       "Sun Lord",
+                       "Sun Thane",
+                       "Grand Thane",
+                       "Grand Crown",
+                       "Sun Prince",
+                       "Kai Supreme Master"
+                    ]
+                    function countRanks() {
+                        var keys = []
+                        for (var i=0; i < grandmasterdisciplinesModel.count; ++i) {
+                            var e = grandmasterdisciplinesModel.get(i)
+                            keys.push(e.prop)
+                        }
 
                         const r = keys.reduce(function(acc, val, idx) {
                               if (you[val]) { acc +=1 }
@@ -819,6 +869,7 @@ Page {
                         return r
                     }
                 }
+
                 DetailItem {
                     width: parent.width/2
                     label: "Lore Circles"
