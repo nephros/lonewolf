@@ -98,7 +98,7 @@ ApplicationWindow {
     }
 
     property alias tts: ttsplugin.item
-    property bool ttsSpeaking
+    property bool ttsSpeaking: false // assume available on start
 	property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
     function ttsPlay(text) { if (!haveTts) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
