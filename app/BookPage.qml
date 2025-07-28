@@ -191,7 +191,7 @@ WebViewPage {
 
         property bool inBackMatter: false
         property bool inFrontMatter: false
-        property bool inGame: !inBackMatter && !inBackMatter
+        property bool inGame: !inBackMatter && !inFrontMatter
 
         onPageContentChanged: {
             //console.debug("Loading:", pageId, pageType)
@@ -319,9 +319,7 @@ WebViewPage {
         onLoadedChanged: { // text-to-speech
             if (loaded) {
                 if (mainView.haveTts) {
-                    if (visible) {
-                        if (uisettings.autoTts && (book.nextPageId != "") && !book.inBackMatter) { pageView.readText() }
-                    }
+                    if (uisettings.autoTts && book.inGame ) { pageView.readText() }
                 }
             }
         }
@@ -366,7 +364,7 @@ WebViewPage {
         function readText() { 
             runJavaScript("
                 var pageText = document.body.textContent;
-                if (pageText) { return pageText } else { return null};
+                if (pageText) { return pageText } else { return 'empty'};
             ",
             function(result) {
                    //console.log("Document text is", result)
