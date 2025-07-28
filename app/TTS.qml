@@ -75,12 +75,13 @@ Item { id: root
                   ],
                 },
             ],
-            function(tid) {
-                if (tid < 0) { 
+            function(task) {
+                if (task < 0) {
                     console.warn("TTS: Speech job ID < 0 indicates an error!")
                     root.speaking = false
                 } else {
                     //console.debug("TTS: Speech job submitted:", tid ); root.speaking = true; root.speakId = tid
+                    root.speakId = task
                 }
             },
             function(e,m) { console.warn("TTS: Speech job Error:", e, m) }
