@@ -88,7 +88,8 @@ Item { id: root
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
-    Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
+    Component.onCompleted: { fdo.call("Ping", []) }
+    //Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
     DBusInterface { id: fdo
         iface: "org.freedesktop.DBus.Peer"
         service: "org.mkiol.Speech"
@@ -105,6 +106,8 @@ Item { id: root
             //console.debug("TTS: DBus status", dbus.status)
             if (dbus.status == DBusInterface.Available) {
                 console.debug("TTS: DBus available.")
+            } else {
+                console.debug("TTS: DBus not available.")
             }
         }
         // Signals from "org.mkiol.Speech"
