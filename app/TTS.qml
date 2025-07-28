@@ -7,9 +7,10 @@ import Nemo.DBus 2.0
 
 Item { id: root
     property bool ready: (dbus.status == DBusInterface.Available)
+    property bool paused: false // TODO
     property bool speaking: false
     property bool idle: true // assume idle at start, until we hear a signal
-    property int speakId
+    property int currentTask
 
     property var speech: {
         // keep the CamelCase properties of the bus interface here::
@@ -20,30 +21,53 @@ Item { id: root
         "ttsModels": [],
     }
 
-    onSpeakingChanged: {
-        if (!speaking) speakId = -1
+    Timer { id: kickservice
+        running: root.idle && (Qt.application.state === Qt.ApplicationActive)
+        interval: 50000 // service default: 60s
+        repeat: true
+        onTriggered: wakeService()
+        //onRunningChanged: console.debug("TTS: Service keepalive timer " + (running ? "started" : "stopped" ))
     }
-    property alias keepaliveInterval: keepalive.interval
     // we need to keep the speech going
     Timer { id: keepalive
+        running: root.speaking && (currentTask >= 0)
         interval: 500
         repeat: true
-        onTriggered: root.wakeTask()
+        onTriggered: wakeTask()
+        onRunningChanged: console.debug("TTS: Task keepalive timer " + (running ? "started" : "stopped" ))
+        //onIntervalChanged: console.debug("TTS: Task keepalive interval" , interval)
     }
     function wakeTask() {
-        console.warn("TTS: Timer Speech keepalive", root.speakId, keepaliveInterval)
-        dbus.call("KeepAliveTask", [ root.speakId ],
+        //console.warn("TTS: Task keepalive", root.currentTask)
+        dbus.call("KeepAliveTask", [ root.currentTask ],
             function(m) {
-                 //console.debug("TTS: Speech keepalive", m)
-                 if (m == 0) { keepaliveInterval = 500; keepalive.stop() }
-                 else { keepaliveInterval = Math.max(500, m/2) }
+                 keepalive.interval = (m == 0) ? 500 : Math.max(500, Math.floor(m*0.8))
             },
             function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
         )
     }
 
     function wakeService() {
-        dbus.call("KeepAliveService", [ ])
+        if (ready) {
+            dbus.call("KeepAliveService", [ ],
+            function(m) {
+                console.debuf("TTS: Service will shutdown in", m)
+            //     keepalive.interval = (m == 0) ? 500 : Math.max(500, m/2)
+            }
+            )
+        } else {
+            fdo.call("Ping", [],
+                function() { // success, now retrieve required properties:
+                    //dbus.call("Reload", [], function() {
+                        getBusProp("DefaultTtsLang")
+                        getBusProp("DefaultTtsModel")
+                        //getBusProp("TtsLangList")
+                        //getBusProp("TtsLangs")
+                        getBusProp("TtsModels")
+                    //})
+                }
+            )
+        }
     }
 
     function cleanText(text) {
@@ -53,7 +77,7 @@ Item { id: root
     }
     function play(text) {
         if (speaking || !idle) {
-            console.warn("TTS: Not idle, not submitting new job!")
+            console.warn("TTS: Not idle, not submitting new task!")
         } else {
             const toSpeak = cleanText(text)
             reallyPlay(toSpeak)
@@ -69,9 +93,13 @@ Item { id: root
             </method>
         */
         //dbus.call("TtsPlaySpeech", [ text, "en" ],
-        // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
-        const useModelOrLang = (speech["defaultTtsModel"] != "") ? speech["defaultTtsModel"] : "en"
+
+        const useModelOrLang = ( (speech["defaultTtsModel"] != "")
+            && (speech["defaultTtsLang"] != "")
+            && (speech["defaultTtsLang"] == "en")
+            ) ? speech["defaultTtsModel"] : "en"
         const useSpeed = 20
+        // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
         dbus.typedCall("TtsPlaySpeech2", [
                 { "type" : 's', "value": text },
                 { "type" : 's', "value": useModelOrLang} ,
@@ -86,57 +114,43 @@ Item { id: root
             ],
             function(task) {
                 if (task < 0) {
-                    console.warn("TTS: Speech job ID < 0 indicates an error!")
-                    root.speaking = false
+                    console.warn("TTS: Speech task ID < 0 indicates an error!")
                 } else {
-                    //console.debug("TTS: Speech job submitted:", tid ); root.speaking = true; root.speakId = tid
-                    root.speakId = task
+                    console.info("TTS: Speech task", task, " submitted using nodel/lang:", useModelOrLang )
                 }
+                root.currentTask = task
             },
-            function(e,m) { console.warn("TTS: Speech job Error:", e, m) }
+            function(e,m) { console.warn("TTS: Speech task Error:", e, m) }
         )
     }
     function stop() {
-        if (speakId < 0) { console.debug("TTS: No valid job stored in our tracker. Doing nothing"); return }
-        dbus.call("TtsStopSpeech", [ speakId ],
-            function(r)   { console.debug("TTS: Stop job submitted:", r)
-                root.speaking = false
-            },
+        dbus.call("TtsStopSpeech", [ currentTask ],
+            function(r)   { },
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
     // Call Ping to initialize, query properties when successful:
     Component.onCompleted: {
-        fdo.call("Ping", [],
-            function() { // success, now retrieve required properties:
-                //dbus.call("Reload", [], function() {
-                    busprops.getProp("DefaultTtsLang")
-                    busprops.getProp("DefaultTtsModel")
-                    //busprops.getProp("TtsLangList")
-                    //busprops.getProp("TtsLangs")
-                    busprops.getProp("TtsModels")
-                //})
-            }
-        )
+        wakeService()
     }
     //Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
+    function getBusProp(which) {
+        busprops.call("Get", [ "org.mkiol.Speech", which ],
+            function(r) {
+                console.debug("TTS: DBus: got property:", which, JSON.stringify(r))
+                // lowercase first letter:
+                const pname = which[0].toLowerCase() + which.slice(1)
+                var no = root.speech
+                no[pname] = r
+                root.speech = new Object(no)
+            },
+            function(e,m) { console.warn("TTS: DBus get Property Error:", e, m) }
+        )
+    }
     DBusInterface { id: busprops
         iface: "org.freedesktop.DBus.Properties"
         service: "org.mkiol.Speech"
         path: "/"
-        function getProp(which) {
-            call("Get", [ "org.mkiol.Speech", which ],
-                function(r) {
-                    console.debug("TTS: DBus: got property:", which, JSON.stringify(r))
-                    // lowercase first letter:
-                    const pname = which[0].toLowerCase() + which.slice(1)
-                    var no = root.speech
-                    no[pname] = r
-                    root.speech = new Object(no)
-                },
-                function(e,m) { console.warn("TTS: DBus get Property Error:", e, m) }
-            )
-        }
     }
     DBusInterface { id: fdo
         iface: "org.freedesktop.DBus.Peer"
@@ -159,21 +173,23 @@ Item { id: root
             }
         }
         // Signals from "org.mkiol.Speech"
+        /*
         function ttsPlaySpeechFinished(task) {
-            //console.debug("TTS: Speech job finished:", task)
-            if (task == root.speakId) root.speaking = false
+            console.debug("TTS: Speech task finished:", task)
+            //if (task == root.currentTask) { root.speaking = false }
+            else { console.debug("TTS: Finished signal for unknown id:", task) }
         }
         function errorOccured(code) {
             console.warn("TTS: Speech error:", code, ",", errorCodeTable[code])
-            if ((errorCodeTable[code] == "TTS engine") || (errorCodeTable[code] == "Generic"))
-                root.speaking = false
+            //if ((errorCodeTable[code] == "TTS engine") || (errorCodeTable[code] == "Generic"))
+            //    root.speaking = false
         }
+        */
         function ttsPartialSpeechPlaying(text, task) {
-            console.debug("TTS: Partial task:", task, text)
-            if (task == root.speakId) { 
-                root.speaking = true
-                root.wakeTask()
-            }
+            //console.debug("TTS: Partial task:", task, text)
+            root.currentTask = task
+            root.speaking = true
+            root.wakeTask()
         }
         /*
             State of the service.
@@ -185,12 +201,16 @@ Item { id: root
             Unrecognized states should be considered equal to Unknown.
         */
         function statePropertyChanged(code) {
-            //console.debug("TTS: State now:", stateTable[code])
+            console.debug("TTS: Service state now:", stateTable[code])
             root.idle = (code == 3)
+            root.speaking = (code == 9)
         }
+        /*
         function taskStatePropertyChanged(code) {
-            root.speaking = (code != 0)
+            console.debug("TTS: Task now:", taskStateTable[code])
+            root.speaking = (code > 0) && (code != 6) // will not report back after Cancelling
         }
+        */
     }
     readonly property var errorCodeTable: [
         "Generic",
