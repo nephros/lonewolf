@@ -97,6 +97,7 @@ ApplicationWindow {
         id: licensePage
     }
 
+    /**** BEG TTS Plugin stuff ****/
     property alias tts: ttsplugin.item
     property bool ttsSpeaking: false // assume available on start
 	property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
@@ -115,6 +116,7 @@ ApplicationWindow {
         asynchronous: true
         onLoaded: console.info("Text-to-speech plugin found.")
     }
+    /**** END TTS Plugin stuff ****/
 
     Component.onCompleted: {
         Qt.application.version = '@@UNRELEASED@@'
@@ -216,3 +218,5 @@ ApplicationWindow {
                                        gameState.book == "27v" ||
                                        gameState.book == "28thos"
 }
+
+// vim: filetype=javascript syntax=qml expandtab tabstop=4 shiftwidth=4

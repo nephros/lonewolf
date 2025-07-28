@@ -848,3 +848,5 @@ WebViewPage {
         }
     }
 }
+
+// vim: ft=javascript expandtab ts=4 sw=4 st=4 syntax=qml
