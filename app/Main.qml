@@ -102,7 +102,9 @@ ApplicationWindow {
 	property bool ttsAvailable: (ttsplugin.status == Loader.Ready) && tts.ready
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
     function ttsPlay(text) { if (!ttsAvailable) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
-    function ttsStop() { if (!ttsAvailable) return; tts.stop(); console.debug("TTS: Requested to stop")}
+	// always try to stop:
+    //function ttsStop() { if (!ttsAvailable) return; tts.stop(); console.debug("TTS: Requested to stop")}
+    function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
     Connections {
         target: ttsplugin.item
         onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }

@@ -88,7 +88,9 @@ Item { id: root
     function stop() {
         if (speakId < 0) { console.debug("TTS: No valid job stored in our tracker. Doing nothing"); return }
         dbus.call("TtsStopSpeech", [ speakId ],
-            function(r)   { console.debug("TTS: Stop job submitted:", r) },
+            function(r)   { console.debug("TTS: Stop job submitted:", r)
+                root.speakId = -1
+            },
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
@@ -121,7 +123,8 @@ Item { id: root
         }
         function errorOccured(code) {
             console.warn("TTS: Speech error:", code, ",", errorCodeTable[code])
-            root.speaking = false
+            if ((errorCodeTable[code] == "TTS engine") || (errorCodeTable[code] == "Generic"))
+                root.speaking = false
         }
         function ttsPartialSpeechPlaying(text, task) {
             console.debug("TTS: Partial task:", task, text)
