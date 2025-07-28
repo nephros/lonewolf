@@ -2,7 +2,7 @@ Name: harbour-lonewolf
 Summary: A role-playing choose-your-own-adventure game
 # harbour only accepts three digits.
 # 0.1.1 is upstream, so we use a datestamp for patch:
-Version: 0.1.250725
+Version: 0.1.250728
 Release: 0
 Group: Applications
 License: GPLv3 and OFL
