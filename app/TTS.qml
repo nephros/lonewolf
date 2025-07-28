@@ -81,9 +81,9 @@ Item { id: root
                 { "type" : 's', "value": "en"} ,
                 { "type" : 'a{sv}',
                   "value": [ { "split_into_sentences": false,
-                               "use_engine_speed_control": true,
+                               "use_engine_speed_control": (uisettings.ttsSpeed == 0),
                                "normalize_audio": false,
-                               "speech_speed": useSpeed // 1- 20???
+                               "speech_speed": uisettings.ttsSpeed // 1- 20???
                              }
                   ],
                 },

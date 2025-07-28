@@ -172,6 +172,14 @@ Page {
                 checked: uisettings.styleHtml
                 onCheckedChanged: uisettings.styleHtml = checked
             }
+            Label {
+                width: ttsswitch.width
+                visible: !ttsswitch.enabled
+                text: "Text-to-Speech plugin is not available.\nEither the plugin is not installed, or outdated/incompatible, or the service crashed."
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                x: ttsswitch.x + Theme.paddingMedium *3
+            }
             TextSwitch { id: ttsswitch
                 text: "Text-To-Speech: Read automatically"
                 description: "Start reading each page immediately after it's loaded.\nIf disabled, you can still use the TTS button to hear the page"
@@ -180,13 +188,16 @@ Page {
                 //visible: mainView.haveTts
                 enabled: mainView.haveTts
             }
-            Label {
+            Slider {
                 width: ttsswitch.width
-                visible: !ttsswitch.enabled
-                text: "Text-to-Speech plugin is not installed, or outdated/incompatible."
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                x: ttsswitch.x + Theme.paddingMedium *3
+                visible: mainView.haveTts
+                label: "Reading Speed"
+                minimumValue: 0
+                maximumValue: 20
+                stepSize: 1
+                valueText: (value < 1) ? "automatic" : ((value < 8) ? "slow" : ((value < 15) ? "medium" : "fast"))
+                value: uisettings.ttsSpeed
+                onSliderValueChanged: uisettings.ttsSpeed = sliderValue
             }
 
             ListModel {
@@ -386,3 +397,4 @@ Page {
     }
 }
 
+// vim: filetype=javascript syntax=qml expandtab tabstop=4 shiftwidth=4
