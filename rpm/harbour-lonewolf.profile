@@ -25,5 +25,6 @@ dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsPlaySpeech@/
 dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsPlaySpeech2@/
 dbus-user.call org.mkiol.Speech=org.mkiol.Speech.TtsStopSpeech@/
 dbus-user.call org.mkiol.Speech=org.mkiol.Speech.KeepAliveTask@/
+dbus-user.call org.mkiol.Speech=org.mkiol.Speech.KeepAliveService@/
 dbus-user.call org.mkiol.Speech=org.freedesktop.DBus.Peer.Ping@/
 

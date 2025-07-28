@@ -21,17 +21,22 @@ Item { id: root
     Timer { id: keepalive
         interval: 2000
         repeat: true
-        onTriggered: {
-            //console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
-            dbus.call("KeepAliveTask", [ root.speakId ],
-                function(m) {
-                     //console.debug("TTS: Speech keepalive", m)
-                     if (m == 0) { keepalive.interval = 2000; keepalive.stop() }
-                     else { keepalive.interval = Math.max(2000, m/2) }
-                },
-                function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
-            )
-        }
+        onTriggered: root.wakeTask()
+    }
+    function wakeTask() {
+        //console.warn("TTS: Timer Speech keepalive", root.speakId, interval)
+        dbus.call("KeepAliveTask", [ root.speakId ],
+            function(m) {
+                 //console.debug("TTS: Speech keepalive", m)
+                 if (m == 0) { keepaliveInterval = 2000; keepalive.stop() }
+                 else { keepaliveInterval = Math.max(2000, m/2) }
+            },
+            function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
+        )
+    }
+
+    function wakeService() {
+        dbus.call("KeepAliveService", [ ])
     }
 
     function cleanText(text) {
@@ -123,13 +128,7 @@ Item { id: root
             console.debug("TTS: Partial task:", task, text)
             if (task == root.speakId) { 
                 root.speaking = true
-                call("KeepAliveTask", [ task ],
-                    function(m) { //console.debug("TTS: Speech keepalive", m)
-                        if (m==0) { root.keepaliveInterval = 2000; keepalive.stop() }
-                        else { root.keepaliveInterval = Math.max(2000, m/2); keepalive.restart() }
-                    },
-                    function(e,m) { console.warn("TTS: Speech keepalive Error:", e, m) }
-                )
+                root.wakeTask()
             }
         }
         /*
