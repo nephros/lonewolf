@@ -9,14 +9,14 @@ Name:       harbour-lonewolf
 %bcond_with harbour
 # << macros
 %define pkgname %{name}
-%define lw_minver 0.1.250727
+%define lw_minver 0.1.250728
 %define plugindir %{_datadir}/%{name}/
 %define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
 
 Summary:    A role-playing choose-your-own-adventure game
-Version:    0.1.250728
+Version:    0.1.250729
 Release:    0
 Group:      Applications
 License:    GPLv3 and OFL
