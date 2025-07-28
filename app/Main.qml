@@ -28,7 +28,6 @@ ApplicationWindow {
         //property bool saveOnQuit: false
         property bool styleHtml: true
         property bool autoTts: false
-        property int  ttsSpeed: 0
     }
 
     // game state at end of the last book
