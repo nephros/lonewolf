@@ -98,7 +98,7 @@ Page {
                 onLinkActivated: Qt.openUrlExternally(link)
                 wrapMode: Text.Wrap
                 width: parent.width
-                horizontalAlignment: Qt.AlignHCenter
+                horizontalAlignment: Text.AlignHCenter
             }
 
             SectionHeader { text: "Adventure Progress" }
@@ -123,7 +123,7 @@ Page {
                          ? "Start Book 1"
                          : "Continue" + (/^sect/.test(gameState.pageId) ? " on page %2".arg(bookPage) : "")
                     color: Theme.secondaryColor
-                    horizontalAlignment: Qt.AlignHCenter
+                    horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
                     //width: parent.width
                     width: stateCover.width
@@ -148,7 +148,7 @@ Page {
                 text: "“%1”".arg(bookTitle)
                     + (/^sect/.test(quickSaveState.pageId) ? " page %2".arg(bookPage) : "")
                 color: Theme.secondaryColor
-                horizontalAlignment: Qt.AlignHCenter
+                horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 width: parent.width
                 onVisibleChanged: {
@@ -181,8 +181,10 @@ Page {
                 enabled: mainView.ttsAvailable
             }
             Label {
+                width: ttsswitch.width
                 visible: !ttsswitch.enabled
                 text: "Text-to-Speech plugin is not installed, or outdated/incompatible."
+                horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 x: ttsswitch.x + Theme.paddingMedium *3
             }
