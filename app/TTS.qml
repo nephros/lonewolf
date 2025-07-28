@@ -8,7 +8,7 @@ import Nemo.DBus 2.0
 Item { id: root
     property bool ready: (dbus.status == DBusInterface.Available)
     property bool speaking: false
-    property bool idle: false
+    property bool idle: true // assume idle at start, until we hear a signal
     property int speakId
 
     onSpeakingChanged: {
