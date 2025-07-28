@@ -25,11 +25,27 @@ Page { id: about
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: Theme.paddingLarge
         PageHeader { title: "About" }
-        Image {
+        Label {
+            width: icon.width
+            anchors.horizontalCenter: icon.horizontalCenter
+            text: "Lone Wolf"
+            color: Theme.highlightColor
+            font.pixelSize: Theme.fontSizeSmall
+            horizontalAlignment: Text.AlignHCenter
+        }
+        Image { id: icon
             anchors.horizontalCenter: parent.horizontalCenter
             source: "image://theme/" + Qt.application.name
             height: Theme.iconSizeExtraLarge
             width: height
+        }
+        Label {
+            width: icon.width
+            anchors.horizontalCenter: icon.horizontalCenter
+            text: Qt.application.version
+            color: Theme.highlightColor
+            font.pixelSize: Theme.fontSizeSmall
+            horizontalAlignment: Text.AlignHCenter
         }
         Label {
             width: parent.width

@@ -115,6 +115,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        Qt.application.version = '@@UNRELEASED@@'
         // start this late, so startup performance is better
         ttsplugin.setSource(Qt.resolvedUrl("TTS.qml"))
         ttsplugin.active = true

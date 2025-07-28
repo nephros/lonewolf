@@ -152,6 +152,9 @@ BuildRequires: sdk-harbour-rpmvalidator
 %cmake_install
 
 # >> install post
+# set version
+sed -i 's/@@UNRELEASED@@/%{version}/' %{buildroot}/%{_datadir}/%{name}/qml/Main.qml
+
 ln -s Main.qml %{buildroot}/%{_datadir}/%{name}/qml/%{name}.qml
 
 # S:1: SVG file for conversion

@@ -182,7 +182,7 @@ Page {
             }
             Label {
                 visible: !ttsswitch.enabled
-                text: "Text-to-Speech plugin is not installed."
+                text: "Text-to-Speech plugin is not installed, or outdated/incompatible."
                 wrapMode: Text.Wrap
                 x: ttsswitch.x + Theme.paddingMedium *3
             }
