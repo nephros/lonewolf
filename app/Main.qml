@@ -72,7 +72,7 @@ ApplicationWindow {
       mainView.bookTitle = info.title
       mainView.bookColor = info.coverColor
       pageStack.replaceAbove(null, bookComponent)
-      if (mainView.ttsAvailable && uisettings.autoTts && (info.pageId == "") && info.title) {
+      if (mainView.haveTts && uisettings.autoTts && (info.pageId == "") && info.title) {
           if ((info.pageId == "") || (info.pageId == "title")) ttsPlay(info.title)
       }
     }
@@ -99,11 +99,11 @@ ApplicationWindow {
 
     property alias tts: ttsplugin.item
     property bool ttsSpeaking
-	property bool ttsAvailable: (ttsplugin.status == Loader.Ready) && tts.ready
+	property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
-    function ttsPlay(text) { if (!ttsAvailable) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
+    function ttsPlay(text) { if (!haveTts) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
 	// always try to stop:
-    //function ttsStop() { if (!ttsAvailable) return; tts.stop(); console.debug("TTS: Requested to stop")}
+    //function ttsStop() { if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
     function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
     Connections {
         target: ttsplugin.item

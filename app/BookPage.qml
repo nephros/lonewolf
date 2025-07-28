@@ -318,7 +318,7 @@ WebViewPage {
         }
         onLoadedChanged: { // text-to-speech
             if (loaded) {
-                if (mainView.ttsAvailable) {
+                if (mainView.haveTts) {
                     if (visible) {
                         if (uisettings.autoTts && (book.nextPageId != "") && !book.inBackMatter) { pageView.readText() }
                     }
@@ -457,7 +457,7 @@ WebViewPage {
                     : "image://theme/icon-m-speaker?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                 highlighted: down || mainView.ttsSpeaking
                 onClicked: mainView.ttsSpeaking ?  mainView.ttsStop() : pageView.readText()
-                visible: mainView.ttsAvailable && !licenseButton.visible
+                visible: mainView.haveTts && !licenseButton.visible
                 anchors.left: previous.right
                 anchors.right: plusminus.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -500,7 +500,7 @@ WebViewPage {
                 repeat: true
                 onTriggered: {
                     if (!nightmode.hintShown) { hint.start(); nightmode.hintShown = true }
-                    else if (ttsAvailable && !hint.running && !readbtn.hintShown) { ttshint.start(); readbtn.hintShown = true }
+                    else if (haveTts && !hint.running && !readbtn.hintShown) { ttshint.start(); readbtn.hintShown = true }
                     if (nightmode.hintShown && readbtn.hintShown) uisettings.showHints = false
                 }
             }
