@@ -11,6 +11,15 @@ Item { id: root
     property bool idle: true // assume idle at start, until we hear a signal
     property int speakId
 
+    property var speech: {
+        // keep the CamelCase properties of the bus interface here::
+        "defaultTtsLang": "",
+        "defaultTtsModel": "",
+        "ttsLangList": ({}),
+        "ttsLangs": [],
+        "ttsModels": [],
+    }
+
     onSpeakingChanged: {
         if (!speaking) speakId = -1
     }
@@ -61,14 +70,16 @@ Item { id: root
         */
         //dbus.call("TtsPlaySpeech", [ text, "en" ],
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
+        const useModelOrLang = (speech["defaultTtsModel"] != "") ? speech["defaultTtsModel"] : "en"
+        const useSpeed = 20
         dbus.typedCall("TtsPlaySpeech2", [
                 { "type" : 's', "value": text },
-                { "type" : 's', "value": "en"} ,
+                { "type" : 's', "value": useModelOrLang} ,
                 { "type" : 'a{sv}',
                   "value": [ { "split_into_sentences": false,
                                "use_engine_speed_control": true,
                                "normalize_audio": false,
-                               "speech_speed": 15 // 1- 20???
+                               "speech_speed": useSpeed // 1- 20???
                              }
                   ],
                 },
@@ -89,13 +100,44 @@ Item { id: root
         if (speakId < 0) { console.debug("TTS: No valid job stored in our tracker. Doing nothing"); return }
         dbus.call("TtsStopSpeech", [ speakId ],
             function(r)   { console.debug("TTS: Stop job submitted:", r)
-                root.speakId = -1
+                root.speaking = false
             },
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
-    Component.onCompleted: { fdo.call("Ping", []) }
+    // Call Ping to initialize, query properties when successful:
+    Component.onCompleted: {
+        fdo.call("Ping", [],
+            function() { // success, now retrieve required properties:
+                //dbus.call("Reload", [], function() {
+                    busprops.getProp("DefaultTtsLang")
+                    busprops.getProp("DefaultTtsModel")
+                    //busprops.getProp("TtsLangList")
+                    //busprops.getProp("TtsLangs")
+                    busprops.getProp("TtsModels")
+                //})
+            }
+        )
+    }
     //Component.onCompleted: { console.debug("One Ping, Vassili!"); fdo.call("Ping", []) }
+    DBusInterface { id: busprops
+        iface: "org.freedesktop.DBus.Properties"
+        service: "org.mkiol.Speech"
+        path: "/"
+        function getProp(which) {
+            call("Get", [ "org.mkiol.Speech", which ],
+                function(r) {
+                    console.debug("TTS: DBus: got property:", which, JSON.stringify(r))
+                    // lowercase first letter:
+                    const pname = which[0].toLowerCase() + which.slice(1)
+                    var no = root.speech
+                    no[pname] = r
+                    root.speech = new Object(no)
+                },
+                function(e,m) { console.warn("TTS: DBus get Property Error:", e, m) }
+            )
+        }
+    }
     DBusInterface { id: fdo
         iface: "org.freedesktop.DBus.Peer"
         service: "org.mkiol.Speech"
