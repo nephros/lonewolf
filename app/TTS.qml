@@ -4,16 +4,26 @@
  */
 import QtQuick 2.6
 import Nemo.DBus 2.0
+import Nemo.Mce 1.0 // power saving mode
+
 
 Item { id: root
     property bool ready: (dbus.status == DBusInterface.Available)
     property bool paused: false // TODO
     property bool speaking: false
     property bool idle: true // assume idle at start, until we hear a signal
+    // FIXME: Should probably handle multiple tasks (Queue)
     property int currentTask
 
+    property alias powersaving: powerSaveMode.active
+    McePowerSaveMode { id: powerSaveMode }
+    onPowersavingChanged: { if ((powersaving) && (speaking)) {
+        cancel(currentTask)
+        stop()
+    }}
+
     Timer { id: kickservice
-        running: root.ready && root.idle && (Qt.application.state === Qt.ApplicationActive)
+        running: root.ready && root.idle && (Qt.application.state === Qt.ApplicationActive) && !powersaving
         interval: 50000 // service default: 60s
         repeat: true
         onTriggered: wakeService()
@@ -106,10 +116,20 @@ Item { id: root
     }
     function stop() {
         dbus.call("TtsStopSpeech", [ currentTask ],
-            function(r)   { },
+            // @result: 0 - success, any other value - error
+            function(r)   { if( r != 0 ) console.warn("TTS: Error while trying to stop:", currentTask, r) },
             function(e,m) { console.warn("TTS: Error while trying to stop:", e, m) }
         )
     }
+
+    function cancel() {
+        dbus.call("Cancel", [ currentTask ],
+            // @result: 0 - success, any other value - error
+            function(r)   { if( r != 0 ) console.warn("TTS: Error while trying to cancel:", currentTask, r) },
+            function(e,m) { console.warn("TTS: Error while trying to cancel:", e, m) }
+        )
+    }
+
     // This is here so we can call the Ping method
     DBusInterface { id: peer
         iface: "org.freedesktop.DBus.Peer"
