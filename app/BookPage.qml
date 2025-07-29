@@ -12,6 +12,7 @@ WebViewPage {
 
     property var you
     property bool canDoBackAction: false
+    property bool read: false
     //readonly property product: bookProduct()
 
     Behavior on backgroundColor { ColorAnimation {} }
@@ -325,7 +326,9 @@ WebViewPage {
                         if (mainView.titleRead != mainView.bookTitle) {
                             pageView.readText(mainView.bookTitle + ". " + pageId.replace("sect", "Page ") + ". ")
                             mainView.titleRead = mainView.bookTitle
-                        } else if (book.inGame) { pageView.readText("Page " + book.pageTitle + ". ") }
+                        } else if (book.inGame) {
+                            if (!read) { pageView.readText("Page " + book.pageTitle + ". "); read = true }
+                        }
                     }
                 }
             }
