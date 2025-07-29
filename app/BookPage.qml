@@ -318,6 +318,7 @@ WebViewPage {
         }
         onLoadedChanged: { // text-to-speech
             if (loaded) {
+                if ((mainView.haveTts) && (mainView.ttsSpeaking)) { mainView.ttsStop() }
                 if ((mainView.haveTts) && (uisettings.autoTts)) {
                     if (mainView.titleRead != mainView.bookTitle) {
                         pageView.readText(mainView.bookTitle + ". " + pageId.replace("sect", "Page ") + ". ")

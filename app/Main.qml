@@ -73,6 +73,7 @@ ApplicationWindow {
       pageStack.replaceAbove(null, bookComponent)
     }
     function popBookTab() {
+      ttsStop()
       pageStack.replaceAbove(null, menuPage)
     }
     function loadQuickSave()
