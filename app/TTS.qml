@@ -37,7 +37,7 @@ Item { id: root
         interval: 50000 // service default: 60s
         repeat: true
         onTriggered: wakeService()
-        onRunningChanged: console.debug("TTS: Service keepalive timer " + (running ? "started" : "stopped" ))
+        //onRunningChanged: console.debug("TTS: Service keepalive timer " + (running ? "started" : "stopped" ))
     }
     // we need to keep the speech going
     Timer { id: keepalive
@@ -45,7 +45,7 @@ Item { id: root
         interval: 500
         repeat: true
         onTriggered: wakeTask()
-        onRunningChanged: console.debug("TTS: Task keepalive timer " + (running ? "started" : "stopped" ))
+        //onRunningChanged: console.debug("TTS: Task keepalive timer " + (running ? "started" : "stopped" ))
         //onIntervalChanged: console.debug("TTS: Task keepalive interval" , interval)
     }
     // Call Ping to initialize, query properties when successful:
@@ -62,11 +62,7 @@ Item { id: root
 
     function wakeService() {
         if (ready) {
-            dbus.call("KeepAliveService", [ ],
-                function(m) {
-                    console.debug("TTS: Service will shutdown in", m)
-                }
-            )
+            dbus.call("KeepAliveService", [ ])
         }
     }
 
@@ -213,13 +209,13 @@ Item { id: root
             Unrecognized states should be considered equal to Unknown.
         */
         function statePropertyChanged(code) {
-            console.debug("TTS: Service state now:", stateTable[code])
+            console.debug("TTS: Service is:", stateTable[code])
             root.idle = (code == 3)
             root.speaking = (code == 9)
         }
 
         function taskStatePropertyChanged(code) {
-            console.debug("TTS: Task now:", taskStateTable[code])
+            //console.debug("TTS: Task now:", taskStateTable[code])
             root.speaking = (code > 0) && (code != 6) // will not report back after Cancelling
             root.paused = (code == 5)
         }
