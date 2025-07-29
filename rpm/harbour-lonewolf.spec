@@ -9,7 +9,7 @@ Name:       harbour-lonewolf
 %bcond_with harbour
 # << macros
 %define pkgname %{name}
-%define lw_minver 0.1.250728
+%define lw_minver 0.1.250729
 %define plugindir %{_datadir}/%{name}/
 %define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$

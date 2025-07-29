@@ -2,6 +2,7 @@ Name: harbour-lonewolf
 Summary: A role-playing choose-your-own-adventure game
 # harbour only accepts three digits.
 # 0.1.1 is upstream, so we use a datestamp for patch:
+# Remember to adjust the lw_minver macro
 Version: 0.1.250729
 Release: 0
 Group: Applications
@@ -20,7 +21,7 @@ Macros:
   # 'appname;lonewolf'
   # 'orgname;lonewolf'
   - 'pkgname;%{name}'
-  - 'lw_minver;0.1.250728' # incompatible changes
+  - 'lw_minver;0.1.250729' # incompatible changes
   - plugindir;%{_datadir}/%{name}/
   # plugindir;%{_libdir}/qt5/qml
   - '__requires_exclude_from;^%{_datadir}/%{name}/_cheat/.*\.sh$'
