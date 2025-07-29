@@ -320,9 +320,9 @@ WebViewPage {
             if (loaded) {
                 if ((mainView.haveTts) && (uisettings.autoTts)) {
                     if (mainView.titleRead != mainView.bookTitle) {
-                        pageView.readText(mainView.bookTitle)
+                        pageView.readText(mainView.bookTitle + ". " + pageId.replace("sect", "Page ") + ". ")
                         mainView.titleRead = mainView.bookTitle
-                    } else if (book.inGame) { pageView.readText() }
+                    } else if (book.inGame) { pageView.readText("Page " + book.pageTitle + ". ") }
                 }
             }
         }
@@ -371,7 +371,7 @@ WebViewPage {
             ",
             function(result) {
                    //console.log("Document text is", result)
-                   if (result != "empty") mainView.ttsPlay(prefix + ".\n \n" + result)
+                   if (result != "empty") mainView.ttsPlay((prefix ? prefix + ".\n \n" : "") + result)
             }
             );
         }
