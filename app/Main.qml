@@ -54,13 +54,8 @@ ApplicationWindow {
     Connections { target: Qt.application; onAboutToQuit: willQuit() }
     onWillQuit: {
         if (_willquitHandled) return
-        /*
-        if (uisettings.saveOnQuit) {
-             gameState.copyTo(quickSaveState);
-        }
-        */
-        ttsStop()
-        _willquitHandled=true
+         console.info(Qt.application.name, "quitting.")
+         _willquitHandled=true
     }
     property bool _willquitHandled: false
 

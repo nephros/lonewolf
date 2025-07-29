@@ -13,7 +13,7 @@ Item { id: root
     property int currentTask
 
     Timer { id: kickservice
-        running: root.idle && (Qt.application.state === Qt.ApplicationActive)
+        running: root.ready && root.idle && (Qt.application.state === Qt.ApplicationActive)
         interval: 50000 // service default: 60s
         repeat: true
         onTriggered: wakeService()
@@ -107,7 +107,7 @@ Item { id: root
     function stop() {
         dbus.call("TtsStopSpeech", [ currentTask ],
             function(r)   { },
-            function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
+            function(e,m) { console.warn("TTS: Error while trying to stop:", e, m) }
         )
     }
     // This is here so we can call the Ping method
@@ -123,6 +123,9 @@ Item { id: root
         signalsEnabled: true
         //propertiesEnabled: true
         watchServiceStatus: true
+        Component.onDestruction: { // failsafe, see root.stop()
+            dbus.call("TtsStopSpeech", [ root.currentTask ])
+        }
         onStatusChanged: {
             console.debug("TTS: DBus ", (dbus.status == DBusInterface.Available) ? "available" : "not available")
         }
