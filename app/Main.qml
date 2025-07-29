@@ -22,12 +22,15 @@ ApplicationWindow {
         scope: settings
         path: "ui"
         property bool licenseAccepted: false
-        //property int font: 2 // deprecated, use the float:
         property double fontF: 2.0
         property bool showHints: false
-        //property bool saveOnQuit: false
         property bool styleHtml: true
         property bool autoTts: false
+        Component.onCompleted: {
+            // legacy keys from earlier releases:
+            if(value("font"))       setValue("font", undefined)
+            if(value("saveOnQuit")) setValue("saveOnQuit", undefined)
+        }
     }
 
     // game state at end of the last book
