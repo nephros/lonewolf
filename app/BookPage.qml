@@ -318,12 +318,17 @@ WebViewPage {
         }
         onLoadedChanged: { // text-to-speech
             if (loaded) {
-                if ((mainView.haveTts) && (mainView.ttsSpeaking)) { mainView.ttsStop() }
-                if ((mainView.haveTts) && (uisettings.autoTts)) {
-                    if (mainView.titleRead != mainView.bookTitle) {
-                        pageView.readText(mainView.bookTitle + ". " + pageId.replace("sect", "Page ") + ". ")
-                        mainView.titleRead = mainView.bookTitle
-                    } else if (book.inGame) { pageView.readText("Page " + book.pageTitle + ". ") }
+                if (mainView.haveTts) {
+                    if (mainView.ttsSpeaking) {
+                        mainView.ttsStop()
+                    } else {
+                        if (uisettings.autoTts) {
+                            if (mainView.titleRead != mainView.bookTitle) {
+                                pageView.readText(mainView.bookTitle + ". " + pageId.replace("sect", "Page ") + ". ")
+                                mainView.titleRead = mainView.bookTitle
+                            } else if (book.inGame) { pageView.readText("Page " + book.pageTitle + ". ") }
+                        }
+                    }
                 }
             }
         }
