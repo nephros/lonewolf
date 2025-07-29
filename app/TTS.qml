@@ -67,7 +67,8 @@ Item { id: root
     }
 
     function play(text) {
-        if (speaking || !idle) {
+        if (speaking) cancel()
+        if (!speaking && !idle) {
             console.warn("TTS: Not idle, not submitting new task!")
         } else {
             // remove superfluous whitespace
