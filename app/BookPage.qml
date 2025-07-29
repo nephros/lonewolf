@@ -461,7 +461,7 @@ WebViewPage {
                     ? "image://theme/icon-m-speaker-on?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                     : "image://theme/icon-m-speaker?" + (!mainView.nightModeEnabled ? Theme.primaryColor : Theme.secondaryColor)
                 highlighted: down || mainView.ttsSpeaking
-                onClicked: mainView.ttsSpeaking ?  mainView.ttsStop() : pageView.readText()
+                onClicked: mainView.ttsSpeaking ? mainView.ttsCancel() : pageView.readText()
                 visible: mainView.haveTts && !licenseButton.visible
                 anchors.left: previous.right
                 anchors.right: plusminus.left

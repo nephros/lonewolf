@@ -99,18 +99,16 @@ ApplicationWindow {
     property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
     property bool ttsSpeaking: false // assume available on start
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
+    Connections { target: ttsplugin.item
+        onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
+    }
 
     property string titleRead: ""
 
-
+    // do not remove the check for haveTts, otherwise calls will fail if plugin not installed.
     function ttsPlay(text) { if (!haveTts) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
-    // always try to stop:
-    //function ttsStop() { if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
-    function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
-    Connections {
-        target: ttsplugin.item
-        onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
-    }
+    function ttsStop() {     if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
+    function ttsCancel() {   if (!haveTts) return; tts.cancel(); console.debug("TTS: Requested to cancel")}
     Loader { id: ttsplugin
         // start this late, so startup performance is better
         active: false
