@@ -17,10 +17,12 @@ Item { id: root
 
     property alias powersaving: powerSaveMode.active
     McePowerSaveMode { id: powerSaveMode }
-    onPowersavingChanged: { if ((powersaving) && (speaking)) {
-        cancel(currentTask)
-        stop()
-    }}
+    onPowersavingChanged: {
+        if (powersaving) {
+            if (speaking) { cancel(currentTask) }
+            stop()
+        }
+    }
 
     Timer { id: kickservice
         running: root.ready && root.idle && (Qt.application.state === Qt.ApplicationActive) && !powersaving

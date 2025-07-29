@@ -34,7 +34,7 @@ ApplicationWindow {
     }
 
     // game state at end of the last book
-    // so we can restart the current one correctly
+    // so we can restart the current one correctly (TODO)
     GameState {
         path: "lastbook"
         id: lastBook
@@ -94,16 +94,17 @@ ApplicationWindow {
 
     /**** BEG TTS Plugin stuff ****/
     property alias tts: ttsplugin.item
-    property bool ttsSpeaking: false // assume available on start
     property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
+    property bool ttsSpeaking: false // assume available on start
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
+
+    property string titleRead: ""
+
+
     function ttsPlay(text) { if (!haveTts) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
     // always try to stop:
     //function ttsStop() { if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
     function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
-
-    property string titleRead: ""
-
     Connections {
         target: ttsplugin.item
         onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
