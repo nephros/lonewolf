@@ -26,6 +26,7 @@ ApplicationWindow {
         property bool showHints: false
         property bool styleHtml: true
         property bool autoTts: false
+        property bool pauseTts: true
         Component.onCompleted: {
             // legacy keys from earlier releases:
             if(value("font"))       setValue("font", undefined)

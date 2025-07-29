@@ -180,6 +180,14 @@ Page {
                 //visible: mainView.haveTts
                 enabled: mainView.haveTts
             }
+            TextSwitch { id: ttspauseswitch
+                text: "Text-To-Speech: Pause when not active"
+                description: "Interrupt speech when the app is not active, and resume when it becomes active again"
+                checked: uisettings.pauseTts
+                onCheckedChanged: uisettings.pauseTts = checked
+                visible: mainView.haveTts
+                //enabled: mainView.haveTts
+            }
             Label {
                 width: ttsswitch.width
                 visible: !ttsswitch.enabled

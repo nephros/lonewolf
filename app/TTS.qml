@@ -26,9 +26,9 @@ Item { id: root
     }
     onAppActiveChanged: {
         if (appActive) {
-            if (paused) unpause()
+            if (paused && uisettings.pauseTts) unpause()
         } else {
-            if (speaking) pause()
+            if (speaking && uisettings.pauseTts) pause()
         }
     }
 
