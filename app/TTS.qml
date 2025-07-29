@@ -8,6 +8,7 @@ import Nemo.Mce 1.0 // power saving mode
 
 
 Item { id: root
+    property bool appActive: (Qt.application.state === Qt.ApplicationActive)
     property bool ready: (dbus.status == DBusInterface.Available)
     property bool paused: false // TODO
     property bool speaking: false
@@ -23,9 +24,16 @@ Item { id: root
             stop()
         }
     }
+    onAppActiveChanged: {
+        if (appActive) {
+            if (paused) unpause()
+        } else {
+            if (speaking) pause()
+        }
+    }
 
     Timer { id: kickservice
-        running: root.ready && root.idle && (Qt.application.state === Qt.ApplicationActive) && !powersaving
+        running: root.ready && root.idle && appActive && !powersaving
         interval: 50000 // service default: 60s
         repeat: true
         onTriggered: wakeService()
@@ -132,6 +140,26 @@ Item { id: root
         )
     }
 
+    function unpause() {
+        dbus.call("TtsResumeSpeech", [ currentTask ],
+            // @result: 0 - success, any other value - error
+            function(r)   { if( r != 0 ) console.warn("TTS: Error while trying to resume:", currentTask, r) },
+            function(e,m) { console.warn("TTS: Error while trying to resume:", e, m) }
+        )
+    }
+
+    function pause() {
+        dbus.call("TtsPauseSpeech", [ currentTask ],
+            // @result: 0 - success, any other value - error
+            function(r)   { if( r != 0 ) console.warn("TTS: Error while trying to pause:", currentTask, r) },
+            function(e,m) { console.warn("TTS: Error while trying to pause:", e, m) }
+        )
+    }
+
+    function togglePause() {
+        if (paused) { unpause() } else { pause() }
+    }
+
     // This is here so we can call the Ping method
     DBusInterface { id: peer
         iface: "org.freedesktop.DBus.Peer"
@@ -189,12 +217,13 @@ Item { id: root
             root.idle = (code == 3)
             root.speaking = (code == 9)
         }
-        /*
+
         function taskStatePropertyChanged(code) {
             console.debug("TTS: Task now:", taskStateTable[code])
             root.speaking = (code > 0) && (code != 6) // will not report back after Cancelling
+            root.paused = (code == 5)
         }
-        */
+
     }
     readonly property var errorCodeTable: [
         "Generic",
