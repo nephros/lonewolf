@@ -47,7 +47,7 @@ ApplicationWindow {
         id: gameState
     }
 
-    /* detect closing of app*/
+    /* detect closing of app */
     signal willQuit()
     Connections { target: __quickWindow; onClosing: willQuit() }
     // AND/OR
@@ -100,10 +100,10 @@ ApplicationWindow {
     /**** BEG TTS Plugin stuff ****/
     property alias tts: ttsplugin.item
     property bool ttsSpeaking: false // assume available on start
-	property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
+    property bool haveTts: (ttsplugin.status == Loader.Ready) && tts.ready
     onTtsSpeakingChanged: { console.info("Text-to-speech has" + (ttsSpeaking ? " begun " : " stopped " ) + "speaking.") }
     function ttsPlay(text) { if (!haveTts) return; tts.play(text); console.debug("TTS: Requested to read", text.split(/\s/).length, "words.") }
-	// always try to stop:
+    // always try to stop:
     //function ttsStop() { if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
     function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
     Connections {

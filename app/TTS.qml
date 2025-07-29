@@ -17,7 +17,7 @@ Item { id: root
         interval: 50000 // service default: 60s
         repeat: true
         onTriggered: wakeService()
-        //onRunningChanged: console.debug("TTS: Service keepalive timer " + (running ? "started" : "stopped" ))
+        onRunningChanged: console.debug("TTS: Service keepalive timer " + (running ? "started" : "stopped" ))
     }
     // we need to keep the speech going
     Timer { id: keepalive
@@ -43,10 +43,9 @@ Item { id: root
     function wakeService() {
         if (ready) {
             dbus.call("KeepAliveService", [ ],
-            function(m) {
-                console.debuf("TTS: Service will shutdown in", m)
-            //     keepalive.interval = (m == 0) ? 500 : Math.max(500, m/2)
-            }
+                function(m) {
+                    console.debug("TTS: Service will shutdown in", m)
+                }
             )
         }
     }
@@ -65,7 +64,7 @@ Item { id: root
         }
     }
     function reallyPlay(text) {
-        // https://github.com/mkiol/dsnote/blob/main/dbus/org.mkiol.Speech.xml
+        // https://github.com/mkiol/dsnote/blob/raw/dbus/org.mkiol.Speech.xml
         /*
             <method name="TtsPlaySpeech">
                 <arg name="text" type="s" direction="in" />
@@ -75,6 +74,18 @@ Item { id: root
         */
         //dbus.call("TtsPlaySpeech", [ text, "en" ],
 
+        /*
+        <!--
+            TtsPlaySpeech2:
+            @text: text that should be encoded to speech
+            @lang: language code (ISO 639-1) or model id
+            @options: A dict of options (option-name => option-value).
+            @task: returned id of task which will be included in TtsPlaySpeechFinished signals,
+                   @task less than 0 idicates an error
+
+            Synthesizes speech from given text and plays it.
+        -->
+        */
         // available settings: split_into_sentences, use_engine_speed_control, normalize_audio, speech_speed
         dbus.typedCall("TtsPlaySpeech2", [
                 { "type" : 's', "value": text },
@@ -117,12 +128,7 @@ Item { id: root
         //propertiesEnabled: true
         watchServiceStatus: true
         onStatusChanged: {
-            //console.debug("TTS: DBus status", dbus.status)
-            if (dbus.status == DBusInterface.Available) {
-                console.debug("TTS: DBus available.")
-            } else {
-                console.debug("TTS: DBus not available.")
-            }
+            console.debug("TTS: DBus ", (dbus.status == DBusInterface.Available) ? "available" : "not available")
         }
         // Signals from "org.mkiol.Speech"
         /*
@@ -137,6 +143,11 @@ Item { id: root
             //    root.speaking = false
         }
         */
+        /* This one is important.
+         * Once this signal is received, it is expected to call the keepalive
+         * method to keep going.
+         * Otherwise TTS will stop after about a dozen seconds (about one sentence)."
+         */
         function ttsPartialSpeechPlaying(text, task) {
             //console.debug("TTS: Partial task:", task, text)
             root.currentTask = task
