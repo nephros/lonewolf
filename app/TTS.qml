@@ -174,7 +174,7 @@ Item { id: root
             dbus.call("TtsStopSpeech", [ root.currentTask ])
         }
         onStatusChanged: {
-            console.debug("TTS: DBus ", (dbus.status == DBusInterface.Available) ? "available" : "not available")
+            console.debug("TTS: DBus", (dbus.status == DBusInterface.Available) ? "available" : "not available")
         }
         // Signals from "org.mkiol.Speech"
         /*
