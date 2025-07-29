@@ -50,16 +50,12 @@ Item { id: root
         }
     }
 
-    function cleanText(text) {
-        const newText
-        newText = text.replace(/[ \n]+/g, ' ')
-        return newText
-    }
     function play(text) {
         if (speaking || !idle) {
             console.warn("TTS: Not idle, not submitting new task!")
         } else {
-            const toSpeak = cleanText(text)
+            // remove superfluous whitespace
+            const toSpeak = text.replace(/[ \n]+/g, ' ')
             reallyPlay(toSpeak)
         }
     }
