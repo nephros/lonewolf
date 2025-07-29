@@ -182,7 +182,6 @@ WebViewPage {
 
         //property var images: []
 
-        Behavior on bgColor { ColorAnimation {} }
         bgColor:   mainView.nightModeEnabled ? "black" : "bisque"
         textColor: mainView.nightModeEnabled ? "#8E8E93" : "#333300"
         linkColor: Theme.highlightFromColor("bisque", (mainView.nightModeEnabled ? Theme.LightOnDark : Theme.DarkOnLight ))
@@ -583,7 +582,6 @@ WebViewPage {
         canAccept: false //combat.done
         property alias props: combat.props
         property alias you: combat.you
-        Behavior on backgroundColor { ColorAnimation {} }
         backgroundColor: mainView.nightModeEnabled
            ? "black"
            : Theme.highlightDimmerFromColor("darkred", Theme.colorScheme)
@@ -624,7 +622,6 @@ WebViewPage {
         Rectangle {
             id: puzzleRect
             anchors.fill: parent
-            Behavior on color { ColorAnimation {} }
             color: mainView.nightModeEnabled
                 ? "black"
                 : Theme.highlightDimmerFromColor(mainView.bookColor, Theme.colorScheme)
