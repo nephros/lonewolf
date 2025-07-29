@@ -29,7 +29,7 @@ Item { id: root
         //onIntervalChanged: console.debug("TTS: Task keepalive interval" , interval)
     }
     // Call Ping to initialize, query properties when successful:
-    Component.onCompleted: { fdo.call("Ping", [], function() { console.debug("Pong") }) }
+    Component.onCompleted: { peer.call("Ping", [], function() { console.debug("Pong") }) }
     function wakeTask() {
         //console.warn("TTS: Task keepalive", root.currentTask)
         dbus.call("KeepAliveTask", [ root.currentTask ],
@@ -103,7 +103,8 @@ Item { id: root
             function(e,m) { console.warn("TTS: Stopping Error:", e, m) }
         )
     }
-    DBusInterface { id: fdo
+    // This is here so we can call the Ping method
+    DBusInterface { id: peer
         iface: "org.freedesktop.DBus.Peer"
         service: "org.mkiol.Speech"
         path: "/"
