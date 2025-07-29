@@ -211,14 +211,17 @@ Item { id: root
         */
         function statePropertyChanged(code) {
             console.debug("TTS: Service is:", stateTable[code])
-            root.idle = (code == 3)
-            root.speaking = (code == 9)
+            // note: do not do idle = (code == foo), that will send a changed signal in every case.
+            if (code == 3) { root.idle = true; root.speaking = false }
+            if (code == 9) root.speaking = true
         }
 
         function taskStatePropertyChanged(code) {
             //console.debug("TTS: Task now:", taskStateTable[code])
-            root.speaking = (code > 0) && (code != 6) // will not report back after Cancelling
-            root.paused = (code == 5)
+            // note: do not do speaking = (code == foo), that will send a changed signal in every case.
+            if ((code > 0) && (code != 6)) root.speaking = true // will not report back after Cancelling
+            if (code == 5) root.paused = true
+            if (code == 0) root.speaking = false // will not report back after Cancelling
         }
 
     }
