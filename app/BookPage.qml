@@ -318,8 +318,11 @@ WebViewPage {
         }
         onLoadedChanged: { // text-to-speech
             if (loaded) {
-                if (mainView.haveTts) {
-                    if (uisettings.autoTts && book.inGame ) { pageView.readText() }
+                if ((mainView.haveTts) && (uisettings.autoTts)) {
+                    if (mainView.titleRead != mainView.bookTitle) {
+                        pageView.readText(mainView.bookTitle)
+                        mainView.titleRead = mainView.bookTitle
+                    } else if (book.inGame) { pageView.readText() }
                 }
             }
         }
@@ -361,14 +364,14 @@ WebViewPage {
             //console.debug("Executed alert action:", text)
         }
 
-        function readText() { 
+        function readText(prefix) {
             runJavaScript("
                 var pageText = document.body.textContent;
                 if (pageText) { return pageText } else { return 'empty'};
             ",
             function(result) {
                    //console.log("Document text is", result)
-                   if (result != "empty") mainView.ttsPlay(result)
+                   if (result != "empty") mainView.ttsPlay(prefix + ".\n \n" + result)
             }
             );
         }

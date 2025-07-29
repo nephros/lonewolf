@@ -67,9 +67,6 @@ ApplicationWindow {
       mainView.bookTitle = info.title
       mainView.bookColor = info.coverColor
       pageStack.replaceAbove(null, bookComponent)
-      if (mainView.haveTts && uisettings.autoTts && (info.pageId == "") && info.title) {
-          if ((info.pageId == "") || (info.pageId == "title")) ttsPlay(info.title)
-      }
     }
     function popBookTab() {
       pageStack.replaceAbove(null, menuPage)
@@ -101,6 +98,9 @@ ApplicationWindow {
     // always try to stop:
     //function ttsStop() { if (!haveTts) return; tts.stop(); console.debug("TTS: Requested to stop")}
     function ttsStop() { tts.stop(); console.debug("TTS: Requested to stop")}
+
+    property string titleRead: ""
+
     Connections {
         target: ttsplugin.item
         onSpeakingChanged: { mainView.ttsSpeaking = ttsplugin.item.speaking }
