@@ -211,7 +211,8 @@ desktop-file-install --delete-original       \
 %clean
 %if 0%{?harbour_validation:1}
 echo '=========== Checking for Harbour compatability.'
-find ~/rpmbuild/RPMS -type f -name %{name}-%{version}*.rpm -exec /usr/libexec/sdk-harbour-rpmvalidator/rpmvalidation.sh -d 0 --no-color {} \; ||:
+mkdir -p ~/rpmbuild/OTHER || :
+find ~/rpmbuild/RPMS -type f -name %{name}-%{version}*.rpm -exec /usr/libexec/sdk-harbour-rpmvalidator/rpmvalidation.sh -d 0 --no-color {}  \; | tee ~/rpmbuild/OTHER/harbour-validator.log ||:
 echo '=========== DONE checking for Harbour compatability.'
 %else
 echo '=========== NOT checking for Harbour compatability.'
