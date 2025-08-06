@@ -229,7 +229,7 @@ WebViewPage {
                         : '<style> .pagelink { border-bottom: 1px solid #212121; }</style>'
                     ),
                     '<style> .attribute { font-variant-caps: small-caps; }</style>',
-                    '<style> .footnote { font-style: italic; }</style>',
+                    '<style> .footnote { font-style: italic; font-size: smaller; }</style>',
                     '<style> .dedication { font-style: italic; font-weight: bold; text-align: center; margin-left: auto; margin-right: auto; }</style>',
                     '<style> .sound { font-style: italic; }</style>',
                     '<style> dt { font-weight: bold; }</style>',
@@ -239,7 +239,7 @@ WebViewPage {
                         ? '<style> img { filter: invert(100%) sepia(40%) brightness(80%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
                         : '<style> img { filter: sepia(120%); width: 90%; display: block; margin-left: auto; margin-right: auto; }</style>'
                     ),
-                    '<style> figcaption { font-style: italic; text-align: center;}</style>',
+                    '<style> figcaption { font-style: italic; text-align: center; font-size: smaller; }</style>',
                     '<style> quote:before { content: \'“\'; }</style>',
                     '<style> quote:after { content: \'”\'; }</style>',
                     //'<style> :-moz-suppressed { border: 2px dashed #ff0000; }</style>',
