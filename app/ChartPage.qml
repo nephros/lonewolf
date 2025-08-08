@@ -39,6 +39,7 @@ Page {
             PropertyChanges { target: disciplines_header; text:  "Magnakai Disciplines" }
 
             PropertyChanges { target: magnakairank; visible: true }
+            PropertyChanges { target: lorecircles; visible: true }
 
             PropertyChanges { target: weaponmastery_header; text: "Weaponmastery" }
             PropertyChanges { target: weaponmastery_repeater; model: weaponmasteryModel }
@@ -819,7 +820,8 @@ Page {
                         return r
                     }
                 }
-                DetailItem {
+                DetailItem { id: lorecircles
+                    visible: false
                     width: parent.width/2
                     label: "Lore Circles"
                     forceValueBelow: true
