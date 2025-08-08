@@ -221,6 +221,7 @@ Page {
          ListElement {
              text: "Grand Weaponmastery"
              prop: "grandmaster_grandweaponmastery"
+             note: "+5 CS for with chosen weapon"
          }
          ListElement {
              text: "Animal Mastery"
@@ -229,14 +230,17 @@ Page {
          ListElement {
              text: "Deliverance"
              prop: "grandmaster_deliverance"
+              note: "Restore 20EP every 20 days, if <= 8EP"
          }
          ListElement {
              text: "Assimilance"
              prop: "grandmaster_assimilance"
+             note: "Enhanced Invisibility"
          }
          ListElement {
              text: "Grand Huntmastery"
              prop: "grandmaster_grandhuntmastery"
+            note: "Skip a meal when instructed"
          }
          ListElement {
              text: "Grand Pathsmanship"
@@ -245,6 +249,7 @@ Page {
          ListElement {
              text: "Kai-surge"
              prop: "grandmaster_kaisurge"
+             note: "+8CS, -1EP per round used, or +4CS. Not if EP<7"
          }
          ListElement {
              text: "Kai-screen"
