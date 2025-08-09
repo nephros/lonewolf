@@ -143,6 +143,7 @@ ApplicationWindow {
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.top: parent.top; anchors.topMargin: Theme.paddingLarge
           font.pixelSize: Theme.fontSizeLarge
+          font.family: "serif"
           wrapMode: Text.Wrap
       }
       SectionHeader { text: mainView.endurance + "/" + mainView.maxendurance + "EP"
