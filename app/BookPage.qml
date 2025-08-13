@@ -637,7 +637,7 @@ WebViewPage {
         Puzzle { id: puzzle
             anchors.fill: parent
             onGoTo: {
-              succes.play()
+              success.play()
               pageView.pageId = solution
               puzzlePanel.hide()
           }
