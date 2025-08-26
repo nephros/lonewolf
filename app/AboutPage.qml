@@ -82,7 +82,19 @@ Page { id: about
             wrapMode: Text.WordWrap
             text: "<b>Display Font:</b><p>The original books were printed using the “Souvenir” typeface. Since no freely distributable version of this font could be found (hints welcome!), we can not provide it with the app. Instead, we ship the free font “Alegreya” which looks somewhat similar.</p>"
                 + "<p>If you happen to have the original (non-free) “Souvenir”, “ITC Souvenir”, or “AG Souvenir” fonts installed, they will be used automatically.</p>"
-                + "<p>Below you can see a comparison of Alegreya (top) and Souvenir (bottom)</p>"
+                + "<p>Below you can see a comparison of Alegreya (top), AG Souvenir, and Souvenir (bottom)</p>"
+        }
+        Image {
+            width: parent.width*8/10
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "demo_alegreya.png"
+            fillMode: Image.PreserveAspectFit
+        }
+        Image {
+            width: parent.width*8/10
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "demo_ag_souvenir.png"
+            fillMode: Image.PreserveAspectFit
         }
         Image {
             width: parent.width*8/10
