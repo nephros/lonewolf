@@ -82,7 +82,22 @@ Page { id: about
             wrapMode: Text.WordWrap
             text: "<b>Display Font:</b><p>The original books were printed using the “Souvenir” typeface. Since no freely distributable version of this font could be found (hints welcome!), we can not provide it with the app. Instead, we ship the free font “Alegreya” which looks somewhat similar.</p>"
                 + "<p>If you happen to have the original (non-free) “Souvenir”, “ITC Souvenir”, or “AG Souvenir” fonts installed, they will be used automatically.</p>"
-                + "<p>You can also use fontconfig to define an alias called <b>lone-wolf</b>, whatever you set as a font there will be used for the Book pages.</p>"
+                + "<p>Below you can see a comparison of Alegreya (top) and Souvenir (bottom)</p>"
+        }
+        Image {
+            width: parent.width*8/10
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "demo_souvenir.png"
+            fillMode: Image.PreserveAspectFit
+        }
+        Label {
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.secondaryColor
+            font.pixelSize: Theme.fontSizeSmall
+            horizontalAlignment: Text.AlignJustify
+            wrapMode: Text.WordWrap
+            text: "<p>You can also use fontconfig to define an alias called <b>lone-wolf</b>, whatever you set as a font there will be used for the Book pages.</p>"
         }
         Label {
             width: parent.width
