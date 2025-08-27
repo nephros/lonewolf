@@ -218,7 +218,7 @@ WebViewPage {
             var newstyle
             if (uisettings.styleHtml) {
                 newstyle=[
-                    '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
+                    '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, "Fraunces 9pt SuperSoft", Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
                     '<style> p { text-align: justify; }</style>',
                     (mainView.nightModeEnabled
                         ? '<style> .actionlink { border-bottom: 1px dashed #414141; }</style>'

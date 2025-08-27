@@ -38,8 +38,9 @@ This should be installed as e.g. `~/.config/fontconfig/lone-wolf.conf`, and font
 <alias binding="strong">
     <family>lone-wolf</family>
     <prefer>
+        <family>Fraunces 9pt SuperSoft</family>
         <family>Philosopher</family>
-        <family>Alegreya ht</family>
+        <family>Alegreya</family>
         <family>Rosario</family>
         <family>Linux Biolinum</family>
     </prefer>
