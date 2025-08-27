@@ -11,6 +11,7 @@ Name:       harbour-lonewolf
 %define pkgname %{name}
 %define lw_minver 0.1.250729
 %define plugindir %{_datadir}/%{name}/
+%define fontdir %{_datadir}/%{name}/fonts
 %define __requires_exclude_from ^%{_datadir}/%{name}/_cheat/.*\.sh$
 %define __provides_exclude ^(font|qml).*$
 %define __provides_exclude_from %{plugindir}
@@ -125,12 +126,6 @@ Screenshots:
 %if 0%{?harbour_validation:1}
 BuildRequires: sdk-harbour-rpmvalidator
 %endif
-# define install locations w/ and w/o harbour:
-%if %{with harbour}
-%define fontdir %{_datadir}/%{name}/fonts
-%else
-%define fontdir %{_datadir}/fonts
-%endif
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -145,6 +140,7 @@ BuildRequires: sdk-harbour-rpmvalidator
 %cmake .  \
     -Wno-dev \
     -DQT_IMPORTS_DIR=%{plugindir} \
+    -DAPP_FONT_DIR=%{fontdir} \
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
 

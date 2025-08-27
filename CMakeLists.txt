@@ -37,6 +37,9 @@ set(DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/share/applications)
 
 set(EXEC "sailfish-qml lonewolf")
 
+# Set font configuration
+set(FONTCONF_FILE_NAME "09-lonewolf-fonts.conf")
+
 # This command figures out the target architecture for use in the manifest file
 execute_process(
   COMMAND dpkg-architecture -qDEB_HOST_ARCH

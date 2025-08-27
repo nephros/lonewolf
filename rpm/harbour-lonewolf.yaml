@@ -23,6 +23,7 @@ Macros:
   - 'pkgname;%{name}'
   - 'lw_minver;0.1.250729' # incompatible changes
   - plugindir;%{_datadir}/%{name}/
+  - fontdir;%{_datadir}/%{name}/fonts
   # plugindir;%{_libdir}/qt5/qml
   - '__requires_exclude_from;^%{_datadir}/%{name}/_cheat/.*\.sh$'
   - '__provides_exclude;^(font|qml).*$'
@@ -49,12 +50,6 @@ Macros2:
     %endif
     %if 0%{?harbour_validation:1}
     BuildRequires: sdk-harbour-rpmvalidator
-    %endif
-    # define install locations w/ and w/o harbour:
-    %if %{with harbour}
-    %define fontdir %{_datadir}/%{name}/fonts
-    %else
-    %define fontdir %{_datadir}/fonts
     %endif
 
 Check: true # so we can do a fake clean section below it:
@@ -117,6 +112,7 @@ Builder: cmake
 ConfigOptions:
   - '-Wno-dev'
   - '-DQT_IMPORTS_DIR=%{plugindir}'
+  - '-DAPP_FONT_DIR=%{fontdir}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'
 NoIconCache: true
