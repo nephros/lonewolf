@@ -62,6 +62,7 @@ Item {
                     var needle = "sect" + entry.text + " ";
                     if (haystack.indexOf(needle) >= 0) {
                         root.goTo("sect" + entry.text);
+                        entry.text = ""
                     } else {
                         wrong = true;
                     }
