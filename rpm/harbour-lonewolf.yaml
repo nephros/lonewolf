@@ -50,6 +50,12 @@ Macros2:
     %if 0%{?harbour_validation:1}
     BuildRequires: sdk-harbour-rpmvalidator
     %endif
+    # define install locations w/ and w/o harbour:
+    %if %{with harbour}
+    %define fontdir %{_datadir}/%{name}/fonts
+    %else
+    %define fontdir %{_datadir}/fonts
+    %endif
 
 Check: true # so we can do a fake clean section below it:
 

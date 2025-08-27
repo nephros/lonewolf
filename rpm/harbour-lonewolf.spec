@@ -125,6 +125,12 @@ Screenshots:
 %if 0%{?harbour_validation:1}
 BuildRequires: sdk-harbour-rpmvalidator
 %endif
+# define install locations w/ and w/o harbour:
+%if %{with harbour}
+%define fontdir %{_datadir}/%{name}/fonts
+%else
+%define fontdir %{_datadir}/fonts
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -166,9 +172,9 @@ install -Dpm644 %{S:2} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.
 
 
 # S:3/4: Font files
-install -d %{buildroot}/%{_datadir}/fonts/%{name}/
-install -pm644 %{S:3} %{buildroot}/%{_datadir}/fonts/%{name}/
-install -pm644 %{S:4} %{buildroot}/%{_datadir}/fonts/%{name}/
+install -d %{buildroot}/%{fontdir}/Alegreya
+install -pm644 %{S:3} %{buildroot}/%{fontdir}/Alegreya/
+install -pm644 %{S:4} %{buildroot}/%{fontdir}/Alegreya/
 
 # S:5: Scumming script
 install -d %{buildroot}/%{_datadir}/%{name}/_cheat
@@ -237,10 +243,6 @@ find ~/rpmbuild/RPMS -type f -name %{name}-tts-plugin-%{version}*.rpm -exec rm -
 # >> files
 %if %{with harbour}
 %exclude %{_datadir}/icons/*/*/apps/*.svg
-%exclude %{_datadir}/fonts/%{name}
-%else
-%dir %{_datadir}/fonts/%{name}
-%{_datadir}/fonts/%{name}/*
 %endif
 # << files
 
