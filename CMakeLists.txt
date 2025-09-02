@@ -52,7 +52,8 @@ configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
 # Substitute variables in the fontconfig file
 configure_file(${FONTCONF_FILE_NAME}.in ${CMAKE_CURRENT_BINARY_DIR}/${FONTCONF_FILE_NAME}.in)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${FONTCONF_FILE_NAME} DESTINATION ${APP_FONT_DIR})
-add_custom_target(${FONTCONF_FILE_NAME} ALL
+add_custom_target(${FONTCONF_FILE_NAME}
+    ALL SOURCES ${FONTCONF_FILE_NAME}.in
     COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/${FONTCONF_FILE_NAME}.in ${CMAKE_CURRENT_BINARY_DIR}/${FONTCONF_FILE_NAME}
 )
 
