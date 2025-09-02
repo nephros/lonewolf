@@ -80,14 +80,22 @@ Page { id: about
             font.pixelSize: Theme.fontSizeSmall
             horizontalAlignment: Text.AlignJustify
             wrapMode: Text.WordWrap
-            text: "<b>Display Font:</b><p>The original books were printed using the “Souvenir” typeface. Since no freely distributable version of this font could be found (hints welcome!), we can not provide it with the app. Instead, we ship the free font “Alegreya” which looks somewhat similar.</p>"
-                + "<p>If you happen to have the original (non-free) “Souvenir”, “ITC Souvenir”, or “AG Souvenir” fonts installed, they will be used automatically.</p>"
-                + "<p>Below you can see a comparison of Alegreya (top), AG Souvenir, and Souvenir (bottom)</p>"
+            text: "<b>Display Font:</b><p>The original books were printed using the “Souvenir” typeface. Since no freely distributable version of this font could be found (hints welcome!), we can not provide it with the app.</p>"
+                + "<p>Instead, we ship the free fonts “Fraunces”, and “Alegreya” which look somewhat similar.</p>"
+                + "<p>If you happen to have the original (non-free) “Souvenir”, “ITC Souvenir”, or “AG Souvenir” fonts available, they can be used as well.</p>"
+                + "<p>In order to use them, you have to copy them to <tt>~/.local/share/fonts</tt> and select the preferred font on the Menu Page.</p>"
+                + "<p>Below you can see a comparison of Alegreya (top), Fraunces, AG Souvenir, and Souvenir (bottom)</p>"
         }
         Image {
             width: parent.width*8/10
             anchors.horizontalCenter: parent.horizontalCenter
             source: "demo_alegreya.png"
+            fillMode: Image.PreserveAspectFit
+        }
+        Image {
+            width: parent.width*8/10
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "demo_fraunces.png"
             fillMode: Image.PreserveAspectFit
         }
         Image {

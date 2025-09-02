@@ -194,6 +194,28 @@ WebViewPage {
         property bool inFrontMatter: false
         property bool inGame: !inBackMatter && !inFrontMatter
 
+        readonly property string _font_default: '"Bookman Old Style", "URW Bookman", "Linux Biolinum", Baskerville, Garamond, serif'
+        property string fontString
+
+        function setupFont() {
+            switch (uisettings.preferredFont) {
+                 case "Custom":
+                    fontString = 'lone-wolf, ' + _font_default
+                    break
+                 case "Souvenir":
+                    fontString = 'Souvenir, "ITC Souvenir", AG_Souvenir, serif'
+                    break
+                 case "Fraunces":
+                    fontString = '"Fraunces 9pt SuperSoft", serif'
+                    break
+                 case "Alegreya":
+                    fontString = 'Alegreya, serif'
+                    break
+                 default:
+                    fontString = _font_default
+            }
+            console.debug("Setting CSS font to:", fontString)
+        }
         onPageContentChanged: {
             //console.debug("Loading:", pageId, pageType)
             var content = pageContent;
@@ -208,6 +230,9 @@ WebViewPage {
                 you.pageId = pageId; // save place
             }
 
+            // determine user font preference
+            if (!!!fontString) setupFont()
+
             // base and CSP should be first.
             var newcontent = content.replace(
                 /<head>/,
@@ -218,7 +243,7 @@ WebViewPage {
             var newstyle
             if (uisettings.styleHtml) {
                 newstyle=[
-                    '<style>* { font-family: lone-wolf, Souvenir, "ITC Souvenir", AG_Souvenir, "Fraunces 9pt SuperSoft", Alegreya, "Linux Biolinum", Baskerville, Garamond, serif;}</style>',
+                    '<style>* { font-family: ' + fontString + ';}</style>',
                     '<style> p { text-align: justify; }</style>',
                     (mainView.nightModeEnabled
                         ? '<style> .actionlink { border-bottom: 1px dashed #414141; }</style>'

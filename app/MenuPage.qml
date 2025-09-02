@@ -172,6 +172,44 @@ Page {
                 checked: uisettings.styleHtml
                 onCheckedChanged: uisettings.styleHtml = checked
             }
+            ValueButton { id: fontBox
+               x: styleswitch.x + Theme.itemSizeExtraSmall - Theme.paddingLarge
+               enabled: styleswitch.checked
+               label: "Book Font"
+               value: uisettings.preferredFont
+               onClicked: {
+                  var dlg = pageStack.push(fontSelect)
+                  dlg.accepted.connect(function() { uisettings.preferredFont = dlg.selected })
+               }
+               Component { id: fontSelect
+                  Dialog { id: fontDialog
+                     property string selected
+                     SilicaListView {
+                       anchors.fill: parent
+                       header: DialogHeader { id: header; title: "Preferred Font" }
+                       model: [ "Default", "Souvenir", "Alegreya", "Fraunces", "Custom" ]
+                       delegate: ListItem {
+                          width: ListView.view.width
+                          anchors.margins: Theme.paddingLarge
+                          highlighted: down || modelData == uisettings.preferredFont
+                          Column { width: parent.width
+                             Label { text: modelData }
+                             Label { text: (index == 0)
+                                        ? "Use system configuration"
+                                        : ((index == 4)
+                                           ? "Use bespoke fontconfig customization with a 'lone-wolf' alias."
+                                           : "Requires a variant of " + modelData + " to be installed."
+                                          )
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.secondaryColor
+                             }
+                          }
+                          onClicked: { fontDialog.selected = modelData; fontDialog.accept() }
+                       }
+                     }
+                  }
+               }
+            }
             TextSwitch { id: ttsswitch
                 text: "Text-To-Speech: Read automatically"
                 description: "Start reading each page immediately after it's loaded.\nIf disabled, you can still use the TTS button to hear the page"
