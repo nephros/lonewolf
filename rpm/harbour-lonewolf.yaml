@@ -15,6 +15,7 @@ Sources:
     - '%{name}.profile'
     - Alegreya-Medium.otf
     - Alegreya-Regular.otf
+    - https://github.com/undercasetype/Fraunces/raw/1.000/fonts/static/otf/Fraunces9ptSuperSoft-Regular.otf
     - savescumming.sh
 #SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:

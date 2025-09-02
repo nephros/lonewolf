@@ -2,5 +2,6 @@
 <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>
 	<description>Application-specific font configuration file</description>
-	<dir>@APP_FONT_DIR@</dir>
+	<dir>@APP_FONT_DIR@/Alegreya</dir>
+	<dir>@APP_FONT_DIR@/Fraunces</dir>
 </fontconfig>

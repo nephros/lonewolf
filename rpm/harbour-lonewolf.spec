@@ -27,7 +27,8 @@ Source1:    lonewolf-app-icon.svg
 Source2:    %{name}.profile
 Source3:    Alegreya-Medium.otf
 Source4:    Alegreya-Regular.otf
-Source5:    savescumming.sh
+Source5:    https://github.com/undercasetype/Fraunces/raw/1.000/fonts/static/otf/Fraunces9ptSuperSoft-Regular.otf
+Source6:    savescumming.sh
 Source100:  harbour-lonewolf.yaml
 Requires:   libsailfishapp-launcher
 BuildRequires:  pkgconfig(Qt5Core)
@@ -167,15 +168,17 @@ install -Dpm644 %{S:1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{nam
 install -Dpm644 %{S:2} %{buildroot}/%{_sysconfdir}/sailjail/permissions/%{name}.profile
 
 
-# S:3/4: Font files
+# S:3/4/5: Font files
 install -d %{buildroot}/%{fontdir}/Alegreya
 install -pm644 %{S:3} %{buildroot}/%{fontdir}/Alegreya/
 install -pm644 %{S:4} %{buildroot}/%{fontdir}/Alegreya/
+install -d %{buildroot}/%{fontdir}/Fraunces
+install -pm644 %{S:5} %{buildroot}/%{fontdir}/Fraunces/
 
-# S:5: Scumming script
+# S:6: Scumming script
 install -d %{buildroot}/%{_datadir}/%{name}/_cheat
-# habrour will not allow executable in share, so mode 644:
-install -pm644 %{S:5} %{buildroot}/%{_datadir}/%{name}/_cheat
+# harbour will not allow executable in share, so mode 644:
+install -pm644 %{S:6} %{buildroot}/%{_datadir}/%{name}/_cheat
 
 
 # rename default desktop file:
