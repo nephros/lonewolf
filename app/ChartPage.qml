@@ -254,22 +254,27 @@ Page {
          ListElement {
              text: "Kai-screen"
              prop: "grandmaster_kaiscreen"
+             note: "Defense against psychic attacks"
          }
          ListElement {
              text: "Grand Nexus"
              prop: "grandmaster_grandnexus"
+             note: "Withstand harmful elements, such as flames or acids"
          }
          ListElement {
              text: "Telegnosis"
              prop: "grandmaster_telegnosis"
+             note: "Advanced Divination, Spirit Walk"
          }
          ListElement {
              text: "Magi-magic"
              prop: "grandmaster_magimagic"
+             note: ""
          }
          ListElement {
              text: "Kai-alchemy"
              prop: "grandmaster_kaialchemy"
+             note: ""
          }
      }
 
