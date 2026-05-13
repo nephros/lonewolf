@@ -129,7 +129,7 @@ echo ========== configure start ==========
 # << build pre
 
 %cmake .  \
-    --debug-trycompile \
+    --debug-find \
     -DQT_IMPORTS_DIR=%{plugindir} \
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
