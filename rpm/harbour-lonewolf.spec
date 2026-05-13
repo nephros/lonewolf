@@ -125,6 +125,7 @@ BuildRequires: sdk-harbour-rpmvalidator
 
 %build
 # >> build pre
+echo ========== configure start ==========
 # << build pre
 
 %cmake .  \
@@ -133,9 +134,11 @@ BuildRequires: sdk-harbour-rpmvalidator
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
 
-%cmake_build
 
 # >> build post
+echo ========== configure done ==========
+%cmake_build
+echo ========== build done ==========
 # << build post
 
 %install
