@@ -108,10 +108,6 @@ Screenshots:
 
 
 %define please_also ignore this macro
-# Be careful not to generate a loop/forkbomb here:
-%{!?cmake_build:%define cmake_build %__cmake --build "." %{?_smp_mflags} V=1 VERBOSE=1}
-%{!?cmake_install:%define cmake_install DESTDIR=%buildroot %__cmake --install .}
-# undefine macros that may interfere with harbour:
 %if %{with harbour}
 %undefine vendor
 %undefine _vendor
