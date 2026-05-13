@@ -113,7 +113,7 @@ Builder: cmake
 ConfigOptions:
   # '-Wno-dev'
   # '--trace'
-  - --debug-find
+  # --debug-find
   - --debug-trycompile
   - '-DQT_IMPORTS_DIR=%{plugindir}'
   - '-DINSTALL_TESTS=off'
