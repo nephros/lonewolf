@@ -108,6 +108,15 @@ Screenshots:
 
 
 %define please_also ignore this macro
+%if 0%{?sailfishos_version} < 40600
+%if 0%{?sailfishos_version} <= 40001
+%define cmake_build %__cmake --build "."
+%define cmake_install %make_install
+%else
+%define cmake_build %__cmake --build "." -j8 --verbose
+%define cmake_install DESTDIR=%buildroot %__cmake --install .
+%endif
+%endif
 %if %{with harbour}
 %undefine vendor
 %undefine _vendor
