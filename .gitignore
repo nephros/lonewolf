@@ -1,2 +1,12 @@
 build/
 .clickable/
+CMakeFiles
+*_autogen
+backend/Lonewolf/qmldir
+backend/Lonewolf/libLonewolfbackend.so
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+install_manifest.txt
+manifest.json
+app/lonewolf.desktop
