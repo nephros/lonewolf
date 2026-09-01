@@ -2,8 +2,8 @@ Name: harbour-lonewolf
 Summary: A role-playing choose-your-own-adventure game
 # harbour only accepts three digits.
 # 0.1.1 is upstream, so we use a datestamp for patch:
-# Remember to adjust the lw_minver macro
-Version: 0.1.250804
+# Remember to adjust the lw_minver macro if necessary
+Version: 0.1.260901
 Release: 0
 Group: Applications
 License: GPLv3 and OFL
@@ -134,12 +134,13 @@ SubPackages:
         - harbour-dsnote >= 4.7.0
         - '%{name} >= %{lw_minver}' #0.1.250727' # since 0.1.250727_pre1
       Description: |
-          Adds text-to-speech support to the Lone Wolf app from Jolla Harbour.
+          Adds text-to-speech support to the Lone Wolf app from Jolla Store (Harbour).
 
-          Requires the excellent Speech Note (harbour-dsnote) by mkiol, this means you have to have the Openrepos (Storeman) 
-          mkiol repo enabled in order to istall this.
+          Requires the excellent Speech Note (harbour-dsnote) by mkiol.
+          This means you have to have the Openrepos (Storeman) mkiol repo enabled in
+          order to install this.
 
-          The plugin will use engine and settings configured for English.
+          The plugin will use engine and settings configured for English (in Speech Note settings).
 
           %if "0%{?_chum}"
           Title: TTS plugin for Lone Wolf
