@@ -12,9 +12,20 @@ Image { id: root
     property bool mayDisplay: uisettings.licenseAccepted
     // Can not distribute local images, see Project AON license, and Issue #19
     //onBookChanged: if (book) { source = Qt.resolvedUrl("./covers/" + book + ".jpg") }
+    //source: (mayDisplay && book && (book != "29tsoc")) // 29 has no image
+    //        ? "https://www.projectaon.org/data/trunk/en/jpeg/lw/" + book + "/skins/ebook/cover.jpg"
+    //        : ""
+
+    // unfortunately we must resort to download from a probably not-quite-legal mirror:
     source: (mayDisplay && book && (book != "29tsoc")) // 29 has no image
-            ? "https://www.projectaon.org/data/trunk/en/jpeg/lw/" + book + "/skins/ebook/cover.jpg"
+            ? "https://raw.githubusercontent.com/cracrayol/project-aon/refs/heads/master/en/jpeg/lw/" + book + "/skins/ebook/cover.jpg"
             : ""
+
+    // alternative source: https://lobo.fernandoruizrico.com/
+    //property int sidx: book.substr(0,2)
+    //source: (mayDisplay && book && sidx <= 13) // only has 1-13
+    //        ? "https://lobo.fernandoruizrico.com/data/projectAon/" + Number(sidx) + "/cover.jpg"
+    //        : ""
 
     // all the cover images have this size:
     height: width/600*800

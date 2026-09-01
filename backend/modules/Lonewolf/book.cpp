@@ -62,7 +62,26 @@ bool Book::isBookDownloaded()
 static QString
 downloadOneXmlFile(const QString &filename)
 {
-    QString fullURL = "https://www.projectaon.org/data/trunk/en/xml/" + filename;
+    // Original Project AON URL, they apparently removed the files:
+    //QString fullURL = "https://www.projectaon.org/data/trunk/en/xml/" + filename;
+
+    //QString fullURL = "https://lobo.fernandoruizrico.com/data/projectAon/" + index + "/" + filename;
+    //QString index;
+    //if(filename.startsWith("0")) {
+    //    index = filename.mid(1, 1);
+    //} else {
+    //    index = filename.left(2);
+    //}
+    //QString fullURL = "https://lobo.fernandoruizrico.com/data/projectAon/" + index + "/" + filename;
+
+    // Wayback machine links: only book 02 and 15:
+    // 02: https://web.archive.org/web/20090904033201/http://www.projectaon.org:80/data/en/xml/15tdc.xml
+    // 15: https://web.archive.org/web/20090816162232/http://www.projectaon.org:80/data/en/xml/20tcon.xml
+    //QString fullURL = "https://web.archive.org/web/20110220174231/https://www.projectaon.org/data/en/xml/" + filename;
+
+    // This repo seems to have all: https://github.com/cracrayol/project-aon/tree/master/en/xml
+    // QString fullURL = "https://github.com/cracrayol/project-aon/raw/master/en/xml/" + filename;
+    QString fullURL = "https://raw.githubusercontent.com/cracrayol/project-aon/refs/heads/master/en/xml/" + filename;
 
     QTemporaryDir tempDir;
     tempDir.setAutoRemove(false);
