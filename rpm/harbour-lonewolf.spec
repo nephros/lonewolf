@@ -16,7 +16,7 @@ Name:       harbour-lonewolf
 %define __provides_exclude_from %{plugindir}
 
 Summary:    A role-playing choose-your-own-adventure game
-Version:    0.1.250804
+Version:    0.1.260901
 Release:    0
 Group:      Applications
 License:    GPLv3 and OFL
