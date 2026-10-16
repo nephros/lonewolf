@@ -907,6 +907,7 @@ Page {
                         prop: model.prop
                         note: model.note ? model.note : ""
                         width: disciplines.itemWidth
+                        enabled: (/^sect/.test(you.pageId) == false)
                     }
                 }
             }

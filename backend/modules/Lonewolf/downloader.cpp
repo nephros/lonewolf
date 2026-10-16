@@ -67,10 +67,19 @@ void Downloader::fileFinished()
     for (int i = 0; i < m_replies.length(); i++) {
         FileData &data = m_replies[i];
         if (data.reply == sender()) {
-            QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
-            if (localFile.open(QIODevice::WriteOnly)) {
-                localFile.write(data.reply->readAll());
-                localFile.close();
+            if( data.reply->error() != QNetworkReply::NoError) {
+                qWarning() << "Download:" << data.reply->errorString();
+            } else {
+                const QString mime = data.reply->header(QNetworkRequest::ContentTypeHeader).toString();
+                if(!mime.startsWith("image/")) {
+                    qWarning() << "Download: Non-image MIME-Type:" << mime;
+                }
+
+                QFile localFile(m_cacheDir + "/" + data.reply->url().fileName());
+                if (localFile.open(QIODevice::WriteOnly)) {
+                    localFile.write(data.reply->readAll());
+                    localFile.close();
+                }
             }
 
             data.reply->deleteLater();
