@@ -84,10 +84,10 @@ WebViewPage {
                     if (quickSaveState.pageId == "") {
                         var dlg = pageStack.push(saveDialog);
                         dlg.done.connect(function() {
-                          Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
+                          Remorse.popupAction(root, "Quick Save", function() { you.copyTo(quickSaveState); } )
                         })
                     } else {
-                        Remorse.popupAction(root, "Saved", function() { you.copyTo(quickSaveState); } )
+                        Remorse.popupAction(root, "Quick Save: replacing " + quickSaveState.book + " section " + quickSaveState.pageId, function() { you.copyTo(quickSaveState); } )
                     }
                 }
             }
