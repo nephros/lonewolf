@@ -98,7 +98,7 @@ PkgConfigBR:
 Configure: cmake
 Builder: cmake
 ConfigOptions:
-  - '-Wno-dev'
+  # '-Wno-dev'
   - '-DQT_IMPORTS_DIR=%{plugindir}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'
