@@ -110,6 +110,8 @@ Configure: cmake
 Builder: cmake
 ConfigOptions:
   - '-Wno-dev'
+  # weird issue on OBS: cmake hangs and OBS kills the build job. Addinf --debug-find prevents this:
+  - '--debug-find'
   - '-DQT_IMPORTS_DIR=%{plugindir}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'

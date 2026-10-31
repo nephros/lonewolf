@@ -139,6 +139,7 @@ BuildRequires: sdk-harbour-rpmvalidator
 
 %cmake .  \
     -Wno-dev \
+    --debug-find \
     -DQT_IMPORTS_DIR=%{plugindir} \
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
