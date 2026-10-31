@@ -5,7 +5,6 @@ Summary: A role-playing choose-your-own-adventure game
 # Remember to adjust the lw_minver macro if necessary
 Version: 0.1.260901
 Release: 0
-Group: Applications
 License: GPLv3 and OFL
 URL: https://github.com/nephros/lonewolf
 SCM: https://github.com/nephros/lonewolf
@@ -75,6 +74,7 @@ Description: |
     Type: desktop-application
     DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
     PackagedBy: nephros
+    AIRating: H
     Categories:
      - Games
     Custom:
@@ -125,7 +125,6 @@ Files:
 SubPackages:
     - Name:  tts-plugin
       Summary: Text-to-Speech support for %{name}
-      Group: Games
       AutoDepend: false
       Requires:
         - harbour-dsnote >= 4.7.0
@@ -142,6 +141,7 @@ SubPackages:
           %if "0%{?_chum}"
           Title: TTS plugin for Lone Wolf
           Type: desktop-application
+          AIRating: H
           Categories:
            - Games
           PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
