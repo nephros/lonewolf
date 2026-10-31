@@ -18,7 +18,6 @@ Name:       harbour-lonewolf
 Summary:    A role-playing choose-your-own-adventure game
 Version:    0.1.260901
 Release:    0
-Group:      Applications
 License:    GPLv3 and OFL
 URL:        https://github.com/nephros/lonewolf
 Source0:    %{name}-%{version}.tar.gz
@@ -67,6 +66,7 @@ Title: Lonewolf
 Type: desktop-application
 DeveloperName: Peter G., Tim Süberkrüb, Michael Terry
 PackagedBy: nephros
+AIRating: H
 Categories:
  - Games
 Custom:
@@ -82,7 +82,6 @@ Links:
 
 %package tts-plugin
 Summary:    Text-to-Speech support for %{name}
-Group:      Games
 BuildArch:  noarch
 Requires:   harbour-dsnote >= 4.7.0
 Requires:   %{name} >= %{lw_minver}
@@ -99,6 +98,7 @@ The plugin will use engine and settings configured for English (in Speech Note s
 %if "0%{?_chum}"
 Title: TTS plugin for Lone Wolf
 Type: desktop-application
+AIRating: H
 Categories:
  - Games
 PackageIcon: %{url}/raw/sfos/rpm/lonewolf-app-icon.svg
