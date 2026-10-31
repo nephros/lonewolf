@@ -129,6 +129,7 @@ BuildRequires: sdk-harbour-rpmvalidator
 # << build pre
 
 %cmake .  \
+    --debug-find \
     --debug-output \
     --log-level=VERBOSE \
     -DQT_IMPORTS_DIR=%{plugindir} \

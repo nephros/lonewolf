@@ -99,6 +99,7 @@ Configure: cmake
 Builder: cmake
 ConfigOptions:
   # '-Wno-dev'
+  - '--debug-find'
   - '--debug-output'
   - '--log-level=VERBOSE'
   - '-DQT_IMPORTS_DIR=%{plugindir}'
