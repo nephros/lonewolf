@@ -28,21 +28,19 @@ Macros:
   - '__provides_exclude_from;%{plugindir}'
   # |
   # please;ignore this macro
-#Macros2:
-#  - |
-#    please_also;ignore this macro
-#    %if 0%{?sailfishos_version} < 40600
-#    %if 0%{?sailfishos_version} <= 40001
-#    %define cmake_build %__cmake --build "."
-#    %define cmake_install %make_install
-#    %else
-#    %define cmake_build %__cmake --build "." -j8 --verbose
-#    %define cmake_install DESTDIR=%buildroot %__cmake --install .
-#    %endif
-#    %endif
 Macros2:
   - |
     please_also;ignore this macro
+    %if 0%{?sailfishos_version} < 40600
+    %if 0%{?sailfishos_version} <= 40001
+    %define cmake_build %__cmake --build "."
+    %define cmake_install %make_install
+    %else
+    %define cmake_build %__cmake --build "." -j8 --verbose
+    %define cmake_install DESTDIR=%buildroot %__cmake --install .
+    %endif
+    %endif
+    # undefine macros that may interfere with harbour:
     %if %{with harbour}
     %undefine vendor
     %undefine _vendor
@@ -111,10 +109,7 @@ PkgConfigBR:
 Configure: cmake
 Builder: cmake
 ConfigOptions:
-  # '-Wno-dev'
-  # '--trace'
-  # --debug-find
-  - --debug-trycompile
+  - '-Wno-dev'
   - '-DQT_IMPORTS_DIR=%{plugindir}'
   - '-DINSTALL_TESTS=off'
   - '-DCLICK_MODE=off'

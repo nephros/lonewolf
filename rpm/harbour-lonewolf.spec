@@ -117,6 +117,7 @@ Screenshots:
 %define cmake_install DESTDIR=%buildroot %__cmake --install .
 %endif
 %endif
+# undefine macros that may interfere with harbour:
 %if %{with harbour}
 %undefine vendor
 %undefine _vendor
@@ -134,20 +135,17 @@ BuildRequires: sdk-harbour-rpmvalidator
 
 %build
 # >> build pre
-echo ========== configure start ==========
 # << build pre
 
 %cmake .  \
-    --debug-find \
+    -Wno-dev \
     -DQT_IMPORTS_DIR=%{plugindir} \
     -DINSTALL_TESTS=off \
     -DCLICK_MODE=off
 
+%cmake_build
 
 # >> build post
-echo ========== configure done ==========
-%cmake_build
-echo ========== build done ==========
 # << build post
 
 %install
